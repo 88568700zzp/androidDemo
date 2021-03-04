@@ -1,0 +1,5 @@
+include ':addemo'
+//include ':lib'
+//include ':reactapp'
+include ':app'
+rootProject.name = "ApplicationKotlin"
