@@ -55,6 +55,10 @@ public class NewMainActivity extends AppCompatActivity {
                     Intent intent = new Intent();
                     intent.setClass(NewMainActivity.this,AddWindowActivity.class);
                     startActivity(intent);
+                }else if(position == 5){
+                    Intent intent = new Intent();
+                    intent.setClass(NewMainActivity.this,WebViewActivity.class);
+                    startActivity(intent);
                 }
             }
         });
@@ -64,7 +68,7 @@ public class NewMainActivity extends AppCompatActivity {
 
     class TitleAdapter extends BaseAdapter{
 
-        private String[] titles = new String[]{"Instrumentation","job","startService","traffic","addWindow"};
+        private String[] titles = new String[]{"Instrumentation","job","startService","traffic","addWindow","webView"};
 
         @Override
         public int getCount() {
