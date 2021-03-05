@@ -51,6 +51,10 @@ public class NewMainActivity extends AppCompatActivity {
                     Intent intent = new Intent();
                     intent.setClass(NewMainActivity.this,TrafficActivity.class);
                     startActivity(intent);
+                }else if(position == 4){
+                    Intent intent = new Intent();
+                    intent.setClass(NewMainActivity.this,AddWindowActivity.class);
+                    startActivity(intent);
                 }
             }
         });
@@ -60,7 +64,7 @@ public class NewMainActivity extends AppCompatActivity {
 
     class TitleAdapter extends BaseAdapter{
 
-        private String[] titles = new String[]{"Instrumentation","job","startService","traffic"};
+        private String[] titles = new String[]{"Instrumentation","job","startService","traffic","addWindow"};
 
         @Override
         public int getCount() {

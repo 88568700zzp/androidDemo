@@ -20,6 +20,7 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
     <uses-permission
         android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"
         tools:ignore="ProtectedPermissions" />
@@ -52,6 +53,9 @@
         <activity
             android:name=".ForegroundServiceActivity"
             android:label="@string/title_activity_work_manager_actiivty"
+            android:theme="@style/Theme.ApplicationKotlin.NoActionBar"></activity>
+        <activity
+            android:name=".AddWindowActivity"
             android:theme="@style/Theme.ApplicationKotlin.NoActionBar"></activity>
         <activity
             android:name=".JobActivity"
