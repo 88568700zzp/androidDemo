@@ -8,10 +8,24 @@ import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.net.ConnectivityManager;
+import android.net.TrafficStats;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Process;
 import android.os.RemoteException;
 import android.provider.Settings;
+import android.telephony.CellInfo;
+import android.telephony.CellInfoCdma;
+import android.telephony.CellInfoGsm;
+import android.telephony.CellInfoLte;
+import android.telephony.CellInfoWcdma;
+import android.telephony.CellSignalStrengthCdma;
+import android.telephony.CellSignalStrengthGsm;
+import android.telephony.CellSignalStrengthLte;
+import android.telephony.CellSignalStrengthWcdma;
+import android.telephony.PhoneStateListener;
+import android.telephony.SignalStrength;
+import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.widget.CompoundButton;
 import android.widget.Switch;
@@ -45,6 +59,7 @@ public class TrafficActivity extends AppCompatActivity implements CompoundButton
     private static final String TAG = "TrafficActivity";
 
     private NetworkStatsManager mNetworkStatsManager;
+    private TelephonyManager mTelephonyManager;
 
     private List<TrafficData> mData = new ArrayList<>();
     private RecyclerView mRecyclerView;
@@ -67,9 +82,13 @@ public class TrafficActivity extends AppCompatActivity implements CompoundButton
         mRecyclerView.setAdapter(mAdapter);
 
         mNetworkStatsManager = (NetworkStatsManager) getSystemService(NETWORK_STATS_SERVICE);
+        mTelephonyManager = (TelephonyManager) getSystemService(TELEPHONY_SERVICE);
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             mNetworkStatsManager.registerUsageCallback(ConnectivityManager.TYPE_WIFI, null, 100, mUsageCallback);
         }
+
+        Log.i(TAG, "Total1: " + (TrafficStats.getMobileRxBytes() + TrafficStats.getMobileTxBytes())/1024/1024 + "m");
+        Log.i(TAG, "Total2: " + (TrafficStats.getTotalTxBytes() + TrafficStats.getTotalRxBytes())/1024/1024 + "m");
 
         checkTitle();
         getTotalRecTraffic();
@@ -79,7 +98,69 @@ public class TrafficActivity extends AppCompatActivity implements CompoundButton
                 getUidByPackageName(TrafficActivity.this);
             }
         });
+        mTelephonyManager.listen(mPhoneStateListener, PhoneStateListener.LISTEN_SIGNAL_STRENGTHS);
+        getMobileDbm();
     }
+
+    public void getMobileDbm() {
+        int dbm = -1;
+        TelephonyManager tm = (TelephonyManager)this.getSystemService(Context.TELEPHONY_SERVICE);
+        List<CellInfo> cellInfoList = tm.getAllCellInfo();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1)
+        {
+            if (null != cellInfoList)
+            {
+                for (CellInfo cellInfo : cellInfoList)
+                {
+                    if (cellInfo instanceof CellInfoGsm)
+                    {
+                        CellSignalStrengthGsm cellSignalStrengthGsm = ((CellInfoGsm)cellInfo).getCellSignalStrength();
+                        dbm = cellSignalStrengthGsm.getDbm();
+                        Log.e("getMobileDbm", "cellSignalStrengthGsm" + cellSignalStrengthGsm.toString());
+                    }
+                    else if (cellInfo instanceof CellInfoCdma)
+                    {
+                        CellSignalStrengthCdma cellSignalStrengthCdma = ((CellInfoCdma)cellInfo).getCellSignalStrength();
+                        dbm = cellSignalStrengthCdma.getDbm();
+                        Log.e("getMobileDbm", "cellSignalStrengthCdma" + cellSignalStrengthCdma.toString() );
+                    }
+                    else if (cellInfo instanceof CellInfoWcdma)
+                    {
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2)
+                        {
+                            CellSignalStrengthWcdma cellSignalStrengthWcdma = ((CellInfoWcdma)cellInfo).getCellSignalStrength();
+                            dbm = cellSignalStrengthWcdma.getDbm();
+                            Log.e("getMobileDbm", "cellSignalStrengthWcdma" + cellSignalStrengthWcdma.toString() );
+                        }
+                    }
+                    else if (cellInfo instanceof CellInfoLte)
+                    {
+                        CellSignalStrengthLte cellSignalStrengthLte = ((CellInfoLte)cellInfo).getCellSignalStrength();
+                        dbm = cellSignalStrengthLte.getDbm();
+                        Log.e("getMobileDbm", "cellSignalStrengthLte.getAsuLevel()\t" + cellSignalStrengthLte.getAsuLevel() );
+                        Log.e("getMobileDbm", "cellSignalStrengthLte.getCqi()\t" + cellSignalStrengthLte.getCqi() );
+                        Log.e("getMobileDbm", "cellSignalStrengthLte.getDbm()\t " + cellSignalStrengthLte.getDbm() );
+                        Log.e("getMobileDbm", "cellSignalStrengthLte.getLevel()\t " + cellSignalStrengthLte.getLevel() );
+                        Log.e("getMobileDbm", "cellSignalStrengthLte.getRsrp()\t " + cellSignalStrengthLte.getRsrp() );
+                        Log.e("getMobileDbm", "cellSignalStrengthLte.getRsrq()\t " + cellSignalStrengthLte.getRsrq() );
+                        Log.e("getMobileDbm", "cellSignalStrengthLte.getRssnr()\t " + cellSignalStrengthLte.getRssnr() );
+                        Log.e("getMobileDbm", "cellSignalStrengthLte.getTimingAdvance()\t " + cellSignalStrengthLte.getTimingAdvance() );
+                    }
+                }
+            }
+        }
+    }
+
+
+    private PhoneStateListener mPhoneStateListener = new PhoneStateListener(){
+        @Override
+        public void onSignalStrengthsChanged(SignalStrength signalStrength) {
+            super.onSignalStrengthsChanged(signalStrength);
+            Log.d(TAG,"onSignalStrengthsChanged:" + signalStrength);
+            Log.d(TAG,"onSignalStrengthsChanged:" + signalStrength.getLevel());
+
+        }
+    };
 
     private NetworkStatsManager.UsageCallback mUsageCallback = new NetworkStatsManager.UsageCallback(){
 
@@ -116,7 +197,11 @@ public class TrafficActivity extends AppCompatActivity implements CompoundButton
         NetworkStats.Bucket bucket = null;
         try {
             bucket = mNetworkStatsManager.querySummaryForDevice(ConnectivityManager.TYPE_WIFI, "", getTimesMonthMorning(), System.currentTimeMillis());
-            Log.i(TAG, "Total: " + (bucket.getRxBytes() + bucket.getTxBytes())/1024/1024 + "m");
+            Log.e(TAG, "Total1: " + (bucket.getRxBytes() + bucket.getTxBytes())/1024/1024 + "m");
+
+            bucket = mNetworkStatsManager.querySummaryForDevice(ConnectivityManager.TYPE_MOBILE, null, getTimesMonthMorning(), System.currentTimeMillis());
+            Log.e(TAG, "Total2: " + (bucket.getRxBytes() + bucket.getTxBytes())/1024/1024 + "m");
+
         } catch (RemoteException e) {
             e.printStackTrace();
         }
@@ -225,5 +310,6 @@ public class TrafficActivity extends AppCompatActivity implements CompoundButton
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             mNetworkStatsManager.unregisterUsageCallback(mUsageCallback);
         }
+        mTelephonyManager.listen(mPhoneStateListener, PhoneStateListener.LISTEN_NONE);
     }
 }
