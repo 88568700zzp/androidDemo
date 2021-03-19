@@ -19,6 +19,31 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
+    lintOptions {
+        abortOnError false
+        htmlReport true
+        setHtmlOutput(new File("D://c.html"))
+    }
+    sourceSets {
+        main {
+            jniLibs.srcDirs = ['jni_te']
+        }
+    }
+    println "getSourceSets size:" + getSourceSets().size()
+
+    getSourceSets().names.each {
+        println("name:${it}")
+        getSourceSets().named(it).get().java.srcDirs.each {
+           println("java:${it.absolutePath}")
+       }
+        getSourceSets().named(it).get().resources.srcDirs.each {
+            println("resources:${it.absolutePath}")
+        }
+        getSourceSets().named(it).get().getJniLibs().srcDirs.each {
+            println("jniLibs:${it.absolutePath}")
+        }
+    }
+
     buildTypes {
         release {
             minifyEnabled false
@@ -32,6 +57,21 @@ android {
     kotlinOptions {
         jvmTarget = '1.8'
     }
+}
+
+def printlnSourceSet(SourceSet sourceSet){
+    /*Set<File> files = sourceSet.java.srcDirs
+    for(File file:files){
+        println("file:${file.absolutePath}")
+    }
+    Set<File> refiles = sourceSet.resources.srcDirs
+    for(File file:refiles){
+        println("file:${file.absolutePath}")
+    }*/
+}
+
+def test(){
+    println "test"
 }
 
 dependencies {
