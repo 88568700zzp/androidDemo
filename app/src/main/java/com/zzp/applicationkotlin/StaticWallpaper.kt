@@ -27,6 +27,8 @@ class StaticWallpaper : WallpaperService() {
         return StaticEngine()
     }
 
+
+
     companion object {
         /**
          * 是否正在应用中
