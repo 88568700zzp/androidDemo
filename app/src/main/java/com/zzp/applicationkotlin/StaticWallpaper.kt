@@ -74,6 +74,7 @@ class StaticWallpaper : WallpaperService() {
                     applicationContext.resources,
                     R.drawable.wallpaper_preview,option
                 )
+
                 bitmap?.let {
                     var srcRect = Rect(0,0,bitmap.width,bitmap.height)
                     var rect = Rect(0,0,canvas.width,canvas.height)
