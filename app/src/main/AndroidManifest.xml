@@ -33,6 +33,9 @@
     <uses-permission android:name="android.permission.INJECT_EVENTS" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
 
+    <queries>
+        <package android:name="com.tencent.mm" />   // 指定微信包名
+    </queries>
 
     <instrumentation
         android:name="com.zzp.applicationkotlin.instrumentation.InfoInstrumentation"
@@ -86,6 +89,19 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+
+        <activity
+            android:name=".ShareWeixinActivity"
+            android:label="@string/app_name"
+            android:theme="@style/Theme.ApplicationKotlin.NoActionBar" />
+
+        <activity
+            android:name=".wxapi.WXEntryActivity"
+            android:label="@string/app_name"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar"
+            android:exported="true"
+            android:launchMode="singleTask">
         </activity>
 
         <service

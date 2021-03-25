@@ -68,6 +68,10 @@ public class NewMainActivity extends AppCompatActivity {
                     Intent intent = new Intent(WallpaperManager.ACTION_CHANGE_LIVE_WALLPAPER);
                     intent.putExtra(WallpaperManager.EXTRA_LIVE_WALLPAPER_COMPONENT, componentName);
                     startActivity(intent);
+                }else if(position == 7){
+                    Intent intent = new Intent();
+                    intent.setClass(NewMainActivity.this,ShareWeixinActivity.class);
+                    startActivity(intent);
                 }
             }
         });
@@ -78,7 +82,7 @@ public class NewMainActivity extends AppCompatActivity {
 
     class TitleAdapter extends BaseAdapter{
 
-        private String[] titles = new String[]{"Instrumentation","job","startService","traffic","addWindow","webView","动态壁纸"};
+        private String[] titles = new String[]{"Instrumentation","job","startService","traffic","addWindow","webView","动态壁纸","微信分享"};
 
         @Override
         public int getCount() {

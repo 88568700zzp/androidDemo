@@ -28,6 +28,8 @@ android {
         }
     }
 
+
+
     lintOptions {
         abortOnError false
         htmlReport true
@@ -119,5 +121,7 @@ dependencies {
 
     // optional - Multiprocess support
     implementation "androidx.work:work-multiprocess:$work_version"
+
+    api 'com.tencent.mm.opensdk:wechat-sdk-android-without-mta:+'
 
 }
