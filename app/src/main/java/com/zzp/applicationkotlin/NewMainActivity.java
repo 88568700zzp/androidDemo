@@ -72,6 +72,10 @@ public class NewMainActivity extends AppCompatActivity {
                     Intent intent = new Intent();
                     intent.setClass(NewMainActivity.this,ShareWeixinActivity.class);
                     startActivity(intent);
+                }else if(position == 8){
+                    Intent intent = new Intent();
+                    intent.setClass(NewMainActivity.this,DollMachineActivity.class);
+                    startActivity(intent);
                 }
             }
         });
@@ -82,7 +86,7 @@ public class NewMainActivity extends AppCompatActivity {
 
     class TitleAdapter extends BaseAdapter{
 
-        private String[] titles = new String[]{"Instrumentation","job","startService","traffic","addWindow","webView","动态壁纸","微信分享"};
+        private String[] titles = new String[]{"Instrumentation","job","startService","traffic","addWindow","webView","动态壁纸","微信分享","娃娃机"};
 
         @Override
         public int getCount() {

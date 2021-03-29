@@ -97,6 +97,11 @@
             android:theme="@style/Theme.ApplicationKotlin.NoActionBar" />
 
         <activity
+            android:name=".DollMachineActivity"
+            android:label="@string/app_name"
+            android:theme="@style/Theme.ApplicationKotlin.NoActionBar" />
+
+        <activity
             android:name=".wxapi.WXEntryActivity"
             android:label="@string/app_name"
             android:theme="@android:style/Theme.Translucent.NoTitleBar"
