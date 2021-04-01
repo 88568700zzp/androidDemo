@@ -82,6 +82,10 @@ public class NewMainActivity extends AppCompatActivity {
                     Intent intent = new Intent();
                     intent.setClass(NewMainActivity.this,KotlinActivity.class);
                     startActivity(intent);
+                }else if(position == 10){
+                    Intent intent = new Intent();
+                    intent.setClass(NewMainActivity.this,VideoPlayerActivity.class);
+                    startActivity(intent);
                 }
             }
         });
@@ -91,7 +95,7 @@ public class NewMainActivity extends AppCompatActivity {
 
     class TitleAdapter extends BaseAdapter{
 
-        private String[] titles = new String[]{"Instrumentation","job","startService","traffic","addWindow","webView","动态壁纸","微信分享","娃娃机","kotlin"};
+        private String[] titles = new String[]{"Instrumentation","job","startService","traffic","addWindow","webView","动态壁纸","微信分享","娃娃机","kotlin","video"};
 
         @Override
         public int getCount() {
