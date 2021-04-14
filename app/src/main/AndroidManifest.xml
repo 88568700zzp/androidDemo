@@ -9,8 +9,9 @@
 
     <uses-feature android:name="android.hardware.type.watch" />
 
-    <uses-permission android:name="android.permission.PACKAGE_USAGE_STATS" tools:ignore="ProtectedPermissions"/>
-
+    <uses-permission
+        android:name="android.permission.PACKAGE_USAGE_STATS"
+        tools:ignore="ProtectedPermissions" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
     <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
@@ -34,7 +35,8 @@
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
 
     <queries>
-        <package android:name="com.tencent.mm" />   // 指定微信包名
+        <package android:name="com.tencent.mm" />
+        // 指定微信包名
     </queries>
 
     <instrumentation
@@ -45,29 +47,30 @@
     <application
         android:name=".application.AppApplication"
         android:allowBackup="true"
-        android:usesCleartextTraffic="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.ApplicationKotlin">
+        android:theme="@style/Theme.ApplicationKotlin"
+        android:usesCleartextTraffic="true">
+        <activity android:name=".ViewPager2Activity"></activity>
         <activity
             android:name=".WorkManagerActiivty"
             android:label="@string/title_activity_work_manager_actiivty"
-            android:theme="@style/Theme.ApplicationKotlin.NoActionBar"></activity>
+            android:theme="@style/Theme.ApplicationKotlin.NoActionBar" />
         <activity
             android:name=".WebViewActivity"
-            android:theme="@style/Theme.ApplicationKotlin.NoActionBar"></activity>
+            android:theme="@style/Theme.ApplicationKotlin.NoActionBar" />
         <activity
             android:name=".ForegroundServiceActivity"
             android:label="@string/title_activity_work_manager_actiivty"
-            android:theme="@style/Theme.ApplicationKotlin.NoActionBar"></activity>
+            android:theme="@style/Theme.ApplicationKotlin.NoActionBar" />
         <activity
             android:name=".AddWindowActivity"
-            android:theme="@style/Theme.ApplicationKotlin.NoActionBar"></activity>
+            android:theme="@style/Theme.ApplicationKotlin.NoActionBar" />
         <activity
             android:name=".JobActivity"
-            android:label="@string/title_activity_job"></activity>
+            android:label="@string/title_activity_job" />
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name"
@@ -90,36 +93,30 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".ShareWeixinActivity"
             android:label="@string/app_name"
             android:theme="@style/Theme.ApplicationKotlin.NoActionBar" />
-
         <activity
             android:name=".DollMachineActivity"
             android:label="@string/app_name"
             android:theme="@style/Theme.ApplicationKotlin.NoActionBar" />
-
         <activity
             android:name=".KotlinActivity"
             android:label="@string/app_name"
             android:theme="@style/Theme.ApplicationKotlin.NoActionBar" />
-
         <activity
             android:name=".VideoPlayerActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:label="VideoPlayerActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.ApplicationKotlin.NoActionBar" />
-
         <activity
             android:name=".wxapi.WXEntryActivity"
-            android:label="@string/app_name"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar"
             android:exported="true"
-            android:launchMode="singleTask">
-        </activity>
+            android:label="@string/app_name"
+            android:launchMode="singleTask"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar"></activity>
 
         <service
             android:name=".StaticWallpaper"
@@ -134,9 +131,7 @@
                 android:name="android.service.wallpaper"
                 android:resource="@xml/live_wallpaper" />
         </service>
-
-        <service android:name=".service.FirstService"
-            />
+        <service android:name=".service.FirstService" />
         <service android:name=".service.SecondService" />
         <service
             android:name=".service.JobSchedulerService"

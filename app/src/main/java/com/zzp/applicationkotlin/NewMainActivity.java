@@ -1,8 +1,10 @@
 package com.zzp.applicationkotlin;
 
+import android.Manifest;
 import android.app.WallpaperManager;
 import android.content.ComponentName;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -13,9 +15,11 @@ import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 import kotlinx.coroutines.GlobalScope;
 
@@ -66,10 +70,14 @@ public class NewMainActivity extends AppCompatActivity {
                     intent.setClass(NewMainActivity.this,WebViewActivity.class);
                     startActivity(intent);
                 }else if(position == 6){
-                    ComponentName componentName = new ComponentName(getPackageName(), "com.zzp.applicationkotlin.StaticWallpaper");
-                    Intent intent = new Intent(WallpaperManager.ACTION_CHANGE_LIVE_WALLPAPER);
-                    intent.putExtra(WallpaperManager.EXTRA_LIVE_WALLPAPER_COMPONENT, componentName);
-                    startActivity(intent);
+                    if(ContextCompat.checkSelfPermission(NewMainActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
+                        ComponentName componentName = new ComponentName(getPackageName(), "com.zzp.applicationkotlin.StaticWallpaper");
+                        Intent intent = new Intent(WallpaperManager.ACTION_CHANGE_LIVE_WALLPAPER);
+                        intent.putExtra(WallpaperManager.EXTRA_LIVE_WALLPAPER_COMPONENT, componentName);
+                        startActivity(intent);
+                    }else{
+                        requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE,Manifest.permission.WRITE_EXTERNAL_STORAGE},0x123);
+                    }
                 }else if(position == 7){
                     Intent intent = new Intent();
                     intent.setClass(NewMainActivity.this,ShareWeixinActivity.class);
@@ -86,6 +94,10 @@ public class NewMainActivity extends AppCompatActivity {
                     Intent intent = new Intent();
                     intent.setClass(NewMainActivity.this,VideoPlayerActivity.class);
                     startActivity(intent);
+                }else if(position == 11){
+                    Intent intent = new Intent();
+                    intent.setClass(NewMainActivity.this,ViewPager2Activity.class);
+                    startActivity(intent);
                 }
             }
         });
@@ -95,7 +107,7 @@ public class NewMainActivity extends AppCompatActivity {
 
     class TitleAdapter extends BaseAdapter{
 
-        private String[] titles = new String[]{"Instrumentation","job","startService","traffic","addWindow","webView","动态壁纸","微信分享","娃娃机","kotlin","video"};
+        private String[] titles = new String[]{"Instrumentation","job","startService","traffic","addWindow","webView","动态壁纸","微信分享","娃娃机","kotlin","video","viewPager2"};
 
         @Override
         public int getCount() {

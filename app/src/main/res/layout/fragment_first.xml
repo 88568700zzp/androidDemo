@@ -62,7 +62,7 @@
             android:id="@+id/enter_wifi_safe"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/enter_wifi_safe"
+            android:src="@drawable/doll_enter_wifi_safe"
             app:layout_constraintEnd_toStartOf="@+id/enter_wifi_check"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -84,7 +84,7 @@
             android:id="@+id/enter_wifi_check"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/enter_wifi_check"
+            android:src="@drawable/doll_enter_wifi_check"
             app:layout_constraintStart_toEndOf="@+id/enter_wifi_safe"
             app:layout_constraintEnd_toStartOf="@+id/enter_wifi_boost"
             app:layout_constraintTop_toTopOf="parent" />
@@ -107,7 +107,7 @@
             android:id="@+id/enter_wifi_boost"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/enter_wifi_boost"
+            android:src="@drawable/doll_enter_wifi_boost"
             app:layout_constraintStart_toEndOf="@id/enter_wifi_check"
             app:layout_constraintEnd_toStartOf="@+id/enter_wifi_force"
             app:layout_constraintTop_toTopOf="parent" />
@@ -130,7 +130,7 @@
             android:id="@+id/enter_wifi_force"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/enter_wifi_force"
+            android:src="@drawable/doll_enter_wifi_force"
             app:layout_constraintStart_toEndOf="@id/enter_wifi_boost"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
