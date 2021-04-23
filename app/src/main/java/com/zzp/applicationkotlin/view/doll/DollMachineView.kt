@@ -5,10 +5,9 @@ import android.graphics.*
 import android.os.Handler
 import android.os.Looper
 import android.util.AttributeSet
-import android.util.Log
 import android.view.View
-import android.widget.Toast
 import com.zzp.applicationkotlin.R
+import org.greenrobot.eventbus.EventBus
 import java.util.*
 import kotlin.collections.HashSet
 
@@ -20,7 +19,11 @@ class DollMachineView(context: Context?, attrs: AttributeSet?) : View(context, a
 
     private val TAG = "DollMachineView"
 
-    private val RACE_SIZE =4//4条赛道
+    private val RACE_SIZE = 4//4条赛道
+
+    private val MODE_NORMAL = 0
+    private val MODE_FAST = 1
+    private val MODE_SLOW = 2
 
     private var mPauseTime = 0L//暂停时间
     private var mCreateDollTime = 0L//创建娃娃时间
@@ -28,11 +31,12 @@ class DollMachineView(context: Context?, attrs: AttributeSet?) : View(context, a
     var isAnimating = false
 
     private var mDollList = LinkedList<DollView>()
-    private var mPaint:Paint = Paint(Paint.ANTI_ALIAS_FLAG)
+    private var mPaint: Paint = Paint(Paint.ANTI_ALIAS_FLAG)
 
-    private var mStartXArray = floatArrayOf(0f,0f,0f,0f,0f)
-    private var mEndXArray = floatArrayOf(0f,0f,0f,0f,0f)
-    private var mHitXArray = floatArrayOf(0f,0f,0f,0f,0f)
+    private var mStartXArray = floatArrayOf(0f, 0f, 0f, 0f, 0f)
+    private var mEndXArray = floatArrayOf(0f, 0f, 0f, 0f, 0f)
+    private var mEndHitXArray = floatArrayOf(0f, 0f, 0f, 0f, 0f) //保存命中的x坐标值
+    private var mStartHitXArray = floatArrayOf(0f, 0f, 0f, 0f, 0f) //
 
     private var mRandom = Random()
     private var mHashSet = HashSet<Int>(RACE_SIZE)
@@ -40,111 +44,148 @@ class DollMachineView(context: Context?, attrs: AttributeSet?) : View(context, a
     private var mDollStartY = 0F //娃娃开始坐标
     private var mDollEndY = 0F //娃娃结束坐标
 
-    private var mStartHitY = 0F //抓娃娃命中区域
-    private var mEndHitY = 0F
+    private var mStartHitY = 0F //抓娃娃命中区域开始
+    private var mEndHitY = 0F //抓娃娃命中区域结束
 
-    private var mDollClampView:DollClampView = DollClampView()
+    private var mDollClampView: DollClampView = DollClampView()
 
-    private var mDollBitmap1: Bitmap = BitmapFactory.decodeResource(resources, R.drawable.enter_wifi_check)
-    private var mDollBitmap2: Bitmap = BitmapFactory.decodeResource(resources, R.drawable.enter_wifi_force)
-    private var mDollBitmap3: Bitmap = BitmapFactory.decodeResource(resources, R.drawable.enter_wifi_safe)
+    private var mDollBitmap1: Bitmap = BitmapFactory.decodeResource(resources, R.drawable.ic_doll_gift_small)
+    private var mDollBitmap2: Bitmap = BitmapFactory.decodeResource(resources, R.drawable.ic_doll_gift_mid)
+    private var mDollBitmap3: Bitmap = BitmapFactory.decodeResource(resources, R.drawable.ic_doll_gift_big)
+    private var mDollBitmap4: Bitmap = BitmapFactory.decodeResource(resources, R.drawable.ic_doll_gift_bomb)
 
-    private var mBitmapArray = arrayListOf(mDollBitmap1,mDollBitmap2,mDollBitmap3)
+    private var mBitmapArray = arrayListOf(mDollBitmap1, mDollBitmap2, mDollBitmap3, mDollBitmap4)
+
+    private var mPurpleBgBitmapArray = arrayListOf(BitmapFactory.decodeResource(resources, R.drawable.ic_doll_purple_bg_1)
+            , BitmapFactory.decodeResource(resources, R.drawable.ic_doll_purple_bg_2)
+            , BitmapFactory.decodeResource(resources, R.drawable.ic_doll_purple_bg_3)
+            , BitmapFactory.decodeResource(resources, R.drawable.ic_doll_purple_bg_4))
+
+    private var mYellowBgBitmapArray = arrayListOf(BitmapFactory.decodeResource(resources, R.drawable.ic_doll_yellow_bg_1)
+            , BitmapFactory.decodeResource(resources, R.drawable.ic_doll_yellow_bg_2)
+            , BitmapFactory.decodeResource(resources, R.drawable.ic_doll_yellow_bg_3)
+            , BitmapFactory.decodeResource(resources, R.drawable.ic_doll_yellow_bg_4))
 
     private var mHandler = Handler(Looper.getMainLooper())
 
-    companion object{
-        const val DOLL_DURATION = 7000L//娃娃下落时长
-        const val DOLL_CLAMP_DURATION = 2500L//娃娃夹子横向时间
-        const val CREATE_DOLL_DURATION = 2500L//创建娃娃机间隔时间
-        const val DOLL_CLAMP_ANIMATE_DURATION = 600L//娃娃机动画时间
+    private var mMode = MODE_NORMAL//0是正常，1变快，2变慢
+    private var mPlayingMode = MODE_NORMAL
 
+    companion object {
+        var mCurrentDollDuration = 7000L//娃娃下落时长
+        var mCurrentCreateDollDuration = 1500L//创建娃娃机间隔时间
+
+        var INIT_DOLL_CURATION = 7000L//娃娃下落时长
+        var INIT_CREATE_DOLL_DURATION = 1500L//娃娃下落时长
+
+        var INIT_DOLL_DOLL_CLAMP_DURATION = 2500L//娃娃夹子横向时间
+        var DOLL_CLAMP_ANIMATE_DURATION = 600L//娃娃机夹子夹娃娃时间
+
+
+        val MODE_NORMAL = 0
+        val MODE_FAST = 1
+        val MODE_SLOW = 2
+
+    }
+
+    fun initData(dollDuration: Long, dollClampDuration: Long) {
+        mCurrentDollDuration = dollDuration
+        mCurrentCreateDollDuration = mCurrentDollDuration / 3
+
+        INIT_DOLL_CURATION = dollDuration
+        INIT_CREATE_DOLL_DURATION = dollDuration / 3
+        INIT_DOLL_DOLL_CLAMP_DURATION = dollClampDuration
     }
 
     override fun onDraw(canvas: Canvas?) {
         super.onDraw(canvas)
 
-        drawLine(canvas)
+        //drawLine(canvas)
         animateDoll(canvas)
 
-        if(isAnimating){
+        if (isAnimating) {
             invalidate()
         }
     }
 
-    private fun drawLine(canvas: Canvas?){
-        mPaint.color = Color.RED
+    private fun drawLine(canvas: Canvas?) {
+        mPaint.color = Color.GREEN
 
-        for(index in 0..RACE_SIZE){
-            canvas?.drawLine(mStartXArray[index],mDollStartY,mEndXArray[index],mDollEndY,mPaint)
+        for (index in 0..RACE_SIZE) {
+            canvas?.drawLine(mStartXArray[index], mDollStartY, mEndXArray[index], mDollEndY, mPaint)
             //canvas?.drawCircle(mHitXArray[index],mEndHitY,10f,mPaint)
         }
-        canvas?.drawLine(0f,height.toFloat(),width.toFloat(),height.toFloat(),mPaint)
-        canvas?.drawLine(0f,mStartHitY,width.toFloat(),mStartHitY,mPaint)
-        canvas?.drawLine(0f,mEndHitY,width.toFloat(),mEndHitY,mPaint)
+        canvas?.drawLine(0f, height.toFloat(), width.toFloat(), height.toFloat(), mPaint)
+        canvas?.drawLine(mStartHitXArray[0], mStartHitY, mStartHitXArray[RACE_SIZE], mStartHitY, mPaint)
+        canvas?.drawLine(0f, mEndHitY, width.toFloat(), mEndHitY, mPaint)
 
     }
 
-    fun beginDollMachine(){
+    fun beginDollMachine() {
         isAnimating = true
 
-        for(index in 0..3){
+        for (index in 0..3) {
             var dollView = getDollView(index)
-            dollView.mBitmap = mBitmapArray[mRandom.nextInt(3)]
             mDollList.add(dollView)
         }
         mCreateDollTime = System.currentTimeMillis()
-        doCreateDollRunnable(CREATE_DOLL_DURATION)
+        doCreateDollRunnable(mCurrentCreateDollDuration)
 
         postInvalidate()
     }
 
-    private fun doCreateDollRunnable(delayDuration: Long){
+    private fun doCreateDollRunnable(delayDuration: Long) {
         mHandler.removeCallbacks(mCreateDollRunnbale)
-        mHandler.postDelayed(mCreateDollRunnbale,delayDuration)
+        mHandler.postDelayed(mCreateDollRunnbale, delayDuration)
     }
 
     /**
      *@description 抓取娃娃
-    **/
-    fun doHitDoll(){
-        if(mDollClampView.isClampAnimating || mDollList.size == 0){
+     **/
+    fun doHitDoll() {
+        if (mDollClampView.isClampAnimating || mDollClampView.isBombing || mDollList.size == 0) {
             return
         }
-        var hitIndex = -1;
-        for(index in mHitXArray.indices){
-            if(mHitXArray[index] <= mDollClampView.getCurrentX() && mDollClampView.getCurrentX() <= mHitXArray[index + 1]){
+        var hitIndex = -1
+        for (index in 0 until (mEndHitXArray.size - 1)) {
+            /*if(mEndHitXArray[index] <= mDollClampView.getLeftX() && mDollClampView.getLeftX() <= mEndHitXArray[index + 1]){
+                hitIndexSet.add(index)
+            }*/
+            if (mStartHitXArray[index] <= mDollClampView.getCurrentX() && mDollClampView.getCurrentX() <= mStartHitXArray[index + 1]) {
                 hitIndex = index
+            }
+            /*if(mEndHitXArray[index] <= mDollClampView.getRightX() && mDollClampView.getRightX() <= mEndHitXArray[index + 1]){
+                hitIndexSet.add(index)
+            }*/
+        }
+
+        var hitDollView: DollView? = null
+        for (data in mDollList.reversed()) {
+            if (hitIndex == data.race_index && data.hitArea(mStartHitY, mEndHitY)) {//抓中娃娃
+                hitDollView = data
                 break
             }
         }
 
-        var hitDollView:DollView ?= null
-        if(hitIndex in 0 until RACE_SIZE){
-            Log.i(TAG,"hitIndex:${hitIndex}")
-            for(data in mDollList){
-                if(data.race_index == hitIndex && data.hitArea(mStartHitY,mEndHitY)){//抓中娃娃
-                    hitDollView = data
-                    break
-                }
-            }
-        }
-        if(hitDollView == null) {
-            mDollClampView.doHitAnimate(false,(mEndHitY - mStartHitY)/2)
-        }else{
+        if (hitDollView == null) {
+            mDollClampView.hitFailAnimate(mStartHitY + (mEndHitY - mStartHitY) / 2)
+        } else {
             //pauseDoll()
-            mDollClampView.doHitAnimate(true,hitDollView.mCurrentY - mStartHitY)
+            mDollClampView.doHitAnimate(hitDollView)
         }
     }
 
-    private fun getDollView(index:Int):DollView{
-        var startX = mStartXArray[index] + (mStartXArray[index + 1] - mStartXArray[index])/2
-        var endX = mEndXArray[index] + (mEndXArray[index + 1] - mEndXArray[index])/2
-
-        return DollView(startX, mDollStartY,endX, mDollEndY,index)
+    private fun getDollView(index: Int): DollView {
+        var startX = mStartXArray[index] + (mStartXArray[index + 1] - mStartXArray[index]) / 2
+        var endX = mEndXArray[index] + (mEndXArray[index + 1] - mEndXArray[index]) / 2
+        var dollView = DollView(startX, mDollStartY, endX, mDollEndY, index)
+        var randomIndex = mRandom.nextInt(4)
+        dollView.mBitmap = mBitmapArray[randomIndex]
+        dollView.mBgBitmap = if (randomIndex == 3) mPurpleBgBitmapArray[index] else mYellowBgBitmapArray[index]
+        return dollView
     }
 
-    fun stopDollMachine(){
+    fun stopDollMachine() {
         isAnimating = false
         mHandler.removeCallbacks(mCreateDollRunnbale)
         mDollList.clear()
@@ -152,9 +193,9 @@ class DollMachineView(context: Context?, attrs: AttributeSet?) : View(context, a
 
     /**
      *@description 暂停播放
-    **/
-    fun pauseDoll(){
-        if(!isAnimating){
+     **/
+    fun pauseDoll() {
+        if (!isAnimating) {
             return
         }
         isAnimating = false
@@ -164,28 +205,28 @@ class DollMachineView(context: Context?, attrs: AttributeSet?) : View(context, a
 
     /**
      *@description 继续播放
-    **/
-    fun resumeDoll(){
-        if(isAnimating){
+     **/
+    fun resumeDoll() {
+        if (isAnimating) {
             return
         }
         isAnimating = true
         var delayTime = System.currentTimeMillis() - mPauseTime
-        doCreateDollRunnable(CREATE_DOLL_DURATION - (System.currentTimeMillis() - (mCreateDollTime + delayTime)))
-        for(data in mDollList){
+        doCreateDollRunnable(mCurrentCreateDollDuration - (System.currentTimeMillis() - (mCreateDollTime + delayTime)))
+        for (data in mDollList) {
             data.resume(delayTime)
         }
         mDollClampView.resume(delayTime)
         postInvalidate()
     }
 
-    private fun animateDoll(canvas: Canvas?){
+    private fun animateDoll(canvas: Canvas?) {
         mDollList?.takeIf { it.size > 0 }.let {
             var iterator = mDollList.iterator()
-            while (iterator.hasNext()){
+            while (iterator.hasNext()) {
                 var doll = iterator.next()
-                var result = doll.calculate(canvas,mPaint)
-                if(!result){
+                var result = doll.onDraw(canvas, mPaint)
+                if (!result) {
                     iterator.remove()
                 }
             }
@@ -193,7 +234,7 @@ class DollMachineView(context: Context?, attrs: AttributeSet?) : View(context, a
 
         mDollClampView.let {
             mPaint.color = Color.BLUE
-            it.calculate(canvas,mPaint)
+            it.onDraw(canvas, mPaint)
         }
     }
 
@@ -210,53 +251,190 @@ class DollMachineView(context: Context?, attrs: AttributeSet?) : View(context, a
         beginDollMachine()
     }
 
-    private fun initPosition(){
-        var startSideX = width/5
-        var startSpace = (width - 2 * startSideX)/4
+    private fun initPosition() {
+        var startSideX = width * 0.39F
+        var startSpace = (width - 2 * startSideX) / 4
 
-        var endSideX = -width/20
-        var endSpace = (width - 2 * endSideX)/4
+        var endSideX = -width * 0.16F
+        var endSpace = (width - 2 * endSideX) / 4
 
-        //todo 图片高度的一半
-        mDollStartY = -20 * 2.75f
-        mDollEndY = 20 * 2.75f + height
+        mDollStartY = height * 0.43f
+        mDollEndY = 33F.dp + height
 
-        mStartHitY = height /2f
-        mEndHitY = height /2f + height /7f
+        mStartHitY = height * 0.73f
+        mEndHitY = mStartHitY + height * 0.19f
 
-        for(i in 0..RACE_SIZE){
-            mStartXArray[i] = (startSideX + startSpace * i).toFloat()
-            mEndXArray[i] = (endSideX + endSpace * i).toFloat()
+        for (i in 0..RACE_SIZE) {
+            mStartXArray[i] = (startSideX + startSpace * i)
+            mEndXArray[i] = (endSideX + endSpace * i)
 
-            mHitXArray[i] = mStartXArray[i] - mEndHitY * ((mStartXArray[i] - mEndXArray[i])/height)
+            mStartHitXArray[i] = mStartXArray[i] - (mStartHitY - mDollStartY) * ((mStartXArray[i] - mEndXArray[i]) / (height - mDollStartY))
+            mEndHitXArray[i] = mStartXArray[i] - (mEndHitY - mDollStartY) * ((mStartXArray[i] - mEndXArray[i]) / (height - mDollStartY))
         }
 
         //夹子位置
-        mDollClampView.init(mHitXArray[0],mHitXArray[RACE_SIZE], mStartHitY - mDollClampView.drawHeight)
+        mDollClampView.init(context, mStartHitXArray[0], mStartHitXArray[RACE_SIZE], mStartHitY - height * 0.24f)
     }
 
-    private var mCreateDollRunnbale = object:Runnable {
+    private var mCreateDollRunnbale = object : Runnable {
 
         override fun run() {
-            if(isAnimating){
+            if (isAnimating) {
                 var size = mRandom.nextInt(RACE_SIZE) + 1
                 mHashSet.clear()
-                for(index in 0 until size){
+                for (index in 0 until size) {
                     var notFind = false
-                    while(!notFind){
+                    while (!notFind) {
                         var raceIndex = mRandom.nextInt(RACE_SIZE)
                         notFind = !mHashSet.contains(raceIndex)
-                        if(notFind){
+                        if (notFind) {
                             var dollView = getDollView(raceIndex)
-                            dollView.mBitmap = mBitmapArray[mRandom.nextInt(3)]
+
                             mDollList.add(dollView)
                             mHashSet.add(raceIndex)
                         }
                     }
                 }
                 mCreateDollTime = System.currentTimeMillis()
-                mHandler.postDelayed(Runnable@this,CREATE_DOLL_DURATION)
+                mHandler.postDelayed(Runnable@ this, mCurrentCreateDollDuration)
             }
         }
     }
+
+    fun changeClampShape(changeBig: Boolean) {
+        mDollClampView?.let {
+            if (changeBig) {
+                it.bigClamp()
+            } else {
+                it.smallClamp()
+            }
+            invalidate()
+        }
+    }
+
+    private var mNormalModeRunnbale = Runnable {
+        var toMode = mPlayingMode
+        if (mMode == MODE_FAST && toMode != MODE_FAST) {
+            //EventBus.getDefault().post(BuffInvalidEvent(GameDoll.Present.BUFF_TYPE_FAST))
+        } else if (mMode == MODE_SLOW && toMode != MODE_SLOW) {
+            //EventBus.getDefault().post(BuffInvalidEvent(GameDoll.Present.BUFF_TYPE_SLOW))
+        }
+        mMode = toMode
+        setModeEffect()
+    }
+
+    /**
+     *@description
+     *@param changeFast true加速，false 减速
+     *@param effectTime 持续时间
+     *@return
+     **/
+    fun setMode(changeFast: Boolean, effectTime: Long) {
+        var delayTime = effectTime
+        if (delayTime < 1000) {
+            delayTime = 1000
+        }
+        if (changeFast) {
+            when (mMode) {
+                MODE_NORMAL -> {
+                    mMode = MODE_FAST
+                    mHandler.removeCallbacks(mNormalModeRunnbale)
+                    mHandler.postDelayed(mNormalModeRunnbale, delayTime)
+                }
+                MODE_SLOW -> {
+                    mMode = MODE_NORMAL
+                    //EventBus.getDefault().post(BuffInvalidEvent(GameDoll.Present.BUFF_TYPE_SLOW))
+                }
+                MODE_FAST -> {
+                    mHandler.removeCallbacks(mNormalModeRunnbale)
+                    mHandler.postDelayed(mNormalModeRunnbale, delayTime)
+                }
+            }
+        } else {
+            when (mMode) {
+                MODE_NORMAL -> {
+                    mMode = MODE_SLOW
+                    mHandler.removeCallbacks(mNormalModeRunnbale)
+                    mHandler.postDelayed(mNormalModeRunnbale, delayTime)
+                }
+                MODE_FAST -> {
+                    mMode = MODE_NORMAL
+                    //EventBus.getDefault().post(BuffInvalidEvent(GameDoll.Present.BUFF_TYPE_FAST))
+                }
+                MODE_SLOW -> {
+                    mHandler.removeCallbacks(mNormalModeRunnbale)
+                    mHandler.postDelayed(mNormalModeRunnbale, delayTime)
+                }
+            }
+        }
+        setModeEffect()
+    }
+
+    private fun changeDollDuration(newTime: Long) {
+        if (mCurrentDollDuration == newTime) {
+            return
+        }
+        mDollList?.takeIf { it.size > 0 }.let {
+            var iterator = mDollList.iterator()
+            while (iterator.hasNext()) {
+                var doll = iterator.next()
+                var result = doll.changeDollSpeed(newTime, mCurrentDollDuration)
+                if (!result) {
+                    iterator.remove()
+                }
+            }
+        }
+        mCurrentDollDuration = newTime
+        invalidate()
+    }
+
+    private fun changeCreateDollDuration(newTime: Long) {
+        if (newTime == mCurrentCreateDollDuration) {
+            return
+        }
+        var progress =
+                1 - (System.currentTimeMillis() - mCreateDollTime) * 1f / mCurrentCreateDollDuration
+        doCreateDollRunnable((newTime * progress).toLong())
+
+        mCurrentCreateDollDuration = newTime
+    }
+
+    fun bomp(time: Int) {
+        mDollClampView.bomp(time)
+    }
+
+    fun setPlayingMode(mode: Int) {
+        mPlayingMode = mode
+        mMode = mPlayingMode
+        setModeEffect()
+    }
+
+    private fun setModeEffect() {
+        var newDollDuration = 0L
+        var newCreateDollDuration = 0L
+        when (mMode) {
+            MODE_NORMAL -> {
+                newDollDuration = INIT_DOLL_CURATION
+                newCreateDollDuration = INIT_CREATE_DOLL_DURATION
+            }
+            MODE_FAST -> {
+                newDollDuration = INIT_DOLL_CURATION / 2
+                newCreateDollDuration = INIT_CREATE_DOLL_DURATION / 2
+            }
+            MODE_SLOW -> {
+                newDollDuration = INIT_DOLL_CURATION * 2
+                newCreateDollDuration = INIT_CREATE_DOLL_DURATION * 2
+            }
+        }
+        changeDollDuration(newDollDuration)
+        changeCreateDollDuration(newCreateDollDuration)
+    }
+
+    fun reset() {
+        mHandler.removeCallbacks(mNormalModeRunnbale)
+        mMode = MODE_NORMAL
+        mPlayingMode = MODE_NORMAL
+        setModeEffect()
+    }
+
 }

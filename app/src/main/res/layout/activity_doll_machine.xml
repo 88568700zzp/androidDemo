@@ -1,37 +1,97 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:keepScreenOn="true"
     tools:context=".DollMachineActivity">
 
     <com.zzp.applicationkotlin.view.doll.DollMachineView
         android:id="@+id/doll_machine"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintDimensionRatio="1080:1698"
+        android:background="@drawable/ic_doll_machine_bg"
         tools:context=".DollMachineActivity"
-        android:layout_marginBottom="50dp"
         />
-    <Button
-        android:id="@+id/pause_btn"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:id="@+id/doll_machine_layout1"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="停止"
-        android:layout_gravity="left|bottom"
-        />
-    <Button
-        android:id="@+id/doll_btn"
-        android:layout_width="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center"
+        app:layout_constraintTop_toBottomOf="@id/doll_machine"
+        >
+        <Button
+            android:id="@+id/pause_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="停止"
+            android:layout_margin="5dp"
+            />
+        <Button
+            android:id="@+id/doll_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="抓取"
+            android:layout_margin="5dp"
+            />
+        <Button
+            android:id="@+id/resume_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="继续"
+            android:layout_margin="5dp"
+            />
+        <Button
+            android:id="@+id/bomb_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="爆炸"
+            android:layout_margin="5dp"
+            />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="抓取"
-        android:layout_gravity="center_horizontal|bottom"
-        />
-    <Button
-        android:id="@+id/resume_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="继续"
-        android:layout_gravity="right|bottom"
-        />
-</FrameLayout>
+        android:orientation="horizontal"
+        android:gravity="center"
+        app:layout_constraintTop_toBottomOf="@id/doll_machine_layout1"
+        >
+        <Button
+            android:id="@+id/fast_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="加速"
+            android:layout_margin="5dp"
+            />
+        <Button
+            android:id="@+id/big_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="钩子变大"
+            android:layout_margin="5dp"
+            />
+        <Button
+            android:id="@+id/small_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="钩子变小"
+            android:layout_margin="5dp"
+            />
+        <Button
+            android:id="@+id/slow_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="减速"
+            android:layout_margin="5dp"
+            />
+
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
