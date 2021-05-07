@@ -98,6 +98,10 @@ public class NewMainActivity extends AppCompatActivity {
                     Intent intent = new Intent();
                     intent.setClass(NewMainActivity.this,ViewPager2Activity.class);
                     startActivity(intent);
+                }else if(position == 12){
+                    Intent intent = new Intent();
+                    intent.setClass(NewMainActivity.this,RoomActivity.class);
+                    startActivity(intent);
                 }
             }
         });
@@ -107,7 +111,7 @@ public class NewMainActivity extends AppCompatActivity {
 
     class TitleAdapter extends BaseAdapter{
 
-        private String[] titles = new String[]{"Instrumentation","job","startService","traffic","addWindow","webView","动态壁纸","微信分享","娃娃机","kotlin","video","viewPager2"};
+        private String[] titles = new String[]{"Instrumentation","job","startService","traffic","addWindow","webView","动态壁纸","微信分享","娃娃机","kotlin","video","viewPager2","room"};
 
         @Override
         public int getCount() {

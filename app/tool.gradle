@@ -1,0 +1,22 @@
+//import android.graphics.BitmapFactory
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+
+task changeIcon {
+    println("=================changeIcon start=================")
+
+    def appFile = project.projectDir
+    def newFile = new File(appFile,"\\src\\main\\res\\drawable-xxhdpi\\doll_enter_wifi_boost.png")
+    try {
+        BufferedImage bufferedImage = ImageIO.read(newFile);
+        println("width:" + bufferedImage.getWidth() + " height:" + bufferedImage.getHeight());
+
+    } catch (IOException e) {
+        e.printStackTrace();
+    }
+    /*def bitmap = BitmapFactory.decodeFile(newFile.absolutePath)
+    println("bitmap width:${bitmap.width} height:${bitmap.height}")
+    println("path:${project.projectDir.absolutePath}")*/
+
+    println("=================changeIcon end=================")
+}

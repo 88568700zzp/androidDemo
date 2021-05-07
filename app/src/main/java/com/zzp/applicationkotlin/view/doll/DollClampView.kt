@@ -143,7 +143,6 @@ class DollClampView {
 
     private fun caculateCurrentX():Float{
         var currentX = 0F
-
         if(isBombing){
             currentX = mBompX
         }else if(mHitDollView != null){
@@ -200,6 +199,7 @@ class DollClampView {
         var animator = ValueAnimator.ofInt(0,time)
         animator.addUpdateListener {
            var value = it.animatedValue as Int
+            isBombing = true
             mBompStatus = (value/300)%2
         }
         animator.addListener(object : android.animation.AnimatorListenerAdapter() {

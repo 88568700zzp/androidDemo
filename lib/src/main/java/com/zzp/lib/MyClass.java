@@ -1,16 +1,20 @@
 package com.zzp.lib;
 
+import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.net.UnknownHostException;
 
+import javax.imageio.ImageIO;
+
 public class MyClass {
 
     public static void main(String[] args) {
         //System.out.println("zzp");
-        long time = 0;
+        /*long time = 0;
         try {
             InetSocketAddress socketAddress = new InetSocketAddress(InetAddress.getLocalHost(), 3306);
             System.out.println(socketAddress);
@@ -31,6 +35,17 @@ public class MyClass {
         } catch (IOException e) {
             e.printStackTrace();
             System.out.println("IOException");
-        }
+        }*/
+        /*try {
+            BufferedImage bufferedImage = ImageIO.read(new File("C:\\Users\\zhangzhipeng\\Downloads\\mipmap-xxhdpi\\push.png"));
+            System.out.println("width:" + bufferedImage.getWidth() + " height:" + bufferedImage.getHeight());
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }*/
+        MainKt mainKt = new MainKt();
+        mainKt.main();
+        mainKt.invoke("mainkt");
+        mainKt.example();
     }
 }
