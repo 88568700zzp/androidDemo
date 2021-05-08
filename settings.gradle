@@ -1,3 +1,4 @@
+include ':watchapplication'
 include ':addemo'
 //include ':lib'
 //include ':reactapp'
