@@ -11,17 +11,31 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="addSong"
+        android:layout_marginTop="10dp"
         />
     <Button
         android:id="@+id/querySong"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="querySong"
+        android:layout_marginTop="10dp"
         />
-    <Button
+    <com.zzp.applicationkotlin.view.RoundTextView
         android:id="@+id/deleteSong"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        app:has_stroke="true"
+        app:stroke_width="1dp"
+        app:radius="5dp"
+        app:stroke_color="#23dd12"
+        app:start_color="@color/teal_200"
+        app:end_color="#ff221d"
+        app:linear_type="topToBottom"
         android:text="deleteSong"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
         />
 </LinearLayout>

@@ -1,5 +1,6 @@
 package com.zzp.applicationkotlin
 
+import android.graphics.Color
 import android.os.Bundle
 import android.provider.Settings
 import android.util.Log
@@ -8,6 +9,7 @@ import androidx.lifecycle.*
 import androidx.lifecycle.Observer
 import com.zzp.applicationkotlin.database.DataBaseManager
 import com.zzp.applicationkotlin.database.Song
+import com.zzp.applicationkotlin.util.GradientUtil
 import com.zzp.applicationkotlin.viewmodel.RoomViewModel
 import kotlinx.android.synthetic.main.activity_room.*
 import java.util.*
@@ -51,8 +53,7 @@ class RoomActivity:AppCompatActivity(){
             DataBaseManager.getDataBase(RoomActivity@this).songDao.delete(song)
         }
 
-
-
+        querySong.background = GradientUtil.createGradientDrawable(Color.RED,10f)
 
         mViewModelProvider = ViewModelProviders.of(this)
 
