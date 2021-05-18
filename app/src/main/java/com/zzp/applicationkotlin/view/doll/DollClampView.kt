@@ -4,6 +4,7 @@ import android.animation.Animator
 import android.animation.ValueAnimator
 import android.content.Context
 import android.graphics.*
+import android.util.Log
 import android.view.animation.AccelerateDecelerateInterpolator
 import com.zzp.applicationkotlin.R
 import com.zzp.applicationkotlin.event.HitAnimateEvent
@@ -107,7 +108,7 @@ class DollClampView {
         mHitDollView?.let {
             if (hitClampProgress >= 0.5f) {
                 it.setHiddenAndSaveInfo()
-                it.drawHitDoll(canvas, paint, clampBeginY + clampHeight)
+                it.drawHitDoll(canvas, paint, clampBeginY + clampHeight + 10.dp)
             }
 
         }
@@ -236,6 +237,7 @@ class DollClampView {
 
         var animator = ValueAnimator.ofFloat(0F,finalOffsetY,0F)
         animator.addUpdateListener { it ->
+            isClampAnimating = true
             mOffsetY = it.animatedValue as Float
             hitClampProgress = it.animatedFraction
 
@@ -349,10 +351,12 @@ class DollClampView {
         }
         animator.addListener(object : android.animation.AnimatorListenerAdapter() {
             override fun onAnimationEnd(animation: Animator?) {
+                Log.d("zzp123","onAnimationEnd")
                 isClampAnimating = false
                 mOffsetY = 0F
             }
             override fun onAnimationStart(animation: Animator?, isReverse: Boolean) {
+                Log.d("zzp123","onAnimationStart")
                 isClampAnimating = true
                 mOffsetY = 0F
             }

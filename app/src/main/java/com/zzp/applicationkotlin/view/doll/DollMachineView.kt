@@ -49,6 +49,7 @@ class DollMachineView(context: Context?, attrs: AttributeSet?) : View(context, a
 
     private var mDollClampView: DollClampView = DollClampView()
 
+    private var mVoiceBitmap: Bitmap = BitmapFactory.decodeResource(resources, R.drawable.ic_doll_sheep_voice)
     private var mDollBitmap1: Bitmap = BitmapFactory.decodeResource(resources, R.drawable.ic_doll_gift_small)
     private var mDollBitmap2: Bitmap = BitmapFactory.decodeResource(resources, R.drawable.ic_doll_gift_mid)
     private var mDollBitmap3: Bitmap = BitmapFactory.decodeResource(resources, R.drawable.ic_doll_gift_big)
@@ -182,6 +183,7 @@ class DollMachineView(context: Context?, attrs: AttributeSet?) : View(context, a
         var randomIndex = mRandom.nextInt(4)
         dollView.mBitmap = mBitmapArray[randomIndex]
         dollView.mBgBitmap = if (randomIndex == 3) mPurpleBgBitmapArray[index] else mYellowBgBitmapArray[index]
+        dollView.mVoiceBitmap = mVoiceBitmap
         return dollView
     }
 

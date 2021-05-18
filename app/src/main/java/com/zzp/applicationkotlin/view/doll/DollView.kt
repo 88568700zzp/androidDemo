@@ -41,6 +41,7 @@ class DollView {
 
     var mBitmap:Bitmap ?= null
     var mBgBitmap:Bitmap ?= null
+    var mVoiceBitmap:Bitmap ?= null
 
 
     constructor(startx: Float, startY: Float, endx: Float, endY: Float,raceIndex:Int) {
@@ -76,7 +77,7 @@ class DollView {
             width = (width * mCurrentScale)
             height = (height * mCurrentScale)
 
-            var currentY = mCurrentY + 15f.dp * mCurrentScale
+            var currentY = mCurrentY + 20f.dp * mCurrentScale
             var currentX = mCurrentX
             if(race_index == 0){
                 currentX -= 2f.dp * mCurrentScale
@@ -186,6 +187,9 @@ class DollView {
         if(!hidden){
             return
         }
+
+        var startVoiceY = endY
+
         mBitmap?.let{
             var width = it.width.toFloat()
             var height = it.height.toFloat()
@@ -193,11 +197,24 @@ class DollView {
             width = (width * mHiddenScale)
             height = (height * mHiddenScale)
 
+            startVoiceY = endY - height
+
             mRectF.set(mHiddenX - width/2,endY - height,mHiddenX + width/2,endY)
 
             canvas?.drawBitmap(it, null, mRectF, paint)
         }
 
+        mVoiceBitmap?.let {
+            var width = it.width.toFloat()
+            var height = it.height.toFloat()
+
+            width = (width * mHiddenScale)
+            height = (height * mHiddenScale)
+
+            mRectF.set(mHiddenX,startVoiceY,mHiddenX + width,startVoiceY + height)
+
+            canvas?.drawBitmap(it, null, mRectF, paint)
+        }
     }
 
 }
