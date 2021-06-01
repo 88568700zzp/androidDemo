@@ -102,6 +102,10 @@ public class NewMainActivity extends AppCompatActivity {
                     Intent intent = new Intent();
                     intent.setClass(NewMainActivity.this,RoomActivity.class);
                     startActivity(intent);
+                }else if(position == 13){
+                    Intent intent = new Intent();
+                    intent.setClass(NewMainActivity.this,NotifyActivity.class);
+                    startActivity(intent);
                 }
             }
         });
@@ -111,7 +115,7 @@ public class NewMainActivity extends AppCompatActivity {
 
     class TitleAdapter extends BaseAdapter{
 
-        private String[] titles = new String[]{"Instrumentation","job","startService","traffic","addWindow","webView","动态壁纸","微信分享","娃娃机","kotlin","video","viewPager2","room"};
+        private String[] titles = new String[]{"Instrumentation","job","startService","traffic","addWindow","webView","动态壁纸","微信分享","娃娃机","kotlin","video","viewPager2","room","通知栏"};
 
         @Override
         public int getCount() {

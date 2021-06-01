@@ -21,7 +21,7 @@ public class AppApplication extends Application implements Application.ActivityL
     protected void attachBaseContext(Context base) {
         super.attachBaseContext(base);
         MultiDex.install(this);
-        CrashCatchHandler.getInstance().init(this);
+        //CrashCatchHandler.getInstance().init(this);
         registerActivityLifecycleCallbacks(this);
     }
 

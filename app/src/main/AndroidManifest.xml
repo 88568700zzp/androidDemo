@@ -6,7 +6,6 @@
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.READ_PRIVILEGED_PHONE_STATE" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
-
     <uses-permission
         android:name="android.permission.PACKAGE_USAGE_STATS"
         tools:ignore="ProtectedPermissions" />
@@ -51,7 +50,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ApplicationKotlin"
         android:usesCleartextTraffic="true">
-        <activity android:name=".ViewPager2Activity"></activity>
+        <activity android:name=".NotifyActivity"></activity>
+        <activity android:name=".ViewPager2Activity" />
         <activity
             android:name=".WorkManagerActiivty"
             android:label="@string/title_activity_work_manager_actiivty"
@@ -85,8 +85,12 @@
             android:name=".NewMainActivity"
             android:label="@string/app_name"
             android:theme="@style/Theme.ApplicationKotlin.NoActionBar">
-            <meta-data android:name="UMENG_CHANNEL_VALUE" android:value="${UMENG_CHANNEL_VALUE}"></meta-data>
-            <meta-data android:name="UMENG_CHANNEL_VALUE2" android:value="${UMENG_CHANNEL_VALUE2}"></meta-data>
+            <meta-data
+                android:name="UMENG_CHANNEL_VALUE"
+                android:value="${UMENG_CHANNEL_VALUE}" />
+            <meta-data
+                android:name="UMENG_CHANNEL_VALUE2"
+                android:value="${UMENG_CHANNEL_VALUE2}" />
 
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -123,7 +127,7 @@
             android:exported="true"
             android:label="@string/app_name"
             android:launchMode="singleTask"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar"></activity>
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
 
         <service
             android:name=".StaticWallpaper"
