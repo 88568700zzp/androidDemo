@@ -1,10 +1,9 @@
 package com.zzp.applicationkotlin
 
 import android.content.Intent
-import android.os.Build
-import android.os.Bundle
-import android.os.PersistableBundle
+import android.os.*
 import android.util.Log
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import com.zzp.applicationkotlin.service.FirstService
 import kotlinx.android.synthetic.main.activity_foreground_service.*
@@ -20,7 +19,7 @@ class ForegroundServiceActivity: AppCompatActivity() {
         setContentView(R.layout.activity_foreground_service)
         startService.setOnClickListener{
             var intent= Intent()
-            Log.e("ForegroundServiceActivity","startFirstService")
+            Log.e("zzp123","startFirstService")
             intent.setClassName(packageName, FirstService::class.java.name)
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                 startForegroundService(intent)
@@ -28,6 +27,17 @@ class ForegroundServiceActivity: AppCompatActivity() {
                 startService(intent)
             }
         }
+
+        Handler(Looper.getMainLooper()).postDelayed(object:Runnable{
+            @RequiresApi(Build.VERSION_CODES.O)
+            override fun run() {
+                var intent= Intent()
+                Log.e("zzp123","startFirstService")
+                intent.setClassName(packageName, FirstService::class.java.name)
+                startForegroundService(intent)
+            }
+
+        },7000L)
     }
 
     fun createIntent():Intent{

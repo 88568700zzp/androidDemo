@@ -18,14 +18,18 @@ import com.zzp.applicationkotlin.R
  */
 class FirstService :Service(){
 
-
+    override fun onCreate() {
+        super.onCreate()
+        Log.e("FirstService","onCreate")
+        //startNotify()
+    }
 
     override fun onBind(intent: Intent?): IBinder? {
         return null
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
-        Log.d("FirstService","onStartCommand")
+        Log.e("FirstService","onStartCommand")
         //startNotify()
         return super.onStartCommand(intent, flags, startId)
     }

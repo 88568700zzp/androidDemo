@@ -9,7 +9,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.graphics.BitmapFactory
-import android.net.ConnectivityManager
+import android.net.*
 import android.net.wifi.WifiManager
 import android.os.Build
 import android.os.Bundle
@@ -23,6 +23,11 @@ import kotlinx.android.synthetic.main.activity_notify.*
 
 
 class NotifyActivity : AppCompatActivity() , View.OnClickListener{
+
+    private val TAG = "NotifyActivity"
+
+    lateinit var mConnectivityManager:ConnectivityManager
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_notify)
@@ -40,11 +45,19 @@ class NotifyActivity : AppCompatActivity() , View.OnClickListener{
         intentFilter.addAction(ConnectivityManager.CONNECTIVITY_ACTION)
         intentFilter.addAction(WifiManager.NETWORK_STATE_CHANGED_ACTION)
         registerReceiver(receiver,intentFilter)
+
+        mConnectivityManager = getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        mConnectivityManager.registerNetworkCallback(
+            NetworkRequest.Builder()
+                .addTransportType(NetworkCapabilities.TRANSPORT_CELLULAR)
+                .addTransportType(NetworkCapabilities.TRANSPORT_WIFI)
+                .build(),callBack)
     }
 
     override fun onDestroy() {
         super.onDestroy()
         unregisterReceiver(receiver)
+        mConnectivityManager.unregisterNetworkCallback(callBack)
     }
 
     //创建通知渠道
@@ -97,5 +110,44 @@ class NotifyActivity : AppCompatActivity() , View.OnClickListener{
             Log.d("zzp","onReceive ${intent?.action} ${intent?.getIntExtra("zzp",-1)}")
         }
 
+    }
+
+    private var callBack = object: ConnectivityManager.NetworkCallback(){
+        override fun onBlockedStatusChanged(network: Network, blocked: Boolean) {
+            super.onBlockedStatusChanged(network, blocked)
+        }
+
+        override fun onCapabilitiesChanged(
+            network: Network,
+            networkCapabilities: NetworkCapabilities
+        ) {
+            super.onCapabilitiesChanged(network, networkCapabilities)
+            Log.d(TAG,"onCapabilitiesChanged ${network}")
+        }
+
+        override fun onLost(network: Network) {
+            super.onLost(network)
+            Log.d(TAG,"onLost ${network}")
+        }
+
+        override fun onLinkPropertiesChanged(network: Network, linkProperties: LinkProperties) {
+            super.onLinkPropertiesChanged(network, linkProperties)
+            Log.d(TAG,"onLinkPropertiesChanged ${network}")
+        }
+
+        override fun onUnavailable() {
+            super.onUnavailable()
+            Log.d(TAG,"onUnavailable")
+        }
+
+        override fun onLosing(network: Network, maxMsToLive: Int) {
+            super.onLosing(network, maxMsToLive)
+            Log.d(TAG,"onLosing ${network}")
+        }
+
+        override fun onAvailable(network: Network) {
+            super.onAvailable(network)
+            Log.d(TAG,"onAvailable ${network}")
+        }
     }
 }
