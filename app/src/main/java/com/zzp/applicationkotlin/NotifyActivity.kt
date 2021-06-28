@@ -24,9 +24,10 @@ import kotlinx.android.synthetic.main.activity_notify.*
 
 class NotifyActivity : AppCompatActivity() , View.OnClickListener{
 
-    private val TAG = "NotifyActivity"
+    private val TAG = "NotifyActivity123"
 
     lateinit var mConnectivityManager:ConnectivityManager
+    lateinit var mWifiManager: WifiManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,12 +40,17 @@ class NotifyActivity : AppCompatActivity() , View.OnClickListener{
             createNotificationChannel(channelId, channelName, importance)
         }
 
+        mWifiManager  = getApplicationContext().getSystemService(Context.WIFI_SERVICE) as WifiManager
+
         var intentFilter = IntentFilter()
         intentFilter.addAction("zzp")
         intentFilter.addAction("zzy")
         intentFilter.addAction(ConnectivityManager.CONNECTIVITY_ACTION)
         intentFilter.addAction(WifiManager.NETWORK_STATE_CHANGED_ACTION)
+        intentFilter.addAction(WifiManager.WIFI_STATE_CHANGED_ACTION)
         registerReceiver(receiver,intentFilter)
+
+
 
         mConnectivityManager = getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
         mConnectivityManager.registerNetworkCallback(
@@ -108,11 +114,26 @@ class NotifyActivity : AppCompatActivity() , View.OnClickListener{
     var receiver = object:BroadcastReceiver(){
         override fun onReceive(context: Context?, intent: Intent?) {
             Log.d("zzp","onReceive ${intent?.action} ${intent?.getIntExtra("zzp",-1)}")
+            if(intent?.action == WifiManager.NETWORK_STATE_CHANGED_ACTION){
+               var extra:NetworkInfo? = intent?.getParcelableExtra(WifiManager.EXTRA_NETWORK_INFO)
+                Log.d(TAG,"NETWORK_STATE_CHANGED_ACTION:${extra?.toString()}")
+                extra?.let {
+                    Log.d(TAG,"NETWORK_STATE_CHANGED_ACTION ${mWifiManager.connectionInfo?.ssid} ${it.type} ${it.typeName} ${it.state}")
+                }
+            }else if(intent?.action == WifiManager.WIFI_STATE_CHANGED_ACTION){
+                var state= intent?.getIntExtra(WifiManager.EXTRA_WIFI_STATE,0)
+                Log.d(TAG,"WIFI_STATE_CHANGED_ACTION:${state}")
+            }else if(intent?.action == ConnectivityManager.CONNECTIVITY_ACTION){
+                Log.d(TAG,"CONNECTIVITY_ACTION ${mConnectivityManager.activeNetwork}")
+                Log.d(TAG,"CONNECTIVITY_ACTION ${mConnectivityManager.activeNetworkInfo?.typeName}")
+            }
         }
 
     }
 
     private var callBack = object: ConnectivityManager.NetworkCallback(){
+        private val NEWTAG = "NetworkCallback"
+
         override fun onBlockedStatusChanged(network: Network, blocked: Boolean) {
             super.onBlockedStatusChanged(network, blocked)
         }
@@ -122,32 +143,32 @@ class NotifyActivity : AppCompatActivity() , View.OnClickListener{
             networkCapabilities: NetworkCapabilities
         ) {
             super.onCapabilitiesChanged(network, networkCapabilities)
-            Log.d(TAG,"onCapabilitiesChanged ${network}")
+            Log.d(NEWTAG,"onCapabilitiesChanged ${network}")
         }
 
         override fun onLost(network: Network) {
             super.onLost(network)
-            Log.d(TAG,"onLost ${network}")
+            Log.d(NEWTAG,"onLost ${network}")
         }
 
         override fun onLinkPropertiesChanged(network: Network, linkProperties: LinkProperties) {
             super.onLinkPropertiesChanged(network, linkProperties)
-            Log.d(TAG,"onLinkPropertiesChanged ${network}")
+            Log.d(NEWTAG,"onLinkPropertiesChanged ${network}")
         }
 
         override fun onUnavailable() {
             super.onUnavailable()
-            Log.d(TAG,"onUnavailable")
+            Log.d(NEWTAG,"onUnavailable")
         }
 
         override fun onLosing(network: Network, maxMsToLive: Int) {
             super.onLosing(network, maxMsToLive)
-            Log.d(TAG,"onLosing ${network}")
+            Log.d(NEWTAG,"onLosing ${network}")
         }
 
         override fun onAvailable(network: Network) {
             super.onAvailable(network)
-            Log.d(TAG,"onAvailable ${network}")
+            Log.d(NEWTAG,"onAvailable ${network}")
         }
     }
 }
