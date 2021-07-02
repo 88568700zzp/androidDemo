@@ -6,11 +6,13 @@ import android.app.NotificationManager
 import android.app.Service
 import android.content.Context
 import android.content.Intent
+import android.os.Binder
 import android.os.Build
 import android.os.IBinder
 import android.provider.Settings
 import android.util.Log
 import com.zzp.applicationkotlin.R
+import com.zzp.applicationkotlin.aidl.IITalk
 
 /**
  *
@@ -24,9 +26,18 @@ class FirstService :Service(){
         //startNotify()
     }
 
-    override fun onBind(intent: Intent?): IBinder? {
-        return null
+    var stub = object:IITalk.Stub(){
+        override fun doTalk(msg: String?) {
+           Log.d("zzp123","message ${msg}")
+        }
+
     }
+
+    override fun onBind(intent: Intent?): IBinder? {
+        return stub
+    }
+
+
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         Log.e("FirstService","onStartCommand")

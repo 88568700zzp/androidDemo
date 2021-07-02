@@ -102,11 +102,12 @@ class NotifyActivity : AppCompatActivity() , View.OnClickListener{
             .setContentTitle("升级")
             .setContentText("程序员终于下班了。。")
             .setWhen(System.currentTimeMillis())
-            .setSmallIcon(R.drawable.doll_enter_wifi_safe)
-            .setLargeIcon(BitmapFactory.decodeResource(resources, R.mipmap.ic_launcher))
+            .setSmallIcon(R.drawable.notify_small_icon)
+            .setLargeIcon(BitmapFactory.decodeResource(resources, R.drawable.notify_small_icon))
             .setAutoCancel(true)
             .setOngoing(false)
             .setCustomContentView(remoteViews)
+
             .build()
         manager.notify(id, notification)
     }

@@ -1,12 +1,19 @@
 package com.zzp.applicationkotlin
 
+import android.content.ComponentName
 import android.content.Intent
-import android.os.*
+import android.content.ServiceConnection
+import android.os.Bundle
+import android.os.Handler
+import android.os.IBinder
 import android.util.Log
-import androidx.annotation.RequiresApi
+import android.view.KeyEvent
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import com.zzp.applicationkotlin.aidl.IITalk
 import com.zzp.applicationkotlin.service.FirstService
 import kotlinx.android.synthetic.main.activity_foreground_service.*
+import java.io.IOException
 
 /**
  *
@@ -21,14 +28,24 @@ class ForegroundServiceActivity: AppCompatActivity() {
             var intent= Intent()
             Log.e("zzp123","startFirstService")
             intent.setClassName(packageName, FirstService::class.java.name)
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            /*if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                 startForegroundService(intent)
             }else{
                 startService(intent)
-            }
+            }*/
+            bindService(intent,conn, android.content.Context.BIND_AUTO_CREATE)
+
+            var dialog =  AlertDialog.Builder(this).setMessage("zzp").create()
+            dialog.show()
+            Handler().postDelayed({
+               Log.d("zzp","dialog:${dialog.window?.getAttributes()}")
+                Log.d("zzp","activity:${window?.getAttributes()}")
+            },1000L)
+
         }
 
-        Handler(Looper.getMainLooper()).postDelayed(object:Runnable{
+
+        /*Handler(Looper.getMainLooper()).postDelayed(object:Runnable{
             @RequiresApi(Build.VERSION_CODES.O)
             override fun run() {
                 var intent= Intent()
@@ -37,7 +54,25 @@ class ForegroundServiceActivity: AppCompatActivity() {
                 startForegroundService(intent)
             }
 
-        },7000L)
+        },7000L)*/
+    }
+
+    var conn = object:ServiceConnection{
+        override fun onServiceDisconnected(name: ComponentName?) {
+            Log.d("zzp123","onServiceDisconnected:${name}")
+        }
+
+        override fun onServiceConnected(name: ComponentName?, service: IBinder?) {
+            Log.d("zzp123","onServiceConnected:${name}")
+            var talk =  IITalk.Stub.asInterface(service)
+            talk?.doTalk("doTalk")
+        }
+
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        unbindService(conn)
     }
 
     fun createIntent():Intent{
