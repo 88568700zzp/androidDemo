@@ -43,4 +43,5 @@ open class MainKt: (String) -> Unit {
     override fun invoke(p1: String) {
         println("MainKt invoke ${p1}")
     }
+
 }

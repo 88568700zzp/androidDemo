@@ -1,18 +1,25 @@
 package com.zzp.applicationkotlin;
 
 import android.Manifest;
+import android.accessibilityservice.AccessibilityServiceInfo;
 import android.app.WallpaperManager;
 import android.content.ComponentName;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.provider.Settings;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.accessibility.AccessibilityManager;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
+import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -20,6 +27,8 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
+
+import java.util.List;
 
 import kotlinx.coroutines.GlobalScope;
 
@@ -32,9 +41,19 @@ public class NewMainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
+        DisplayMetrics displayMetrics = getResources().getDisplayMetrics();
+        Log.d("zzp","displayMetrics:" + displayMetrics.toString());
+        //displayMetrics.scaledDensity = displayMetrics.density * 2;
+
         super.onCreate(savedInstanceState);
 
-        dip = getResources().getDisplayMetrics().density;
+
+
+        DisplayMetrics displayMetric =  getResources().getDisplayMetrics();
+
+        dip = displayMetric.density;
+
+        Log.d("zzp","displayMetrics:" + displayMetric.toString());
 
         ListView listView = new ListView(this);
 
@@ -106,16 +125,48 @@ public class NewMainActivity extends AppCompatActivity {
                     Intent intent = new Intent();
                     intent.setClass(NewMainActivity.this,NotifyActivity.class);
                     startActivity(intent);
+                }else if(position == 14){
+                    Intent intent = new Intent();
+                    intent.setClass(NewMainActivity.this,FaceTestWifi.class);
+                    startActivity(intent);
+                }else if(position == 15){
+                    Intent intent = new Intent();
+                    intent.setClass(NewMainActivity.this,ProviderActivity.class);
+                    startActivity(intent);
+                }else if(position == 16){
+                    boolean result = false;
+                    AccessibilityManager mAccessibilityManager = (AccessibilityManager)getSystemService(Context.ACCESSIBILITY_SERVICE);
+                    List<AccessibilityServiceInfo> accessibilityServices =
+                            mAccessibilityManager.getEnabledAccessibilityServiceList(AccessibilityServiceInfo.FEEDBACK_ALL_MASK);
+                    for (AccessibilityServiceInfo info : accessibilityServices) {
+                        if (info.getId().contains(".AutoAccessibilityService")) {
+                            result = true;
+                        }
+                    }
+                    if(result){
+                        Toast.makeText(NewMainActivity.this,"已申请成功",Toast.LENGTH_SHORT).show();
+                        //requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},0x123);
+                    }else {
+                        Intent intent = new Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        startActivity(intent);
+                    }
+                }else if(position == 17){
+                    Intent intent = new Intent();
+                    intent.setClass(NewMainActivity.this,HookServiceActivity.class);
+                    startActivity(intent);
                 }
             }
         });
 
         setContentView(listView);
+
+        Log.d("zzp","listView getDescendantFocusability:" + (listView.getDescendantFocusability() == ViewGroup.FOCUS_BEFORE_DESCENDANTS));
     }
 
     class TitleAdapter extends BaseAdapter{
 
-        private String[] titles = new String[]{"Instrumentation","job","startService","traffic","addWindow","webView","动态壁纸","微信分享","娃娃机","kotlin","video","viewPager2","room","通知栏"};
+        private String[] titles = new String[]{"Instrumentation","job","startService","traffic","addWindow","webView","动态壁纸","微信分享","娃娃机","kotlin","video","viewPager2","room","通知栏","FaceTestWifi","provider","辅助服务","hookService"};
 
         @Override
         public int getCount() {
@@ -140,6 +191,7 @@ public class NewMainActivity extends AppCompatActivity {
             int padding = (int) (15 * dip);
             textView.setPadding(padding,padding,0,padding);
             textView.setTextColor(Color.BLUE);
+
             return textView;
         }
     }

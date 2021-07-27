@@ -3,6 +3,9 @@ package com.zzp.lib;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.lang.reflect.InvocationHandler;
+import java.lang.reflect.Method;
+import java.lang.reflect.Proxy;
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.net.Socket;
@@ -43,9 +46,31 @@ public class MyClass {
         } catch (IOException e) {
             e.printStackTrace();
         }*/
-        MainKt mainKt = new MainKt();
+        /*MainKt mainKt = new MainKt();
         mainKt.main();
         mainKt.invoke("mainkt");
-        mainKt.example();
+        mainKt.example();*/
+       /* PVTest test = new PVTest("main",2);
+        test.doJob();
+
+        TestObject.INSTANCE.zzp(0);*/
+
+        final Cat cat = new Cat();
+
+        Object newObject = Proxy.newProxyInstance(cat.getClass().getClassLoader(),Cat.class.getInterfaces(),new InvocationHandler(){
+
+            @Override
+            public Object invoke(Object o, Method method, Object[] objects) throws Throwable {
+                System.out.println("---------before-------" + method.getName());
+                Object invoke = method.invoke(cat, objects);
+                System.out.println("---------after-------" + method.getName());
+
+                return invoke;
+
+            }
+        });
+        System.out.println(newObject.getClass());
+        ((ICat)newObject).doPrint();
+
     }
 }

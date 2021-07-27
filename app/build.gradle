@@ -124,6 +124,9 @@ dependencies {
     implementation 'androidx.multidex:multidex:2.0.1'
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.1.1"
     implementation 'org.greenrobot:eventbus:3.2.0'
+    implementation 'com.airbnb.android:lottie:3.5.0'
+
+    implementation 'com.facebook.network.connectionclass:connectionclass:1.0.1'
 
     def work_version = "2.5.0"
 

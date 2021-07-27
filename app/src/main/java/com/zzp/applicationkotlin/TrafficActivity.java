@@ -100,6 +100,9 @@ public class TrafficActivity extends AppCompatActivity implements CompoundButton
         });
         mTelephonyManager.listen(mPhoneStateListener, PhoneStateListener.LISTEN_SIGNAL_STRENGTHS);
         getMobileDbm();
+        if(!hasPermissionToReadNetworkStats()){
+            requestReadNetworkStats();
+        }
     }
 
     public void getMobileDbm() {
@@ -180,7 +183,6 @@ public class TrafficActivity extends AppCompatActivity implements CompoundButton
         if (mode == AppOpsManager.MODE_ALLOWED) {
             return true;
         }
-        requestReadNetworkStats();
         return false;
     }
     // 打开“有权查看使用情况的应用”页面
@@ -208,9 +210,6 @@ public class TrafficActivity extends AppCompatActivity implements CompoundButton
     }
 
     public long getRecKugouTraffic2(String name,int uuid){
-        if(!hasPermissionToReadNetworkStats()){
-            return 0;
-        }
         try {
             int type = ConnectivityManager.TYPE_MOBILE;
             if(mSwitch.isChecked()){
@@ -250,6 +249,9 @@ public class TrafficActivity extends AppCompatActivity implements CompoundButton
     }
 
     public void getUidByPackageName(Context context) {
+        if(!hasPermissionToReadNetworkStats()){
+            return;
+        }
         Log.d(TAG,"ThreadPoolUtil getUidByPackageName:" + Thread.currentThread().getName());
         try {
             PackageManager packageManager = context.getPackageManager();

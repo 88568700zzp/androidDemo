@@ -20,9 +20,16 @@ public class AppApplication extends Application implements Application.ActivityL
     @Override
     protected void attachBaseContext(Context base) {
         super.attachBaseContext(base);
+        Log.d(TAG,"attachBaseContext");
         MultiDex.install(this);
         //CrashCatchHandler.getInstance().init(this);
         registerActivityLifecycleCallbacks(this);
+    }
+
+    @Override
+    public void onCreate() {
+        super.onCreate();
+        Log.d(TAG,"onCreate");
     }
 
     @Override
