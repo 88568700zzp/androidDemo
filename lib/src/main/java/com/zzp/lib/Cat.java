@@ -5,8 +5,18 @@ package com.zzp.lib;
  */
 public class Cat implements ICat{
 
+    public Runnable runnable;
+
     @Override
     public void doPrint(){
         System.out.println("doCat");
+
+        runnable = new Runnable() {
+            @Override
+            public void run() {
+            }
+        };
     }
+
+
 }

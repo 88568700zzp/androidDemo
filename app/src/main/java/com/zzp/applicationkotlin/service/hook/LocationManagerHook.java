@@ -38,6 +38,8 @@ public class LocationManagerHook {
         @Override
         public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
             Log.e(TAG, "LocationManagerHookHandler invoke:" + method.getName());
+            Exception e = new Exception("method show");
+            e.printStackTrace();
             return method.invoke(proxy, args);
         }
     }

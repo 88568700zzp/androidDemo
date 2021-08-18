@@ -1,4 +1,4 @@
-package com.zzp.applicationkotlin
+package com.zzp.applicationkotlin.fragment
 
 import android.animation.ObjectAnimator
 import android.content.BroadcastReceiver
@@ -15,16 +15,14 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.animation.AccelerateDecelerateInterpolator
 import android.view.animation.AccelerateInterpolator
 import android.view.animation.Animation
-import android.view.animation.BounceInterpolator
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import com.zzp.applicationkotlin.R
 import com.zzp.applicationkotlin.service.FirstService
 import com.zzp.applicationkotlin.service.SecondService
 import kotlinx.android.synthetic.main.fragment_first.*
-import java.nio.channels.MulticastChannel
 
 
 /**

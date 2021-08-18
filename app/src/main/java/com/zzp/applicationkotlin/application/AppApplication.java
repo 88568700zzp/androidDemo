@@ -5,10 +5,16 @@ import android.app.Application;
 import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
+import android.util.Printer;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.multidex.MultiDex;
+
+import com.zzp.applicationkotlin.BitmapActivity;
+import com.zzp.applicationkotlin.util.TimeMonitor;
+
+import org.jetbrains.annotations.NotNull;
 
 /**
  * Created by samzhang on 2021/2/24.
@@ -16,6 +22,7 @@ import androidx.multidex.MultiDex;
 public class AppApplication extends Application implements Application.ActivityLifecycleCallbacks {
 
     private final String TAG = "AppApplication";
+
 
     @Override
     protected void attachBaseContext(Context base) {
@@ -30,6 +37,13 @@ public class AppApplication extends Application implements Application.ActivityL
     public void onCreate() {
         super.onCreate();
         Log.d(TAG,"onCreate");
+        TimeMonitor.getGlobalInstance().start("AppApplication onCreate" );
+        getMainLooper().setMessageLogging(new Printer() {
+            @Override
+            public void println(String x) {
+                //Log.d("getMainLooper","println:" + x);
+            }
+        });
     }
 
     @Override

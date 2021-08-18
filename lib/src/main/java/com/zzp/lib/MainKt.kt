@@ -5,6 +5,13 @@ package com.zzp.lib
  * Created by samzhang on 2021/5/7.
  */
 open class MainKt: (String) -> Unit {
+
+    companion object{
+        fun test():String{
+            return "zzp"
+        }
+    }
+
     fun main(){
         val lambda = {
                 left: Int, right: Int

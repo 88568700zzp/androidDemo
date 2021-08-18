@@ -28,6 +28,8 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
+import com.zzp.applicationkotlin.util.TimeMonitor;
+
 import java.util.List;
 
 import kotlinx.coroutines.GlobalScope;
@@ -46,8 +48,6 @@ public class NewMainActivity extends AppCompatActivity {
         //displayMetrics.scaledDensity = displayMetrics.density * 2;
 
         super.onCreate(savedInstanceState);
-
-
 
         DisplayMetrics displayMetric =  getResources().getDisplayMetrics();
 
@@ -155,6 +155,10 @@ public class NewMainActivity extends AppCompatActivity {
                     Intent intent = new Intent();
                     intent.setClass(NewMainActivity.this,HookServiceActivity.class);
                     startActivity(intent);
+                }else if(position == 18){
+                    Intent intent = new Intent();
+                    intent.setClass(NewMainActivity.this,BitmapActivity.class);
+                    startActivity(intent);
                 }
             }
         });
@@ -166,7 +170,7 @@ public class NewMainActivity extends AppCompatActivity {
 
     class TitleAdapter extends BaseAdapter{
 
-        private String[] titles = new String[]{"Instrumentation","job","startService","traffic","addWindow","webView","动态壁纸","微信分享","娃娃机","kotlin","video","viewPager2","room","通知栏","FaceTestWifi","provider","辅助服务","hookService"};
+        private String[] titles = new String[]{"Instrumentation","job","startService","traffic","addWindow","webView","动态壁纸","微信分享","娃娃机","kotlin","video","viewPager2","room","通知栏","FaceTestWifi","provider","辅助服务","hookService","bitmap"};
 
         @Override
         public int getCount() {
@@ -195,4 +199,23 @@ public class NewMainActivity extends AppCompatActivity {
             return textView;
         }
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Log.d("globalTimeMonitor","onResume");
+    }
+
+    @Override
+    public void onWindowFocusChanged(boolean hasFocus) {
+        super.onWindowFocusChanged(hasFocus);
+        TimeMonitor.getGlobalInstance().record("onWindowFocusChanged hasFocus:" + hasFocus);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        Log.d("globalTimeMonitor","onPause");
+    }
+
 }

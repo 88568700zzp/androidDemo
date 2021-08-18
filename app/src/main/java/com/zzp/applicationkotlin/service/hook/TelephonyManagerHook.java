@@ -20,14 +20,14 @@ public class TelephonyManagerHook {
     private static final String TAG = TelephonyManagerHook.class.getSimpleName();
 
     public static void hookService(Context context) {
-        IBinder clipboardService = ServiceManager.getService(Context.TELEPHONY_SERVICE);
-        String IClipboard = "com.android.internal.telephony.ITelephony";
+        IBinder telephonyService = ServiceManager.getService(Context.TELEPHONY_SERVICE);
+        String ITelephony = "com.android.internal.telephony.ITelephony";
 
-        if (clipboardService != null) {
+        if (telephonyService != null) {
             IBinder telephonyManagerService =
-                    (IBinder) Proxy.newProxyInstance(clipboardService.getClass().getClassLoader(),
-                            clipboardService.getClass().getInterfaces(),
-                            new ServiceHook(clipboardService, IClipboard, true, new TelephonyHookHandler()));
+                    (IBinder) Proxy.newProxyInstance(telephonyService.getClass().getClassLoader(),
+                            telephonyService.getClass().getInterfaces(),
+                            new ServiceHook(telephonyService, ITelephony, true, new TelephonyHookHandler()));
             ServiceManager.setService(Context.TELEPHONY_SERVICE, telephonyManagerService);
         } else {
             Log.e(TAG, "TelephonyManagerHook hook failed!");
@@ -39,6 +39,8 @@ public class TelephonyManagerHook {
         @Override
         public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
             Log.e(TAG, "TelephonyHookHandler invoke:" + method.getName());
+            Exception e = new Exception("method show");
+            e.printStackTrace();
             return method.invoke(proxy, args);
         }
     }

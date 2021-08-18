@@ -1,4 +1,4 @@
-package com.zzp.applicationkotlin
+package com.zzp.applicationkotlin.fragment
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import androidx.navigation.fragment.findNavController
+import com.zzp.applicationkotlin.R
 
 /**
  * A simple [Fragment] subclass as the default destination in the navigation.

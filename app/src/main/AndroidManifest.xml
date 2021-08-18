@@ -149,6 +149,11 @@
             android:screenOrientation="portrait"
             android:theme="@style/Theme.ApplicationKotlin.NoActionBar" />
 
+        <activity
+            android:name=".BitmapActivity"
+            android:label="@string/app_name"
+            android:theme="@style/Theme.ApplicationKotlin.NoActionBar" />
+
         <service
             android:name=".StaticWallpaper"
             android:enabled="true"
