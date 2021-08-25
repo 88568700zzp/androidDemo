@@ -5,6 +5,7 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.Canvas
 import android.graphics.Rect
+import android.media.MediaPlayer
 import android.os.Environment
 import android.service.wallpaper.WallpaperService
 import android.text.TextUtils
@@ -61,7 +62,6 @@ class StaticWallpaper : WallpaperService() {
                 catch (e:Error){
                 null
                 }
-
             val canvas: Canvas = holder!!.lockCanvas()
 
             var saveBitmap:String ?= null

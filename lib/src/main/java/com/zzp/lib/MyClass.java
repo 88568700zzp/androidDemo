@@ -16,7 +16,10 @@ import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.net.UnknownHostException;
 import java.nio.charset.Charset;
+import java.util.ArrayDeque;
 import java.util.Arrays;
+import java.util.Deque;
+import java.util.Iterator;
 import java.util.concurrent.Executors;
 
 import javax.imageio.ImageIO;
@@ -115,7 +118,7 @@ public class MyClass {
         Code2.bubble(codes);
         System.out.println(Arrays.toString(codes));*/
 
-        for(int i = 0;i < 6;i++) {
+        /*for(int i = 0;i < 6;i++) {
             final int finalI = i;
             ThreadPool.mInstance.executor(new Runnable() {
                 @Override
@@ -130,8 +133,21 @@ public class MyClass {
                 }
             });
         }
-        ThreadPool.mInstance.quit();
+        ThreadPool.mInstance.quit();*/
+       /* Deque<String> stringDeque = new ArrayDeque<>();
+        stringDeque.add("str1");
+        stringDeque.add("str2");
+        stringDeque.add("str3");
+        stringDeque.add("str4");
+        for (Iterator<String> i = stringDeque.iterator(); i.hasNext(); ){
+            System.out.println(i.next());
+        }*/
+        char a = 'a';
+        char b = 'a';
+        System.out.println(a == b);
     }
+
+
 
     public static String bytesToHexString(byte[] src) {
         StringBuilder stringBuilder = new StringBuilder("");

@@ -159,6 +159,10 @@ public class NewMainActivity extends AppCompatActivity {
                     Intent intent = new Intent();
                     intent.setClass(NewMainActivity.this,BitmapActivity.class);
                     startActivity(intent);
+                }else if(position == 19){
+                    Intent intent = new Intent();
+                    intent.setClass(NewMainActivity.this,TouchViewActivity.class);
+                    startActivity(intent);
                 }
             }
         });
@@ -170,7 +174,7 @@ public class NewMainActivity extends AppCompatActivity {
 
     class TitleAdapter extends BaseAdapter{
 
-        private String[] titles = new String[]{"Instrumentation","job","startService","traffic","addWindow","webView","动态壁纸","微信分享","娃娃机","kotlin","video","viewPager2","room","通知栏","FaceTestWifi","provider","辅助服务","hookService","bitmap"};
+        private String[] titles = new String[]{"Instrumentation","job","startService","traffic","addWindow","webView","动态壁纸","微信分享","娃娃机","kotlin","video","viewPager2","room","通知栏","FaceTestWifi","provider","辅助服务","hookService","bitmap","touchBall"};
 
         @Override
         public int getCount() {

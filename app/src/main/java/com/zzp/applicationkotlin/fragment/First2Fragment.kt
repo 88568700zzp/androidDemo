@@ -29,4 +29,6 @@ class First2Fragment : Fragment() {
             findNavController().navigate(R.id.action_First2Fragment_to_Second2Fragment)
         }
     }
+
+
 }
