@@ -4,6 +4,7 @@
     <bytecodeTargetLevel target="1.7">
       <module name="ApplicationKotlin.addemo" target="1.8" />
       <module name="ApplicationKotlin.app" target="1.8" />
+      <module name="ApplicationKotlin.opensdk" target="1.8" />
       <module name="ApplicationKotlin.reactapp" target="1.8" />
       <module name="ApplicationKotlin.watchapplication" target="1.8" />
     </bytecodeTargetLevel>

@@ -8,7 +8,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.util.DisplayMetrics;
@@ -18,8 +17,6 @@ import android.view.ViewGroup;
 import android.view.accessibility.AccessibilityManager;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
-import android.widget.Button;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -32,12 +29,12 @@ import com.zzp.applicationkotlin.util.TimeMonitor;
 
 import java.util.List;
 
-import kotlinx.coroutines.GlobalScope;
-
 /**
  * Created by samzhang on 2021/2/25.
  */
 public class NewMainActivity extends AppCompatActivity {
+
+    private String TAG = "NewMainActivity_";
 
     private float dip;
 
@@ -52,6 +49,15 @@ public class NewMainActivity extends AppCompatActivity {
         DisplayMetrics displayMetric =  getResources().getDisplayMetrics();
 
         dip = displayMetric.density;
+
+        /*String type = getResources().getResourceTypeName(0x7f0800b7);
+        String name = getResources().getResourceEntryName(0x7f0800b7);
+        String resourceName = getResources().getResourceName(0x7f0800b7);
+        TypedValue typedValue = new TypedValue();
+        getResources().getValue(0x7f0c0015,typedValue,true);
+        Log.d("zzp_resource","type:" + typedValue.toString());
+        Log.d("zzp_resource","name:" + name + " type:"+ type + " resourceName:" + resourceName);
+        Log.d("zzp_resource","id:" + Integer.toHexString(getResources().getIdentifier(name,type,getPackageName())));*/
 
         Log.d("zzp","displayMetrics:" + displayMetric.toString());
 
@@ -163,6 +169,14 @@ public class NewMainActivity extends AppCompatActivity {
                     Intent intent = new Intent();
                     intent.setClass(NewMainActivity.this,TouchViewActivity.class);
                     startActivity(intent);
+                }else if(position == 20){
+                    Intent intent = new Intent();
+                    intent.setClass(NewMainActivity.this,TestDtkActivity.class);
+                    startActivity(intent);
+                }else if(position == 21){
+                    Intent intent = new Intent();
+                    intent.setClass(NewMainActivity.this,ShareActivity.class);
+                    startActivity(intent);
                 }
             }
         });
@@ -174,7 +188,7 @@ public class NewMainActivity extends AppCompatActivity {
 
     class TitleAdapter extends BaseAdapter{
 
-        private String[] titles = new String[]{"Instrumentation","job","startService","traffic","addWindow","webView","动态壁纸","微信分享","娃娃机","kotlin","video","viewPager2","room","通知栏","FaceTestWifi","provider","辅助服务","hookService","bitmap","touchBall"};
+        private String[] titles = new String[]{"Instrumentation","job","startService","traffic","addWindow","webView","动态壁纸","微信分享","娃娃机","kotlin","video","viewPager2","room","通知栏","FaceTestWifi","provider","辅助服务","hookService","bitmap","touchBall","大淘客","分享"};
 
         @Override
         public int getCount() {
@@ -208,6 +222,7 @@ public class NewMainActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         Log.d("globalTimeMonitor","onResume");
+        Log.d(TAG,"onResume");
     }
 
     @Override
@@ -220,6 +235,18 @@ public class NewMainActivity extends AppCompatActivity {
     protected void onPause() {
         super.onPause();
         Log.d("globalTimeMonitor","onPause");
+        Log.d(TAG,"onPause");
     }
 
+    @Override
+    protected void onStop() {
+        super.onStop();
+        Log.d(TAG,"onStop");
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Log.d(TAG,"onDestroy");
+    }
 }

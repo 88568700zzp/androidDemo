@@ -34,10 +34,19 @@ class FirstService :Service(){
     }
 
     override fun onBind(intent: Intent?): IBinder? {
+        Log.e("FirstService","onBind")
         return stub
     }
 
+    override fun onUnbind(intent: Intent?): Boolean {
+        return super.onUnbind(intent)
+        Log.e("FirstService","onUnbind")
+    }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        Log.e("FirstService","onDestroy")
+    }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         Log.e("FirstService","onStartCommand")

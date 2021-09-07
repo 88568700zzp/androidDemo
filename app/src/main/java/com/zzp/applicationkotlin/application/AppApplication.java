@@ -11,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.multidex.MultiDex;
 
+import com.tencent.bugly.crashreport.CrashReport;
 import com.zzp.applicationkotlin.BitmapActivity;
 import com.zzp.applicationkotlin.util.TimeMonitor;
 
@@ -44,6 +45,8 @@ public class AppApplication extends Application implements Application.ActivityL
                 //Log.d("getMainLooper","println:" + x);
             }
         });
+
+        //CrashReport.initCrashReport(getApplicationContext(), "4ab5148389", true);
     }
 
     @Override

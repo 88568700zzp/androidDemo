@@ -142,12 +142,47 @@ public class MyClass {
         for (Iterator<String> i = stringDeque.iterator(); i.hasNext(); ){
             System.out.println(i.next());
         }*/
-        char a = 'a';
-        char b = 'a';
-        System.out.println(a == b);
+        //System.out.println(reverse(-123));
+        //System.out.println("str:" + Integer.toBinaryString(Integer.MIN_VALUE) + " toUnsignedString:" + Integer.toUnsignedString(Integer.MIN_VALUE));
+       /* final ThreadLocal<String> local = new ThreadLocal<String>(){
+            @Override
+            protected String initialValue() {
+                return "noValue";
+            }
+        };
+        local.set("zzp");
+        new Thread(){
+            @Override
+            public void run() {
+                System.out.println(local.get());
+                local.set("php");
+                System.out.println(local.get());
+            }
+        }.start();*/
     }
 
-
+    private static int reverse(int x){
+        if(x == 0){
+            return x;
+        }
+        boolean up = true;
+        if(x < 0){
+            up = false;
+            x = x * -1;
+        }
+        long result = 0;
+        while(x > 0){
+            result = result * 10 + x % 10;
+            x = x / 10;
+        }
+        if(!up){
+            result = result * -1;
+        }
+        if(result < Integer.MIN_VALUE || result > Integer.MAX_VALUE){
+            result = 0;
+        }
+        return (int)result;
+    }
 
     public static String bytesToHexString(byte[] src) {
         StringBuilder stringBuilder = new StringBuilder("");

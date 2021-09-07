@@ -1,6 +1,12 @@
 package com.zzp.applicationkotlin;
 
+import android.content.ClipData;
+import android.content.ClipboardManager;
+import android.content.ClipboardManager.OnPrimaryClipChangedListener;
 import android.content.Context;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.net.http.SslError;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -9,9 +15,11 @@ import android.view.View;
 import android.webkit.JavascriptInterface;
 import android.webkit.JsPromptResult;
 import android.webkit.JsResult;
+import android.webkit.SslErrorHandler;
 import android.webkit.WebChromeClient;
 import android.webkit.WebResourceError;
 import android.webkit.WebResourceRequest;
+import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.EditText;
@@ -29,10 +37,12 @@ import org.w3c.dom.Text;
  */
 public class WebViewActivity extends AppCompatActivity implements View.OnClickListener{
 
-    private final String TAG = "WebViewActivity";
+    private final String TAG = "WebViewActivity_";
 
     private WebView mWebView;
     private Switch mSwitch;
+
+    private ClipboardManager mClipboardManager;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -41,16 +51,45 @@ public class WebViewActivity extends AppCompatActivity implements View.OnClickLi
         mWebView = findViewById(R.id.webview);
         mSwitch = findViewById(R.id.dialog_switch);
 
-        mWebView.getSettings().setJavaScriptEnabled(true);
+        WebSettings webSettings = mWebView.getSettings();
+
+        webSettings.setJavaScriptEnabled(true);
+        webSettings.setDomStorageEnabled(true);
+        webSettings.setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK);
+        webSettings.setUseWideViewPort(true);
+
         mWebView.setWebViewClient(new WebViewClient(){
 
             @Override
             public void onReceivedError(WebView view, WebResourceRequest request, WebResourceError error) {
                 super.onReceivedError(view, request, error);
-                loadUrl("file:///android_asset/404_error.html");
+                Log.d(TAG,"onReceivedError:" + error.getDescription() + " code:" + error.getErrorCode());
+                //loadUrl("file:///android_asset/404_error.html");
             }
 
+            @Override
+            public void onPageStarted(WebView view, String url, Bitmap favicon) {
+                super.onPageStarted(view, url, favicon);
+                Log.d(TAG,"onPageStarted:" + url);
+            }
 
+            @Override
+            public void onPageFinished(WebView view, String url) {
+                super.onPageFinished(view, url);
+                Log.d(TAG,"onPageFinished:" + url);
+            }
+
+            @Override
+            public void onReceivedSslError(WebView view, SslErrorHandler handler, SslError error) {
+                super.onReceivedSslError(view, handler, error);
+                Log.d(TAG,"onReceivedSslError:" + error.getUrl());
+            }
+
+            @Override
+            public void onScaleChanged(WebView view, float oldScale, float newScale) {
+                super.onScaleChanged(view, oldScale, newScale);
+                Log.d(TAG,"onScaleChanged oldScale:" + oldScale + " newScale:" + newScale);
+            }
         });
         mWebView.setWebChromeClient(new WebChromeClient(){
             @Override
@@ -96,6 +135,7 @@ public class WebViewActivity extends AppCompatActivity implements View.OnClickLi
 
         findViewById(R.id.btn_load_net).setOnClickListener(this);
         findViewById(R.id.btn_load_js).setOnClickListener(this);
+        findViewById(R.id.btn_share).setOnClickListener(this);
         findViewById(R.id.doSend).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -108,6 +148,15 @@ public class WebViewActivity extends AppCompatActivity implements View.OnClickLi
             }
         });
 
+        mClipboardManager = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+        mClipboardManager.addPrimaryClipChangedListener(listener);
+
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mClipboardManager.removePrimaryClipChangedListener(listener);
     }
 
     @Override
@@ -121,6 +170,18 @@ public class WebViewActivity extends AppCompatActivity implements View.OnClickLi
         return super.onKeyDown(keyCode, event);
     }
 
+    private OnPrimaryClipChangedListener listener = new OnPrimaryClipChangedListener(){
+
+        @Override
+        public void onPrimaryClipChanged() {
+            ClipData clipData = mClipboardManager.getPrimaryClip();
+            if(clipData != null && clipData.getItemCount() > 0){
+               ClipData.Item item = clipData.getItemAt(0);
+                Log.d(TAG,"clipData:" + item.getText());
+            }
+        }
+    };
+
     private void loadUrl(String url){
         mWebView.loadUrl(url);
     }
@@ -130,7 +191,14 @@ public class WebViewActivity extends AppCompatActivity implements View.OnClickLi
         if(v.getId() == R.id.btn_load_js){
             loadUrl("file:///android_asset/java_js.html");
         }else if(v.getId() == R.id.btn_load_net){
-            loadUrl("http://www.baidu.com");
+            loadUrl("http://jingpage.com/#/nineMail?app_key=btgddw");
+        }else if(v.getId() == R.id.btn_share){
+            Intent intent = new Intent();
+            intent.setAction(Intent.ACTION_SEND);
+            intent.putExtra(Intent.EXTRA_TEXT,"聚划算发补贴福利了，大牌正品，买贵必陪，小伙伴们快来抢购吧~  https://10sd1.kuaizhan.com/?_s=kKUX9");
+            intent.setType("text/plain");
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(Intent.createChooser(intent,"选择分享应用"));
         }
     }
 

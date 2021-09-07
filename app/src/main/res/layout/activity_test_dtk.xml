@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    >
+    <Button
+        android:id="@+id/btn_list_hot_words"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="hotWords"
+        android:text="热搜榜"
+        />
+    <Button
+        android:id="@+id/btn_category"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="superCategory"
+        android:text="超级分类"
+        android:layout_marginTop="20dp"
+        />
+
+    <Button
+        android:id="@+id/btn_taokouling"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="parseTaokouling"
+        android:text="淘口令"
+        android:layout_marginTop="20dp"
+        />
+    <Button
+        android:id="@+id/btn_privilegeLink"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="privilegeLink"
+        android:text="高效转链"
+        android:layout_marginTop="20dp"
+        />
+    <Button
+        android:id="@+id/btn_goodsList"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="goodsList"
+        android:text="商品列表"
+        android:layout_marginTop="20dp"
+        />
+
+</LinearLayout>

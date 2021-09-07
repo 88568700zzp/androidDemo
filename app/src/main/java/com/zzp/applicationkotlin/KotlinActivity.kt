@@ -13,7 +13,7 @@ import kotlinx.coroutines.*
  */
 class KotlinActivity :AppCompatActivity(){
 
-    private val TAG = "KotlinActivity"
+    private val TAG = "KotlinActivity_"
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -29,6 +29,9 @@ class KotlinActivity :AppCompatActivity(){
         kotlin2.setOnClickListener {
             val job = GlobalScope.launch (Dispatchers.IO){
                 Log.i(TAG, "协程执行结束 -- 线程id：${Thread.currentThread().name}")
+                withContext(Dispatchers.Main){
+                    Log.i(TAG, "协程切换线程 -- 线程id：${Thread.currentThread().name}")
+                }
             }
             Log.e(TAG, "主线程执行2 isActive:${job.isActive}")
         }
