@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Person>
+    <name type="string">zzp</name>
+    <age type="int">15</age>
+</Person>

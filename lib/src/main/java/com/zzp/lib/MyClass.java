@@ -2,6 +2,7 @@ package com.zzp.lib;
 
 import com.zzp.lib.algorithm.Code1;
 import com.zzp.lib.algorithm.Code2;
+import com.zzp.lib.algorithm.Code3;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -159,6 +160,7 @@ public class MyClass {
                 System.out.println(local.get());
             }
         }.start();*/
+        Code3.getRounts(3,3);
     }
 
     private static int reverse(int x){

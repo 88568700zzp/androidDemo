@@ -33,10 +33,9 @@
     <uses-permission android:name="android.permission.INJECT_EVENTS" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
 
-    <queries>
+    <!--<queries>
         <package android:name="com.tencent.mm" />
-        // 指定微信包名
-    </queries>
+    </queries>-->
 
     <instrumentation
         android:name="com.zzp.applicationkotlin.instrumentation.InfoInstrumentation"
@@ -55,7 +54,7 @@
         <meta-data
             android:name="com.google.android.actions"
             android:resource="@xml/file_paths_share_img" />
-
+        <activity android:name=".XmlActivity" />
         <activity android:name=".NotifyActivity" />
         <activity android:name=".ViewPager2Activity" />
         <activity

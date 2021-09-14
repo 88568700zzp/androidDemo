@@ -177,7 +177,11 @@ public class NewMainActivity extends AppCompatActivity {
                     Intent intent = new Intent();
                     intent.setClass(NewMainActivity.this,ShareActivity.class);
                     startActivity(intent);
-                }
+                }/*else if(position == 22){
+                    Intent intent = new Intent();
+                    intent.setClass(NewMainActivity.this,XmlActivity.class);
+                    startActivity(intent);
+                }*/
             }
         });
 

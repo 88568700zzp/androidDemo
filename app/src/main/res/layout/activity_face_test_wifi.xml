@@ -38,6 +38,8 @@
     <com.zzp.applicationkotlin.view.TestSpeedView
         android:id="@+id/testSpeedView"
         android:background="#FF245CFF"
+        app:zzp_text="6434"
+        app:zzp_customColor="#23dd12"
         android:layout_width="273dp"
         android:layout_height="273dp">
         <com.airbnb.lottie.LottieAnimationView

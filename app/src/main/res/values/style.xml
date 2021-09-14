@@ -22,4 +22,10 @@
         <item name="android:shadowDx">1.2</item>
         <item name="android:shadowRadius">1</item>
     </style>
+
+    <declare-styleable name="ZZpTest">
+        <attr name="zzp_text" format="string" />
+        <attr name="zzp_customColor" format="color" />
+    </declare-styleable>
+
 </resources>
