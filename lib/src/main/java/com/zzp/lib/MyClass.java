@@ -3,6 +3,9 @@ package com.zzp.lib;
 import com.zzp.lib.algorithm.Code1;
 import com.zzp.lib.algorithm.Code2;
 import com.zzp.lib.algorithm.Code3;
+import com.zzp.lib.algorithm.Code4;
+import com.zzp.lib.algorithm.Code5;
+import com.zzp.lib.algorithm.Code6;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -160,7 +163,8 @@ public class MyClass {
                 System.out.println(local.get());
             }
         }.start();*/
-        Code3.getRounts(3,3);
+        //Code5.checkMaxRectCount();
+        Code6.threeSum(new int[]{-1,0,1,2,-1,-4,-2,-3,3,0,4});
     }
 
     private static int reverse(int x){

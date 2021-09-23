@@ -1,6 +1,7 @@
 package com.zzp.applicationkotlin
 
 import android.Manifest
+import android.app.ActivityManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.pm.PackageManager
@@ -15,6 +16,7 @@ import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
+import com.zzp.applicationkotlin.service.hook.ActivityManagerHook
 import com.zzp.applicationkotlin.service.hook.HookSetting
 import com.zzp.applicationkotlin.service.hook.LocationManagerHook
 import com.zzp.applicationkotlin.service.hook.TelephonyManagerHook
@@ -37,11 +39,12 @@ class HookServiceActivity : AppCompatActivity(){
         mTimeMonitor.record("setContentView")
 
         //ClipboardHook.hookService(this)
-        TelephonyManagerHook.hookService(this)
-        mTimeMonitor.record("TelephonyManagerHook.hookService")
-        LocationManagerHook.hookService(this)
-        mTimeMonitor.record("LocationManagerHook.hookService")
-        HookSetting.hookService(this)
+        //TelephonyManagerHook.hookService(this)
+        //mTimeMonitor.record("TelephonyManagerHook.hookService")
+        //LocationManagerHook.hookService(this)
+        //mTimeMonitor.record("LocationManagerHook.hookService")
+        //HookSetting.hookService(this)
+        ActivityManagerHook.hookService(this)
     }
 
     fun hook(view: View){
@@ -51,8 +54,8 @@ class HookServiceActivity : AppCompatActivity(){
         /*var telephonyManager = getSystemService(Context.TELEPHONY_SERVICE) as TelephonyManager
         Log.d(TAG,"deviceId:${telephonyManager.deviceId} imei:${telephonyManager.imei}")*/
 
-        Log.d(TAG,"androidId:${Settings.Secure.getString(
-            contentResolver, Settings.Secure.ANDROID_ID)}")
+        /*Log.d(TAG,"androidId:${Settings.Secure.getString(
+            contentResolver, Settings.Secure.ANDROID_ID)}")*/
 
         /*var locationManager = getSystemService(Context.LOCATION_SERVICE) as LocationManager
         locationManager.allProviders.takeIf { it.isNotEmpty() }?.forEach {
@@ -77,7 +80,10 @@ class HookServiceActivity : AppCompatActivity(){
             }
 
         }*/
-
+        var activityManager = (getSystemService(Context.ACTIVITY_SERVICE) as ActivityManager)
+        activityManager.runningAppProcesses?.forEach{
+            Log.d(TAG,"${it}")
+        }
     }
 
 

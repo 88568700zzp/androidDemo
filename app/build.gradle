@@ -1,10 +1,13 @@
+import org.gradle.api.internal.TaskInputsInternal
+import org.gradle.api.internal.TaskOutputsInternal
+
 plugins {
     id 'com.android.application'
     id 'kotlin-android'
     id 'kotlin-android-extensions'
     id 'AndResGuard'
 }
-apply from: "tool.gradle"
+//apply from: "tool.gradle"
 
 android {
     compileSdkVersion 30
@@ -38,6 +41,7 @@ android {
         }
     }
 
+
     signingConfigs {
         release {
             storePassword '123456'
@@ -59,7 +63,8 @@ android {
             jniLibs.srcDirs = ['jni_te']
         }
     }
-    println "getSourceSets size:" + getSourceSets().size()
+    /*println "getSourceSets size:" + getSourceSets().size()
+
 
     getSourceSets().names.each {
         println("name:${it}")
@@ -72,7 +77,7 @@ android {
         getSourceSets().named(it).get().getJniLibs().srcDirs.each {
             println("jniLibs:${it.absolutePath}")
         }
-    }
+    }*/
 
     buildTypes {
         release {
@@ -96,8 +101,70 @@ android {
     kotlinOptions {
         jvmTarget = '1.8'
     }
-
 }
+
+def checkData() {
+    TaskOutputsInternal out = packageDebug.getOutputs()
+    if(out.hasOutput){
+        out.files.each {
+            println 'checkData hasOutput:' + it.absolutePath
+        }
+
+    }else{
+        println 'noOutput'
+    }
+    println '-----------------------'
+    TaskInputsInternal input = packageDebug.getInputs()
+    if(input.hasInputs){
+        input.files.each {
+            println 'checkData hasInputs:' + it.absolutePath
+        }
+    }else{
+        println 'noInput'
+    }
+}
+
+def createFile(){
+    File file = new File("D://myAndroidProject//androidDemo//app//build//intermediates//packaged_manifests//debug//AndroidManifest.xml");
+    FileReader reader = new FileReader(file)
+    StringBuffer stringBuffer = new StringBuffer()
+    String contentLine
+    while((contentLine = reader.readLine()) != null)
+    {
+        System.out.println(contentLine)
+        if(contentLine.contains("XmlActivity")){
+            stringBuffer.append(contentLine.replace("XmlActivity","Xml123Activity"))
+        }else{
+            stringBuffer.append(contentLine)
+        }
+    }
+    FileWriter writer = new FileWriter(file)
+    writer.write(stringBuffer.toString())
+    writer.flush()
+
+    reader.close()
+    writer.close()
+
+    System.out.println("createFile success")
+}
+
+afterEvaluate{
+    /*preBuild.doLast {
+        packageDebug.dependsOn.each {
+            System.out.println("zzp:" + it.name)
+        }
+        packageDebug.doLast{
+            checkData()
+        }
+        compileDebugJavaWithJavac.doLast{
+            createFile()
+        }
+    }*/
+}
+
+/*preBuild.doLast {
+    checkData()
+}*/
 
 def printlnSourceSet(SourceSet sourceSet){
     /*Set<File> files = sourceSet.java.srcDirs
@@ -108,10 +175,6 @@ def printlnSourceSet(SourceSet sourceSet){
     for(File file:refiles){
         println("file:${file.absolutePath}")
     }*/
-}
-
-def test(){
-    println "test"
 }
 
 dependencies {

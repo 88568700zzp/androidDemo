@@ -1,6 +1,7 @@
 package com.zzp.applicationkotlin;
 
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.Toast;
@@ -9,6 +10,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.zzp.applicationkotlin.view.BallTouchView;
+import com.zzp.applicationkotlin.view.ChargeProgressView;
 import com.zzp.applicationkotlin.view.WifiReportCountView;
 
 /**
@@ -32,6 +34,10 @@ public class TouchViewActivity extends AppCompatActivity {
         WifiReportCountView reportView = new WifiReportCountView(this,null);
         reportView.resetLeftTime(5000002);
         frameLayout.addView(reportView,new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT));
+
+        ChargeProgressView chargeProgressView = new ChargeProgressView(this,null);
+        frameLayout.addView(chargeProgressView,new FrameLayout.LayoutParams(140 * 3, 140 * 3, Gravity.BOTTOM));
+        chargeProgressView.toProgress(100);
 
         setContentView(frameLayout);
     }
