@@ -2,9 +2,7 @@ package com.zzp.applicationkotlin.service.hook;
 
 import android.app.ActivityManager;
 import android.content.Context;
-import android.content.Intent;
 import android.os.Build;
-import android.os.IBinder;
 import android.util.Log;
 
 import java.lang.reflect.Field;
@@ -18,32 +16,19 @@ import java.lang.reflect.Proxy;
  * @author samzhang
  * @since 2021-09-15
  */
-public class ActivityManagerHook {
+public class ActivityManagerHook2 {
 
-    private static final String TAG = ActivityManagerHook.class.getSimpleName();
+    private static final String TAG = ActivityManagerHook2.class.getSimpleName();
 
     public static void hookService(Context context) {
         try {
             Field singletonField;
             Class<?> iActivityManagerClass;
-            // 1，获取Instrumentation中调用startActivity(,intent,)方法的对象
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-//                Thread.sleep(500);
-                // 10.0以上是ActivityTaskManager中的IActivityTaskManagerSingleton
-                Class<?> activityTaskManagerClass = Class.forName("android.app.ActivityTaskManager");
-                singletonField = activityTaskManagerClass.getDeclaredField("IActivityTaskManagerSingleton");
-                iActivityManagerClass = Class.forName("android.app.IActivityTaskManager");
-            } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                // 8.0,9.0在ActivityManager类中IActivityManagerSingleton
-                Class activityManagerClass = ActivityManager.class;
-                singletonField = activityManagerClass.getDeclaredField("IActivityManagerSingleton");
-                iActivityManagerClass = Class.forName("android.app.IActivityManager");
-            } else {
-                // 8.0以下在ActivityManagerNative类中 gDefault
-                Class<?> activityManagerNative = Class.forName("android.app.ActivityManagerNative");
-                singletonField = activityManagerNative.getDeclaredField("gDefault");
-                iActivityManagerClass = Class.forName("android.app.IActivityManager");
-            }
+
+            Class activityManagerClass = ActivityManager.class;
+            singletonField = activityManagerClass.getDeclaredField("IActivityManagerSingleton");
+            iActivityManagerClass = Class.forName("android.app.IActivityManager");
+
             singletonField.setAccessible(true);
             Object singleton = singletonField.get(null);
 

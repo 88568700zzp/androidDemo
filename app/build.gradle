@@ -20,6 +20,7 @@ android {
         versionCode 1
         versionName "1.0"
 
+
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
         manifestPlaceholders = [UMENG_CHANNEL_VALUE: 'release',
@@ -40,7 +41,6 @@ android {
             }
         }
     }
-
 
     signingConfigs {
         release {
@@ -94,6 +94,7 @@ android {
             signingConfig signingConfigs.release
         }
     }
+
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
@@ -148,19 +149,6 @@ def createFile(){
     System.out.println("createFile success")
 }
 
-afterEvaluate{
-    /*preBuild.doLast {
-        packageDebug.dependsOn.each {
-            System.out.println("zzp:" + it.name)
-        }
-        packageDebug.doLast{
-            checkData()
-        }
-        compileDebugJavaWithJavac.doLast{
-            createFile()
-        }
-    }*/
-}
 
 /*preBuild.doLast {
     checkData()
@@ -187,6 +175,12 @@ dependencies {
     implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
     implementation 'androidx.navigation:navigation-fragment-ktx:2.2.2'
     implementation 'androidx.navigation:navigation-ui-ktx:2.2.2'
+    implementation files('src\\main\\libs\\gradle-core-3.1.0-sources.jar')
+    implementation files('src\\main\\libs\\gradle-api-3.1.0-sources.jar')
+    implementation files('src\\main\\libs\\gradle-3.1.0-sources.jar')
+    implementation files('src\\main\\libs\\gradle-3.1.0-sources.jar')
+    implementation files('src\\main\\libs\\builder-3.1.0-sources.jar')
+    implementation files('src\\main\\libs\\builder-model-3.1.0-sources.jar')
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
     implementation 'androidx.multidex:multidex:2.0.1'
@@ -303,3 +297,22 @@ andResGuard {
      **/
     // digestalg = "SHA-256"
 }
+
+afterEvaluate {
+    android.applicationVariants.all { variant ->
+        println("ApplicationId:" + variant.getApplicationId())
+        println("buildType:" + variant.getBuildType().getName())
+
+        //variant.addJavaSourceFoldersToModel(rootProject.file("extra_java"))
+
+        variant.getProductFlavors().each{
+            println("getProductFlavors:" + it.name)
+        }
+
+        variant.getSourceSets().each{
+            println(it.name)
+            println(it.getJavaDirectories())
+        }
+    }
+}
+

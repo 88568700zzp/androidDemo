@@ -16,10 +16,7 @@ import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
-import com.zzp.applicationkotlin.service.hook.ActivityManagerHook
-import com.zzp.applicationkotlin.service.hook.HookSetting
-import com.zzp.applicationkotlin.service.hook.LocationManagerHook
-import com.zzp.applicationkotlin.service.hook.TelephonyManagerHook
+import com.zzp.applicationkotlin.service.hook.*
 import com.zzp.applicationkotlin.util.TimeMonitor
 
 /**
@@ -44,7 +41,8 @@ class HookServiceActivity : AppCompatActivity(){
         //LocationManagerHook.hookService(this)
         //mTimeMonitor.record("LocationManagerHook.hookService")
         //HookSetting.hookService(this)
-        ActivityManagerHook.hookService(this)
+        //ActivityManagerHook.hookService(this)
+        ActivityManagerHook2.hookService(this)
     }
 
     fun hook(view: View){
@@ -81,7 +79,7 @@ class HookServiceActivity : AppCompatActivity(){
 
         }*/
         var activityManager = (getSystemService(Context.ACTIVITY_SERVICE) as ActivityManager)
-        activityManager.runningAppProcesses?.forEach{
+        activityManager.getRunningServices(1)?.forEach{
             Log.d(TAG,"${it}")
         }
     }

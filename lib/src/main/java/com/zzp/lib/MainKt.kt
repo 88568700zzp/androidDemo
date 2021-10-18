@@ -30,6 +30,7 @@ open class MainKt: (String) -> Unit {
             println("class:" + func(2,3))
         }
 
+
     }
 
     private fun example(num1:Int,num2:Int,block:(Int,Int)->Int){

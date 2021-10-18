@@ -7,12 +7,16 @@
         <option name="testRunner" value="PLATFORM" />
         <option name="distributionType" value="DEFAULT_WRAPPED" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
-        <option name="gradleHome" value="D:/gradle/gradle-6.1-rc-1" />
+        <option name="gradleHome" value="$PROJECT_DIR$/../../gradle/gradle-6.6" />
+        <option name="gradleJvm" value="1.8" />
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/addemo" />
+            <option value="$PROJECT_DIR$/annotation" />
+            <option value="$PROJECT_DIR$/annotation-compiler" />
             <option value="$PROJECT_DIR$/app" />
+            <option value="$PROJECT_DIR$/aptdemo" />
             <option value="$PROJECT_DIR$/lib" />
             <option value="$PROJECT_DIR$/watchapplication" />
           </set>

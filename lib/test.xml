@@ -1,0 +1,452 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.hwmoney">
+
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.EXPAND_STATUS_BAR" /> <!-- appsflyer -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" /> <!-- Optional : -->
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" /> <!-- ************************广告相关************************ -->
+    <!-- 商业化 -->
+    <uses-permission android:name="android.permission.INTERNET" /> <!-- 联⽹网 -->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" /> <!-- 检测当前⽹网络是2G、 3G、 4G还是WiFi -->
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" /> <!-- 获取MAC地址，和设备标识⼀一起作为⽤用户标识 -->
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" /> <!-- 获取设备标识，标识⽤用户 -->
+    <!-- 广点通 -->
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" /> <!-- 如果需要精确定位的话请加上此权限 -->
+    <!-- 穿山甲 -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" /> <!-- targetSdkVersion >= 26 -->
+    <uses-permission android:name="android.permission.GET_TASKS" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" /> <!-- 最好能提供的权限 -->
+    <uses-permission android:name="android.permission.WAKE_LOCK" /> <!-- 如果有视频相关的广告且使用textureView播放，请务必添加，否则黑屏 -->
+    <!-- 北极熊 -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" /> <!-- 快手 -->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" /> <!-- 检测当前⽹网络状态是2G、3G、4G还是WiFi -->
+    <uses-permission android:name="android.permission.INTERNET" /> <!-- 联⽹网权限 -->
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" /> <!-- 获取设备标识IMEI。⽤用于标识⽤用户 -->
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" /> <!-- 读写存储权限 -->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" /> <!-- 获取MAC地址，⽤用于标识⽤用户 -->
+    <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" /> <!-- 安装应⽤用权限 -->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" /> <!-- 定位权限，不不强制要求 -->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" /> <!-- SDK内⾃自定义的权限，与下载相关，aar中已经申请 -->
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" /> <!-- 如果国内流量版本SDK ，以下两条权限必须加上 -->
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" /> <!-- SigMob -->
+    <!-- SDK所需要权限 -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" /> <!-- 限于中国大陆Android 应用市场 -->
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" /> <!-- ssz -->
+    <uses-permission android:name="android.permission.GET_TASKS" />
+    <uses-permission
+        android:name="android.permission.INTERACT_ACROSS_USERS_FULL"
+        tools:ignore="ProtectedPermissions" />
+    <uses-permission
+        android:name="android.permission.GET_TOP_ACTIVITY_INFO"
+        tools:ignore="ProtectedPermissions" />
+    <uses-permission android:name="android.permission.REORDER_TASKS" />
+
+    <!--快手 -->
+    <!--检测当前⽹网络状态是2G、3G、4G还是WiFi-->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" /> <!--联⽹网权限-->
+    <uses-permission android:name="android.permission.INTERNET" /> <!--获取设备标识IMEI。⽤用于标识⽤用户-->
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" /> <!--读写存储权限-->
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" /> <!--获取MAC地址，⽤用于标识⽤用户-->
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" /> <!--安装应⽤用权限-->
+    <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" /> <!--定位权限，不不强制要求-->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <!--SDK内⾃自定义的权限，与下载相关，aar中已经申请-->
+    <permission
+        android:name="${applicationId}.permission.KW_SDK_BROADCAST"
+        android:protectionLevel="signature" />
+    <uses-permission android:name="${applicationId}.permission.KW_SDK_BROADCAST" />
+
+    <!--百度-->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permissio.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
+
+    <application>
+
+        <activity
+            android:name=".main.UpgradeActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize|locale"
+            android:theme="@style/TranslucentTheme" />
+
+        <activity
+            android:name=".setting.SettingActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".about.AboutActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
+
+        <service
+            android:name=".service.NotificationService"
+            android:enabled="true" />
+
+        <activity
+            android:name=".global.PermissionRequestingActivity"
+            android:exported="false"
+            android:theme="@style/money_sdk_TranslucentActivityTheme">
+            <intent-filter>
+                <action android:name="${applicationId}.action.PAGE_REQUEST_PERMISSIONS" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".main.WithdrawDetailActivity" /> <!-- 下载安装 -->
+        <provider
+            android:name=".provider.DLFileProvider"
+            android:authorities="${applicationId}.DLFileProvider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/dl_file_paths" />
+        </provider>
+
+        <!-- ************************广告相关************************ -->
+        <!-- Pangle start================== -->
+        <provider
+            android:name="com.bytedance.sdk.openadsdk.TTFileProvider"
+            android:authorities="${applicationId}.TTFileProvider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/pangle_file_paths" />
+        </provider>
+
+        <provider
+            android:name="com.bytedance.sdk.openadsdk.multipro.TTMultiProvider"
+            android:authorities="${applicationId}.TTMultiProvider"
+            android:exported="false" />
+
+        <!--广告点击跳转详细页-->
+        <activity
+            android:name="com.bytedance.sdk.openadsdk.adapter.activity.TTStandardActivity"
+            android:excludeFromRecents="true"
+            android:icon="@drawable/sdk_ic_logo_ad"
+            android:label="广告"
+            android:roundIcon="@drawable/sdk_ic_logo_ad"
+            tools:replace="android:excludeFromRecents,android:label,android:icon,android:roundIcon" />
+
+        <!--全屏视频、激励视频-->
+        <activity
+            android:name="com.bytedance.sdk.openadsdk.adapter.activity.TTStandardPortraitActivity"
+            android:excludeFromRecents="true"
+            android:icon="@drawable/sdk_ic_logo_ad"
+            android:label="广告"
+            android:roundIcon="@drawable/sdk_ic_logo_ad"
+            android:taskAffinity="@string/adTaskAffinity"
+            tools:replace="android:excludeFromRecents,android:label,android:icon,android:roundIcon" />
+
+        <!--下载确认、关闭确认弹窗-->
+        <activity
+            android:name="com.bytedance.sdk.openadsdk.adapter.activity.TTStandardDelegateActivity"
+            android:excludeFromRecents="true"
+            android:icon="@drawable/sdk_ic_logo_ad"
+            android:label="广告"
+            android:roundIcon="@drawable/sdk_ic_logo_ad"
+            android:taskAffinity="@string/adTaskAffinity"
+            tools:replace="android:excludeFromRecents,android:label,android:icon,android:roundIcon" />
+        <!-- Pangle end================== -->
+
+
+        <!-- GDT start================== -->
+        <!-- targetSDKVersion >= 24时才需要添加这个provider。provider的authorities属性的值为${applicationId}.fileprovider，请开发者根据自己的${applicationId}来设置这个值，例如本例中applicationId为"com.qq.e.union.demo"。 -->
+        <provider
+            android:name="com.qq.e.comm.GDTFileProvider"
+            android:authorities="${applicationId}.gdt.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/gdt_file_path" />
+        </provider>
+
+        <activity
+            android:name="com.qq.e.ads.LandscapeADActivity"
+            android:configChanges="keyboard|keyboardHidden|orientation|screenSize"
+            tools:replace="android:screenOrientation"
+            android:screenOrientation="landscape" />
+
+        <!-- 声明SDK所需要的组件 -->
+        <service
+            android:name="com.qq.e.comm.DownloadService"
+            android:exported="false" />
+        <!-- 请开发者注意字母的大小写，ADActivity，而不是AdActivity -->
+
+        <activity
+            android:name="com.qq.e.ads.ADActivity"
+            android:excludeFromRecents="true"
+            android:icon="@drawable/sdk_ic_logo_ad"
+            android:label="广告"
+            android:roundIcon="@drawable/sdk_ic_logo_ad"
+            android:taskAffinity="@string/adTaskAffinity"
+            tools:replace="android:excludeFromRecents,android:label,android:icon,android:roundIcon" />
+
+
+        <activity
+            android:name="com.qq.e.ads.RewardvideoPortraitADActivity"
+            android:excludeFromRecents="true"
+            android:icon="@drawable/sdk_ic_logo_ad"
+            android:label="广告"
+            android:roundIcon="@drawable/sdk_ic_logo_ad"
+            android:taskAffinity="@string/adTaskAffinity"
+            tools:replace="android:excludeFromRecents,android:label,android:icon,android:roundIcon" />
+
+        <activity
+            android:name="com.qq.e.ads.PortraitADActivity"
+            android:excludeFromRecents="true"
+            android:icon="@drawable/sdk_ic_logo_ad"
+            android:label="广告"
+            android:roundIcon="@drawable/sdk_ic_logo_ad"
+            android:taskAffinity="@string/adTaskAffinity"
+            tools:replace="android:excludeFromRecents,android:label,android:icon,android:roundIcon" />
+        <!-- GDT end================== -->
+
+        <!--baidu start-->
+        <!--使用激励视频/全屏视频功能-->
+        <activity
+            android:name="com.baidu.mobads.sdk.api.MobRewardVideoActivity"
+            android:excludeFromRecents="true"
+            android:icon="@drawable/sdk_ic_logo_ad"
+            android:label="广告"
+            android:roundIcon="@drawable/sdk_ic_logo_ad"
+            android:multiprocess="true"
+            android:taskAffinity="@string/adTaskAffinity"
+            tools:replace="android:excludeFromRecents,android:label,android:icon,android:roundIcon"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+
+        <provider
+            android:name="com.baidu.mobads.sdk.api.BdFileProvider"
+            android:authorities="${applicationId}.bd.provider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/bd_file_paths" />
+        </provider>
+
+        <!--打开落地页的Activity-->
+        <activity
+            android:name="com.baidu.mobads.sdk.api.AppActivity"
+            android:excludeFromRecents="true"
+            android:icon="@drawable/sdk_ic_logo_ad"
+            android:label="广告"
+            android:roundIcon="@drawable/sdk_ic_logo_ad"
+            android:showOnLockScreen="true"
+            android:showWhenLocked="true"
+            android:taskAffinity="@string/adTaskAffinity"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar"
+            tools:replace="android:theme" />
+        <!-- baidu end================== -->
+
+        <!-- kuaishou start================== -->
+        <activity
+            android:name="com.kwad.sdk.api.proxy.app.AdWebViewActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:excludeFromRecents="true"
+            android:icon="@drawable/sdk_ic_logo_ad"
+            android:label="广告"
+            android:roundIcon="@drawable/sdk_ic_logo_ad"
+            android:screenOrientation="portrait"
+            android:showOnLockScreen="true"
+            android:showWhenLocked="true"
+            android:taskAffinity="@string/adTaskAffinity_lock"
+            android:theme="@android:style/Theme.Light.NoTitleBar" />
+
+        <activity
+            android:name="com.kwad.sdk.api.proxy.app.KsRewardVideoActivity"
+            android:excludeFromRecents="true"
+            android:icon="@drawable/sdk_ic_logo_ad"
+            android:label="广告"
+            android:roundIcon="@drawable/sdk_ic_logo_ad"
+            android:taskAffinity="@string/adTaskAffinity" />
+
+        <activity
+            android:name="com.kwad.sdk.api.proxy.app.FeedDownloadActivity"
+            android:excludeFromRecents="true"
+            android:icon="@drawable/sdk_ic_logo_ad"
+            android:label="广告"
+            android:roundIcon="@drawable/sdk_ic_logo_ad"
+            android:taskAffinity="@string/adTaskAffinity" />
+
+        <activity
+            android:name="com.kwad.sdk.api.proxy.app.KsFullScreenVideoActivity"
+            android:excludeFromRecents="true"
+            android:icon="@drawable/sdk_ic_logo_ad"
+            android:label="广告"
+            android:roundIcon="@drawable/sdk_ic_logo_ad"
+            android:taskAffinity="@string/adTaskAffinity" />
+        <!-- kuaishou end================== -->
+
+        <!-- sigmob start================== -->
+        <activity
+            android:name="com.sigmob.sdk.base.common.AdActivity"
+            android:excludeFromRecents="true"
+            android:icon="@drawable/sdk_ic_logo_ad"
+            android:label="广告"
+            android:roundIcon="@drawable/sdk_ic_logo_ad"
+            android:taskAffinity="@string/adTaskAffinity" />
+
+        <provider
+            android:name="com.sigmob.sdk.SigmobFileProvider"
+            android:authorities="${applicationId}.sigprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/sigmob_provider_paths" />
+        </provider>
+        <!-- sigmob end================== -->
+
+        <!-- mintegral start================== -->
+        <provider
+            android:name="com.mbridge.msdk.foundation.tools.MBFileProvider"
+            android:authorities="${applicationId}.mbFileProvider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/mb_provider_paths" />
+        </provider>
+
+        <!-- ************************广告相关************************ -->
+
+        <!-- 导流sdk -->
+        <provider
+            android:name=".provider.ToSdkProvider"
+            android:authorities="${applicationId}.to_sdk_provider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/to_sdk_file_paths" />
+        </provider>
+
+        <activity
+            android:name="${applicationId}.wxapi.WXEntryActivity"
+            android:exported="true"
+            android:label="@string/app_name"
+            android:launchMode="singleTask"
+            android:taskAffinity="com.step"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+        <activity
+            android:name="com.module.wechatlibrary.WeChatLoginActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name="com.hwmoney.scene.SceneCommonResultActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
+
+        <meta-data
+            android:name="design_width_in_dp"
+            android:value="360" />
+        <meta-data
+            android:name="design_height_in_dp"
+            android:value="640" />
+
+        <!-- 推啊appkey和appSecret从媒体管理后台获取 咨询运营人员 记得替换成自己的-->
+        <!-- 推啊appkey-->
+        <meta-data
+            android:name="TUIA_APPKEY"
+            android:value="${TUIA_APPKEY}" />
+        <!-- 推啊appSecret -->
+        <meta-data
+            android:name="TUIA_APPSECRET"
+            android:value="${TUIA_APPSECRET}" />
+
+
+        <!-- 新保活 -->
+        <service
+            android:name="com.immortal.aegis.account.AccountSyncService"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.content.SyncAdapter" />
+            </intent-filter>
+            <meta-data
+                android:name="android.content.SyncAdapter"
+                android:resource="@xml/aegis_syncadapter" />
+        </service>
+        <service
+            android:name="com.immortal.aegis.account.AccountSyncService1"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.content.SyncAdapter" />
+            </intent-filter>
+            <meta-data
+                android:name="android.content.SyncAdapter"
+                android:resource="@xml/aegis_syncadapter1" />
+        </service>
+        <service android:name="com.immortal.aegis.account.AccountAuthenticatorService">
+            <intent-filter>
+                <action android:name="android.accounts.AccountAuthenticator" />
+            </intent-filter>
+            <meta-data
+                android:name="android.accounts.AccountAuthenticator"
+                android:resource="@xml/aegis_authenticator" />
+        </service>
+
+        <provider
+            android:name="com.immortal.aegis.account.AccountSyncProvider"
+            android:authorities="@string/account_provider"
+            android:exported="false"
+            android:syncable="true" />
+        <!-- 新保活 end-->
+
+        <!--脚本要通过文字匹配到，下面的文案不能有任何修改-->
+<!--side app start-->
+张志鹏
+<!--side app end-->
+
+
+    </application>
+
+
+
+</manifest>
