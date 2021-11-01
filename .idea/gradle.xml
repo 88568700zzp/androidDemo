@@ -12,13 +12,13 @@
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
-            <option value="$PROJECT_DIR$/addemo" />
             <option value="$PROJECT_DIR$/annotation" />
             <option value="$PROJECT_DIR$/annotation-compiler" />
             <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/aptdemo" />
+            <option value="$PROJECT_DIR$/buildSrc" />
             <option value="$PROJECT_DIR$/lib" />
-            <option value="$PROJECT_DIR$/watchapplication" />
+            <option value="$PROJECT_DIR$/newapp" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />

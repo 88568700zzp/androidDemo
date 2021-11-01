@@ -298,12 +298,61 @@ andResGuard {
     // digestalg = "SHA-256"
 }
 
+
+
+class NewTask extends DefaultTask{
+
+    private File outputFile
+
+    NewTask(){
+        setGroup("zzp")
+    }
+
+    void setOutputFile(File outputFile){
+        this.outputFile = outputFile
+    }
+
+    //生成activity文件
+    private void createActivityFile(String targetFilePath){
+        File targetFile = new File(targetFilePath)
+        if(!targetFile.exists()){
+            targetFile.getParentFile().mkdirs()
+        }
+        println("createActivityFile:${targetFilePath}")
+        FileWriter writer = new FileWriter(targetFile)
+        writer.write("package zzp.com;\n")
+        writer.write("public class Utils{\n")
+        writer.write("public void str(){System.out.println(\"zzp\");}\n")
+        writer.write("}\n")
+        writer.flush()
+        writer.close()
+    }
+
+    @TaskAction
+    void task(){
+        println("println task")
+        createActivityFile(outputFile.absolutePath + "/zzp/com/Utils.java")
+    }
+}
+
+
 afterEvaluate {
     android.applicationVariants.all { variant ->
         println("ApplicationId:" + variant.getApplicationId())
         println("buildType:" + variant.getBuildType().getName())
 
+        println("buildFile:" + project.buildDir.absolutePath)
+
+       /* File outputDir = new File(project.buildDir,"newTask")
+        if(!outputDir.exists()){
+            outputDir.mkdir()
+        }
+
         //variant.addJavaSourceFoldersToModel(rootProject.file("extra_java"))
+        NewTask task = project.tasks.create("genrate${variant.name.capitalize()}NewTask",NewTask.class)
+        task.setOutputFile(outputDir)
+
+        variant.registerJavaGeneratingTask(task, outputDir)*/
 
         variant.getProductFlavors().each{
             println("getProductFlavors:" + it.name)

@@ -1,6 +1,5 @@
 package com.zzp.applicationkotlin
 
-import android.app.Dialog
 import android.content.Context
 import android.content.Intent
 import android.graphics.Color
@@ -8,13 +7,16 @@ import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.provider.Settings
+import android.util.DisplayMetrics
 import android.view.Gravity
 import android.view.View
 import android.view.WindowManager
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.zzp.applicationkotlin.view.WindowDragFrameLayout
 import kotlinx.android.synthetic.main.activity_add_window.*
+
 
 /**
  *
@@ -23,7 +25,7 @@ import kotlinx.android.synthetic.main.activity_add_window.*
 class AddWindowActivity :AppCompatActivity(), View.OnClickListener{
 
     private var mWindowManager:WindowManager?= null
-    private lateinit var mTextView: TextView
+    private lateinit var mView: WindowDragFrameLayout
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,48 +33,60 @@ class AddWindowActivity :AppCompatActivity(), View.OnClickListener{
 
         mWindowManager = getSystemService(Context.WINDOW_SERVICE) as WindowManager
 
-        mTextView = TextView(this)
-        mTextView.text = "zzp"
-        mTextView.gravity = Gravity.CENTER
-        mTextView.setBackgroundColor(Color.BLUE)
-        mTextView.setTextColor(Color.RED)
-        mTextView.setOnClickListener(){
-            Toast.makeText(AddWindowActivity@this,"toast",Toast.LENGTH_LONG).show()
+        mView = WindowDragFrameLayout(this)
+
+        var textView = TextView(this)
+        textView.text = "fdsafdas"
+        textView.setTextColor(Color.RED)
+        mView.addView(textView)
+
+        textView.setOnClickListener(){
+            Toast.makeText(AddWindowActivity@ this, "toast", Toast.LENGTH_LONG).show()
         }
 
 
-        btn_add.setOnClickListener(AddWindowActivity@this)
-        btn_remove.setOnClickListener(AddWindowActivity@this)
+        btn_add.setOnClickListener(AddWindowActivity@ this)
+        btn_remove.setOnClickListener(AddWindowActivity@ this)
     }
 
     override fun onClick(v: View?) {
         when(v){
-            btn_add->{
-                if(!checkFloating()){
+            btn_add -> {
+                if (!checkFloating()) {
                     return
                 }
                 var mLayoutParam = WindowManager.LayoutParams()
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                    mLayoutParam.type = WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY;
+                    mLayoutParam.type = WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY
                 } else {
                     mLayoutParam.type = WindowManager.LayoutParams.TYPE_PHONE;
                 }
                 mLayoutParam.width = 500
                 mLayoutParam.flags = mLayoutParam.flags or WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE
                 mLayoutParam.height = 100
-                mLayoutParam.y = 100
-                mLayoutParam.gravity = Gravity.CENTER_HORIZONTAL or Gravity.TOP
-                mWindowManager?.addView(mTextView,mLayoutParam)
+                mLayoutParam.gravity = Gravity.LEFT or Gravity.TOP
+
+                val outMetrics = DisplayMetrics()
+                windowManager.defaultDisplay.getMetrics(outMetrics)
+
+                mView.mWindowManager = mWindowManager
+                mView.mLayoutParams = mLayoutParam
+                mView.init(outMetrics.widthPixels,outMetrics.heightPixels)
+
+                mLayoutParam.x = outMetrics.widthPixels - mLayoutParam.width
+                mLayoutParam.y = (outMetrics.heightPixels - mLayoutParam.height)/2
+
+                mWindowManager?.addView(mView, mLayoutParam)
             }
-            btn_remove->{
-                mWindowManager?.removeView(mTextView)
+            btn_remove -> {
+                mWindowManager?.removeView(mView)
             }
         }
     }
 
     private fun checkFloating() :Boolean {
         if (!Settings.canDrawOverlays(this)) {
-            startActivityForResult( Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION, Uri.parse("package:" + getPackageName())), 0);
+            startActivityForResult(Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION, Uri.parse("package:" + getPackageName())), 0);
             return false
         }
         return true

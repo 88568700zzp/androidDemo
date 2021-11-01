@@ -25,6 +25,8 @@
       <module name="ApplicationKotlin.aptdemo" target="1.8" />
       <module name="ApplicationKotlin.libAnnotation" target="1.8" />
       <module name="ApplicationKotlin.libAnnotationCompiler" target="1.8" />
+      <module name="ApplicationKotlin.newapp" target="1.8" />
+      <module name="ApplicationKotlin.testlibrary" target="1.8" />
       <module name="ApplicationKotlin.watchapplication" target="1.8" />
     </bytecodeTargetLevel>
   </component>
