@@ -24,6 +24,8 @@ import java.util.ArrayDeque;
 import java.util.Arrays;
 import java.util.Deque;
 import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.Queue;
 import java.util.concurrent.Executors;
 
 import javax.imageio.ImageIO;
@@ -165,6 +167,20 @@ public class MyClass {
         }.start();*/
         //Code5.checkMaxRectCount();
         //TestJavapoet.testMain();
+        /*Deque<String> queue = new LinkedList<>();
+        //添加元素
+        queue.offer("a");
+        queue.offer("b");
+        queue.offer("c");
+        queue.offer("d");
+        queue.offer("e");
+        queue.push("zzp123");
+
+        System.out.println("remove:" + queue.poll());
+
+        for(String q : queue){
+            System.out.println(q);
+        }*/
     }
 
     private static int reverse(int x){

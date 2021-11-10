@@ -28,6 +28,12 @@ class SideActivityPlugin implements Plugin<Project> {
             isLibrary = false
         }
 
+        applyExtension(project)
+
+        project.afterEvaluate {
+            println("applyExtension:${project.side.name} version:${project.side.version}")
+        }
+
         if(isLibrary){
             configureR2Generation(project,variants,isLibrary)
         }
@@ -86,6 +92,12 @@ class SideActivityPlugin implements Plugin<Project> {
     private String getTaskNameByVariant(BaseVariant variant){
         return "generate${variant.name.capitalize()}SideActivity"
     }
+
+    void applyExtension(Project project) {
+        project.extensions.create("side", SideExtension)
+    }
+
+
 }
 
 

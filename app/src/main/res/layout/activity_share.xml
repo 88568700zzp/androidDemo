@@ -25,4 +25,18 @@
         android:text="文件分享"
         android:layout_marginTop="10dp"
         />
+    <Button
+        android:id="@+id/btn_pic"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="选择文件"
+        android:layout_marginTop="10dp"
+        />
+    <Button
+        android:id="@+id/btn_photo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="拍照"
+        android:layout_marginTop="10dp"
+        />
 </LinearLayout>
