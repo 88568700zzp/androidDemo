@@ -5,17 +5,24 @@ import android.app.ActivityManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.pm.PackageManager
+import android.graphics.Color
 import android.location.Location
 import android.location.LocationListener
 import android.location.LocationManager
 import android.os.Build
+import android.os.Build.VERSION_CODES.O
 import android.os.Bundle
+import android.os.Looper
 import android.provider.Settings
 import android.telephony.TelephonyManager
 import android.util.Log
 import android.view.View
+import android.view.WindowManager
+import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import com.zzp.applicationkotlin.service.hook.*
 import com.zzp.applicationkotlin.util.TimeMonitor
 
@@ -42,7 +49,8 @@ class HookServiceActivity : AppCompatActivity(){
         //mTimeMonitor.record("LocationManagerHook.hookService")
         //HookSetting.hookService(this)
         //ActivityManagerHook.hookService(this)
-        ActivityManagerHook2.hookService(this)
+        //ActivityManagerHook2.hookService(this)
+        PackageManagerHook.hookService(this.baseContext)
     }
 
     fun hook(view: View){
@@ -81,6 +89,10 @@ class HookServiceActivity : AppCompatActivity(){
         var activityManager = (getSystemService(Context.ACTIVITY_SERVICE) as ActivityManager)
         activityManager.getRunningServices(1)?.forEach{
             Log.d(TAG,"${it}")
+        }
+
+        if(Build.VERSION.SDK_INT >= O) {
+            packageManager.canRequestPackageInstalls()
         }
     }
 

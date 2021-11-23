@@ -27,6 +27,8 @@ import androidx.core.content.ContextCompat;
 
 import com.zzp.applicationkotlin.util.TimeMonitor;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 /**
@@ -187,7 +189,6 @@ public class NewMainActivity extends AppCompatActivity {
 
         setContentView(listView);
 
-        Log.d("zzp","listView getDescendantFocusability:" + (listView.getDescendantFocusability() == ViewGroup.FOCUS_BEFORE_DESCENDANTS));
     }
 
     class TitleAdapter extends BaseAdapter{
@@ -253,4 +254,5 @@ public class NewMainActivity extends AppCompatActivity {
         super.onDestroy();
         Log.d(TAG,"onDestroy");
     }
+
 }

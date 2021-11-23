@@ -59,6 +59,23 @@ class ShareActivity : AppCompatActivity(),View.OnClickListener{
         Log.d(TAG,"externalCacheDir:${externalCacheDir?.absolutePath}")
         Log.d(TAG,"getExternalFilesDir:${getExternalFilesDir(Environment.DIRECTORY_DCIM)?.absolutePath}")
         Log.d(TAG,"getFilesDir:${filesDir.absolutePath}")
+        Log.d(TAG,"getDataDir:${dataDir.absolutePath}")
+        filelist(dataDir)
+    }
+
+    private fun filelist(file:File){
+        if(!file.exists() || file == null){
+            return
+        }
+        if(file.isDirectory){
+            if(file.list() != null && file.list().isNotEmpty()) {
+                file.listFiles().forEach {
+                    filelist(it)
+                }
+            }
+        }else{
+            Log.d(TAG,"path:${file.absolutePath}")
+        }
     }
 
     override fun onClick(v: View?) {
