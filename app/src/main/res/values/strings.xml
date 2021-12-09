@@ -156,4 +156,5 @@
     <string name="jump_to_offline_pay">打开离线支付</string>
 
     <string name="input_mini_program_appid">Mini Program AppId</string>
+    <string name="behavior_sample_title">com.zzp.applicationkotlin.view.SampleTitleBehavior</string>
 </resources>

@@ -33,6 +33,7 @@
     <uses-permission android:name="android.permission.READ_INTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.INJECT_EVENTS" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.READ_PRIVILEGED_PHONE_STATE" />
 
     <!--<queries>
         <package android:name="com.tencent.mm" />
@@ -168,6 +169,15 @@
             android:name=".ShareActivity"
             android:label="@string/app_name"
             android:theme="@style/Theme.ApplicationKotlin.NoActionBar" />
+        <activity
+            android:name=".NestScrollActivity"
+            android:label="@string/app_name"
+            android:theme="@style/Theme.ApplicationKotlin.NoActionBar" />
+        <activity
+            android:name=".CoordinatorActivity"
+            android:label="@string/app_name"
+            android:theme="@style/Theme.ApplicationKotlin.NoActionBar" />
+
 
         <service
             android:name=".StaticWallpaper"
@@ -182,7 +192,9 @@
                 android:name="android.service.wallpaper"
                 android:resource="@xml/live_wallpaper" />
         </service>
-        <service android:name=".service.FirstService" />
+        <service android:name=".service.FirstService"
+            android:process=".cpp"
+            />
         <service android:name=".service.SecondService" />
         <service
             android:name=".service.JobSchedulerService"

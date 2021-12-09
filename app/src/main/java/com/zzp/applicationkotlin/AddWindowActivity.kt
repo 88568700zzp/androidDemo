@@ -6,13 +6,17 @@ import android.graphics.Color
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.provider.Settings
+import android.util.AndroidRuntimeException
 import android.util.DisplayMetrics
 import android.view.Gravity
 import android.view.View
 import android.view.WindowManager
 import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.zzp.applicationkotlin.view.WindowDragFrameLayout
 import kotlinx.android.synthetic.main.activity_add_window.*
@@ -47,6 +51,24 @@ class AddWindowActivity :AppCompatActivity(), View.OnClickListener{
 
         btn_add.setOnClickListener(AddWindowActivity@ this)
         btn_remove.setOnClickListener(AddWindowActivity@ this)
+        
+      /*  val dialog = AlertDialog.Builder(this).setMessage("zzp").show()
+
+        dialog.window
+
+        Handler(Looper.getMainLooper()).postDelayed(object:Runnable{
+            override fun run() {
+                finish()
+            }
+
+        },2000)
+
+        Handler(Looper.getMainLooper()).postDelayed(object:Runnable{
+            override fun run() {
+                dialog.dismiss()
+            }
+
+        },3000)*/
     }
 
     override fun onClick(v: View?) {

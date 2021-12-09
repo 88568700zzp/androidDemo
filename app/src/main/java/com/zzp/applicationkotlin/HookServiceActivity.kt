@@ -86,14 +86,18 @@ class HookServiceActivity : AppCompatActivity(){
             }
 
         }*/
-        var activityManager = (getSystemService(Context.ACTIVITY_SERVICE) as ActivityManager)
+       /* var activityManager = (getSystemService(Context.ACTIVITY_SERVICE) as ActivityManager)
         activityManager.getRunningServices(1)?.forEach{
             Log.d(TAG,"${it}")
-        }
+        }*/
 
-        if(Build.VERSION.SDK_INT >= O) {
+
+        var telphone = getSystemService(Context.TELEPHONY_SERVICE) as TelephonyManager
+        Log.d(TAG,"imei:${telphone.imei} deviceid:${telphone.deviceId}")
+
+        /*if(Build.VERSION.SDK_INT >= O) {
             packageManager.canRequestPackageInstalls()
-        }
+        }*/
     }
 
 

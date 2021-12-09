@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.zzp.applicationkotlin.view.MyNestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/teal_700"
+    android:fillViewport="true"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="#11cc12"
+        >
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerView"
+            android:layout_width="match_parent"
+            android:layout_marginTop="50dp"
+            android:background="#ddcc12"
+            android:layout_height="300dp"
+            android:visibility="gone"
+            />
+
+        <com.zzp.applicationkotlin.view.ZzpNestView
+            android:layout_width="match_parent"
+            android:layout_marginTop="300dp"
+            android:layout_marginBottom="300dp"
+            android:background="#ccee55"
+            android:layout_height="500dp"/>
+    </LinearLayout>
+
+</com.zzp.applicationkotlin.view.MyNestedScrollView>

@@ -3,12 +3,14 @@ package com.zzp.applicationkotlin
 import android.app.ActivityManager
 import android.app.ActivityManager.RunningAppProcessInfo
 import android.content.ComponentName
+import android.content.Context
 import android.content.Intent
 import android.content.ServiceConnection
 import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.os.IBinder
+import android.telephony.TelephonyManager
 import android.util.Log
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -24,27 +26,35 @@ class ForegroundServiceActivity: AppCompatActivity() {
 
     private var mConnect = false
 
+    private var mTalk:IITalk ?= null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         setContentView(R.layout.activity_foreground_service)
         startService.setOnClickListener{
-            var intent= Intent()
-            Log.e("zzp123", "startFirstService")
-            intent.setClassName(packageName, FirstService::class.java.name)
-            /*if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            if(!mConnect) {
+                var intent = Intent()
+                Log.e("zzp123", "startFirstService")
+                intent.setClassName(packageName, FirstService::class.java.name)
+                /*if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                 startForegroundService(intent)
             }else{
                 startService(intent)
             }*/
-            bindService(intent, conn, android.content.Context.BIND_AUTO_CREATE)
+                bindService(intent, conn, android.content.Context.BIND_AUTO_CREATE)
+            }
 
-            var dialog =  AlertDialog.Builder(this).setMessage("zzp").create()
+            if(mTalk != null){
+                mTalk?.doTalk("6666")
+            }
+
+            /*var dialog =  AlertDialog.Builder(this).setMessage("zzp").create()
             dialog.show()
             Handler().postDelayed({
                 Log.d("zzp", "dialog:${dialog.window?.getAttributes()}")
                 Log.d("zzp", "activity:${window?.getAttributes()}")
-            }, 1000L)
+            }, 1000L)*/
         }
 
         /*Handler(Looper.getMainLooper()).postDelayed(object:Runnable{
@@ -68,8 +78,7 @@ class ForegroundServiceActivity: AppCompatActivity() {
         override fun onServiceConnected(name: ComponentName?, service: IBinder?) {
             mConnect = true
             Log.d("zzp123", "onServiceConnected:${name} service:${service}")
-            var talk =  IITalk.Stub.asInterface(service)
-            talk?.doTalk("doTalk")
+            mTalk =  IITalk.Stub.asInterface(service)
         }
 
         override fun onBindingDied(name: ComponentName?) {

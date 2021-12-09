@@ -181,7 +181,9 @@ public class MyClass {
         for(String q : queue){
             System.out.println(q);
         }*/
-        TestObject.INSTANCE.zzp(1000);
+        //TestObject.INSTANCE.zzp(1000);
+        //new WaitTest().doTest();
+        SwipeTest.doTest();
     }
 
     private static int reverse(int x){

@@ -15,6 +15,8 @@ import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.accessibility.AccessibilityManager;
+import android.view.animation.Animation;
+import android.view.animation.TranslateAnimation;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
@@ -25,6 +27,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
+import com.zzp.applicationkotlin.model.SwipeData;
 import com.zzp.applicationkotlin.util.TimeMonitor;
 
 import java.text.ParseException;
@@ -68,6 +71,9 @@ public class NewMainActivity extends AppCompatActivity {
         TitleAdapter adapter = new TitleAdapter();
 
         listView.setAdapter(adapter);
+
+        listView.animate().alphaBy(10f).setDuration(1000).start();
+
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -179,6 +185,14 @@ public class NewMainActivity extends AppCompatActivity {
                     Intent intent = new Intent();
                     intent.setClass(NewMainActivity.this,ShareActivity.class);
                     startActivity(intent);
+                }else if(position == 22){
+                    Intent intent = new Intent();
+                    intent.setClass(NewMainActivity.this,NestScrollActivity.class);
+                    startActivity(intent);
+                }else if(position == 23){
+                    Intent intent = new Intent();
+                    intent.setClass(NewMainActivity.this,CoordinatorActivity.class);
+                    startActivity(intent);
                 }/*else if(position == 22){
                     Intent intent = new Intent();
                     intent.setClass(NewMainActivity.this,XmlActivity.class);
@@ -188,12 +202,11 @@ public class NewMainActivity extends AppCompatActivity {
         });
 
         setContentView(listView);
-
     }
 
     class TitleAdapter extends BaseAdapter{
 
-        private String[] titles = new String[]{"Instrumentation","job","startService","traffic","addWindow","webView","动态壁纸","微信分享","娃娃机","kotlin","video","viewPager2","room","通知栏","FaceTestWifi","provider","辅助服务","hookService","bitmap","touchBall","大淘客","分享"};
+        private String[] titles = new String[]{"Instrumentation","job","startService","traffic","addWindow","webView","动态壁纸","微信分享","娃娃机","kotlin","video","viewPager2","room","通知栏","FaceTestWifi","provider","辅助服务","hookService","bitmap","touchBall","大淘客","分享","nestScroll","Coordinator"};
 
         @Override
         public int getCount() {
@@ -255,4 +268,8 @@ public class NewMainActivity extends AppCompatActivity {
         Log.d(TAG,"onDestroy");
     }
 
+    @Override
+    protected void finalize() throws Throwable {
+        super.finalize();
+    }
 }

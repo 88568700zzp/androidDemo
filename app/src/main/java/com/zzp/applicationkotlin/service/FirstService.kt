@@ -27,8 +27,9 @@ class FirstService :Service(){
     }
 
     var stub = object:IITalk.Stub(){
-        override fun doTalk(msg: String?) {
+        override fun doTalk(msg: String?):String{
            Log.d("zzp123","message ${msg}")
+            return "success"
         }
 
     }
