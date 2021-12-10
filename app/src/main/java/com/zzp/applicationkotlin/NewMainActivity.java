@@ -66,6 +66,8 @@ public class NewMainActivity extends AppCompatActivity {
 
         Log.d("zzp","displayMetrics:" + displayMetric.toString());
 
+        Log.d("zzp","ndk:" + NDKTool.getStringFromNDK());
+
         ListView listView = new ListView(this);
 
         TitleAdapter adapter = new TitleAdapter();

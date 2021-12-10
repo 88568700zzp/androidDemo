@@ -18,17 +18,11 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel target="1.7">
-      <module name="ApplicationKotlin.addemo" target="1.8" />
       <module name="ApplicationKotlin.annotation" target="1.8" />
       <module name="ApplicationKotlin.annotation-compiler" target="1.8" />
       <module name="ApplicationKotlin.app" target="1.8" />
       <module name="ApplicationKotlin.aptdemo" target="1.8" />
-      <module name="ApplicationKotlin.libAnnotation" target="1.8" />
-      <module name="ApplicationKotlin.libAnnotationCompiler" target="1.8" />
       <module name="ApplicationKotlin.newapp" target="1.8" />
-      <module name="ApplicationKotlin.reactapp" target="1.8" />
-      <module name="ApplicationKotlin.testlibrary" target="1.8" />
-      <module name="ApplicationKotlin.watchapplication" target="1.8" />
     </bytecodeTargetLevel>
   </component>
 </project>

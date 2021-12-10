@@ -59,11 +59,7 @@ android {
         htmlReport true
         setHtmlOutput(new File("D://c.html"))
     }
-    sourceSets {
-        main {
-            jniLibs.srcDirs = ['jni_te']
-        }
-    }
+
     /*println "getSourceSets size:" + getSourceSets().size()
 
 
@@ -93,6 +89,16 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.release
+        }
+
+        externalNativeBuild {
+            ndkBuild {
+                path 'src/main/jni/Android.mk'
+            }
+        }
+        sourceSets.main {
+            jni.srcDirs = []
+            jniLibs.srcDirs = ['src/main/jniLibs']
         }
     }
 
