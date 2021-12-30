@@ -35,6 +35,7 @@ class AddWindowActivity :AppCompatActivity(), View.OnClickListener{
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_window)
 
+
         mWindowManager = getSystemService(Context.WINDOW_SERVICE) as WindowManager
 
         mView = WindowDragFrameLayout(this)
