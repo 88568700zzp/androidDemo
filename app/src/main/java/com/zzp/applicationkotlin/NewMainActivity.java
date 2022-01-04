@@ -66,7 +66,7 @@ public class NewMainActivity extends AppCompatActivity {
 
         Log.d("zzp","displayMetrics:" + displayMetric.toString());
 
-        Log.d("zzp","ndk:" + NDKTool.getStringFromNDK());
+        //Log.d("zzp","ndk:" + NDKTool.getStringFromNDK());
 
         ListView listView = new ListView(this);
 
@@ -195,6 +195,10 @@ public class NewMainActivity extends AppCompatActivity {
                     Intent intent = new Intent();
                     intent.setClass(NewMainActivity.this,CoordinatorActivity.class);
                     startActivity(intent);
+                }else if(position == 24){
+                    Intent intent = new Intent();
+                    intent.setClass(NewMainActivity.this,RxJavaActivity.class);
+                    startActivity(intent);
                 }/*else if(position == 22){
                     Intent intent = new Intent();
                     intent.setClass(NewMainActivity.this,XmlActivity.class);
@@ -208,7 +212,7 @@ public class NewMainActivity extends AppCompatActivity {
 
     class TitleAdapter extends BaseAdapter{
 
-        private String[] titles = new String[]{"Instrumentation","job","startService","traffic","addWindow","webView","动态壁纸","微信分享","娃娃机","kotlin","video","viewPager2","room","通知栏","FaceTestWifi","provider","辅助服务","hookService","bitmap","touchBall","大淘客","分享","nestScroll","Coordinator"};
+        private String[] titles = new String[]{"Instrumentation","job","startService","traffic","addWindow","webView","动态壁纸","微信分享","娃娃机","kotlin","video","viewPager2","room","通知栏","FaceTestWifi","provider","辅助服务","hookService","bitmap","touchBall","大淘客","分享","nestScroll","Coordinator","Rxjava"};
 
         @Override
         public int getCount() {
