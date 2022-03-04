@@ -62,7 +62,7 @@ class RoomActivity:AppCompatActivity(){
         roomViewModel?.getValue()?.observe(this, Observer<String> {
             Log.d(TAG,"onChanged ${it}")
         })
-        roomViewModel?.setValue("zzp ${getAndroidId()}")
+        roomViewModel?.setValue("AndroidID：${getAndroidId()}")
 
     }
 
@@ -81,7 +81,7 @@ class RoomActivity:AppCompatActivity(){
         Log.d(TAG,"onResume")
 
         var roomViewModel = mViewModelProvider?.get(RoomViewModel::class.java)
-        roomViewModel?.setValue("zzp onResume ${getAndroidId()}")
+        roomViewModel?.setValue("AndroidID：onResume ${getAndroidId()}")
     }
 
     override fun onStart() {

@@ -2,20 +2,18 @@ package com.zzp.applicationkotlin
 
 import android.app.Activity
 import android.content.Intent
+import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.os.Environment
+import android.provider.MediaStore
 import android.provider.OpenableColumns
 import android.util.Log
 import android.view.View
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.FileProvider
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.LifecycleEventObserver
-import androidx.lifecycle.LifecycleObserver
-import androidx.lifecycle.LifecycleOwner
 import kotlinx.android.synthetic.main.activity_share.*
 import java.io.*
 
@@ -48,6 +46,7 @@ class ShareActivity : AppCompatActivity(),View.OnClickListener{
         btn_file.setOnClickListener(this)
         btn_pic.setOnClickListener(this)
         btn_photo.setOnClickListener(this)
+        query_file.setOnClickListener(this)
 
         Log.d(TAG,"getRootDirectory:${Environment.getRootDirectory().absolutePath}")
         Log.d(TAG,"getExternalStoragePublicDirectory:${Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM).absolutePath}")
@@ -60,7 +59,8 @@ class ShareActivity : AppCompatActivity(),View.OnClickListener{
         Log.d(TAG,"getExternalFilesDir:${getExternalFilesDir(Environment.DIRECTORY_DCIM)?.absolutePath}")
         Log.d(TAG,"getFilesDir:${filesDir.absolutePath}")
         Log.d(TAG,"getDataDir:${dataDir.absolutePath}")
-        filelist(dataDir)
+        //filelist(dataDir)
+        filelist(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS))
     }
 
     private fun filelist(file:File){
@@ -135,6 +135,25 @@ class ShareActivity : AppCompatActivity(),View.OnClickListener{
             }
             btn_photo->{
                 takePicturePreviewLauncher.launch(null)
+            }
+
+            query_file ->{
+                contentResolver.query(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, null, null, null, null)?.let {
+                    while(it.moveToNext()){
+                        var ID = it.getLong(it.getColumnIndex(MediaStore.Images.Media._ID))
+                        var DISPLAY_NAME = it.getString(it.getColumnIndex(MediaStore.Images.Media.DISPLAY_NAME))
+                        var VOLUME_NAME = it.getString(it.getColumnIndex(MediaStore.Images.Media.VOLUME_NAME))
+                        Log.d(TAG,"ID:${ID} DISPLAY_NAME:${DISPLAY_NAME} VOLUME_NAME:${VOLUME_NAME}")
+
+                        /*MediaStore.Images.Media.getBitmap(
+                            contentResolver, MediaStore.Images.Media.getContentUri(VOLUME_NAME)
+                        ).let {
+                            Log.d(TAG,"width:${it.width} height:${it.height}")
+                        }*/
+                    }
+
+                }
+
             }
         }
 

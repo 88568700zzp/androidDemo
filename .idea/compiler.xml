@@ -22,7 +22,7 @@
       <module name="ApplicationKotlin.annotation-compiler" target="1.8" />
       <module name="ApplicationKotlin.app" target="1.8" />
       <module name="ApplicationKotlin.aptdemo" target="1.8" />
-      <module name="ApplicationKotlin.newapp" target="1.8" />
+      <module name="gitDemo.buildSrc" target="1.8" />
     </bytecodeTargetLevel>
   </component>
 </project>

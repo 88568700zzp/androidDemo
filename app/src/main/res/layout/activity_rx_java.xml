@@ -29,4 +29,40 @@
         android:layout_height="wrap_content"
         android:text="flatmap"
         />
+    <Button
+        android:id="@+id/concat"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="concat"
+        />
+    <Button
+        android:id="@+id/cutThread"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="cutThread"
+        />
+    <Button
+        android:id="@+id/merge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="merge"
+        />
+    <Button
+        android:id="@+id/count"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="count"
+        />
+    <Button
+        android:id="@+id/exception"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="exception"
+        />
+    <Button
+        android:id="@+id/callNet"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="callNet"
+        />
 </LinearLayout>
