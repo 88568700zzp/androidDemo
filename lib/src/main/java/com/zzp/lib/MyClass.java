@@ -6,6 +6,7 @@ import com.zzp.lib.algorithm.Code3;
 import com.zzp.lib.algorithm.Code4;
 import com.zzp.lib.algorithm.Code5;
 import com.zzp.lib.algorithm.Code6;
+import com.zzp.lib.algorithm.Code7;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -184,6 +185,7 @@ public class MyClass {
         //TestObject.INSTANCE.zzp(1000);
         //new WaitTest().doTest();
         SwipeTest.doTest();
+        new Code7().doJob();
     }
 
     private static int reverse(int x){

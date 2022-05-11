@@ -6,6 +6,7 @@ plugins {
     id 'kotlin-android'
     id 'kotlin-android-extensions'
     id 'AndResGuard'
+    id 'org.greenrobot.greendao'
 }
 
 //apply from: "tool.gradle"
@@ -188,6 +189,7 @@ dependencies {
     implementation files('src\\main\\libs\\gradle-3.1.0-sources.jar')
     implementation files('src\\main\\libs\\builder-3.1.0-sources.jar')
     implementation files('src\\main\\libs\\builder-model-3.1.0-sources.jar')
+    implementation 'androidx.biometric:biometric-ktx:1.2.0-alpha03'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
     implementation 'androidx.multidex:multidex:2.0.1'
@@ -266,7 +268,10 @@ dependencies {
     implementation "com.trello.rxlifecycle2:rxlifecycle:2.1.0"
     implementation "com.trello.rxlifecycle2:rxlifecycle-components:2.1.0"
     implementation "com.trello.rxlifecycle2:rxlifecycle-android:2.1.0"
+
+    implementation 'org.greenrobot:greendao:3.3.0'
 }
+
 
 andResGuard {
     // mappingFile = file("./resource_mapping.txt")
@@ -354,6 +359,10 @@ class NewTask extends DefaultTask{
         println("println task")
         createActivityFile(outputFile.absolutePath + "/zzp/com/Utils.java")
     }
+}
+
+greendao {
+    schemaVersion 1000
 }
 
 

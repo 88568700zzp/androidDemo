@@ -46,12 +46,12 @@ public class NewMainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         DisplayMetrics displayMetrics = getResources().getDisplayMetrics();
-        Log.d("zzp","displayMetrics:" + displayMetrics.toString());
+        Log.d("zzp", "displayMetrics:" + displayMetrics.toString());
         //displayMetrics.scaledDensity = displayMetrics.density * 2;
 
         super.onCreate(savedInstanceState);
 
-        DisplayMetrics displayMetric =  getResources().getDisplayMetrics();
+        DisplayMetrics displayMetric = getResources().getDisplayMetrics();
 
         dip = displayMetric.density;
 
@@ -64,7 +64,7 @@ public class NewMainActivity extends AppCompatActivity {
         Log.d("zzp_resource","name:" + name + " type:"+ type + " resourceName:" + resourceName);
         Log.d("zzp_resource","id:" + Integer.toHexString(getResources().getIdentifier(name,type,getPackageName())));*/
 
-        Log.d("zzp","displayMetrics:" + displayMetric.toString());
+        Log.d("zzp", "displayMetrics:" + displayMetric.toString());
 
         //Log.d("zzp","ndk:" + NDKTool.getStringFromNDK());
 
@@ -80,78 +80,78 @@ public class NewMainActivity extends AppCompatActivity {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                if(position == 0){
+                if (position == 0) {
                     Intent intent = new Intent();
-                    intent.setClass(NewMainActivity.this,InstrumentationActivity.class);
+                    intent.setClass(NewMainActivity.this, InstrumentationActivity.class);
                     startActivity(intent);
-                }else if(position == 1){
+                } else if (position == 1) {
                     Intent intent = new Intent();
-                    intent.setClass(NewMainActivity.this,JobActivity.class);
+                    intent.setClass(NewMainActivity.this, JobActivity.class);
                     startActivity(intent);
-                }else if(position == 2){
+                } else if (position == 2) {
                     Intent intent = new Intent();
-                    intent.setClass(NewMainActivity.this,ForegroundServiceActivity.class);
+                    intent.setClass(NewMainActivity.this, ForegroundServiceActivity.class);
                     startActivity(intent);
-                }else if(position == 3){
+                } else if (position == 3) {
                     Intent intent = new Intent();
-                    intent.setClass(NewMainActivity.this,TrafficActivity.class);
+                    intent.setClass(NewMainActivity.this, TrafficActivity.class);
                     startActivity(intent);
-                }else if(position == 4){
+                } else if (position == 4) {
                     Intent intent = new Intent();
-                    intent.setClass(NewMainActivity.this,AddWindowActivity.class);
+                    intent.setClass(NewMainActivity.this, AddWindowActivity.class);
                     startActivity(intent);
-                }else if(position == 5){
+                } else if (position == 5) {
                     Intent intent = new Intent();
-                    intent.setClass(NewMainActivity.this,WebViewActivity.class);
+                    intent.setClass(NewMainActivity.this, WebViewActivity.class);
                     startActivity(intent);
-                }else if(position == 6){
-                    if(ContextCompat.checkSelfPermission(NewMainActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
+                } else if (position == 6) {
+                    if (ContextCompat.checkSelfPermission(NewMainActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
                         ComponentName componentName = new ComponentName(getPackageName(), "com.zzp.applicationkotlin.StaticWallpaper");
                         Intent intent = new Intent(WallpaperManager.ACTION_CHANGE_LIVE_WALLPAPER);
                         intent.putExtra(WallpaperManager.EXTRA_LIVE_WALLPAPER_COMPONENT, componentName);
                         startActivity(intent);
-                    }else{
-                        requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE,Manifest.permission.WRITE_EXTERNAL_STORAGE},0x123);
+                    } else {
+                        requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE}, 0x123);
                     }
-                }else if(position == 7){
+                } else if (position == 7) {
                     Intent intent = new Intent();
-                    intent.setClass(NewMainActivity.this,ShareWeixinActivity.class);
+                    intent.setClass(NewMainActivity.this, ShareWeixinActivity.class);
                     startActivity(intent);
-                }else if(position == 8){
+                } else if (position == 8) {
                     Intent intent = new Intent();
-                    intent.setClass(NewMainActivity.this,DollMachineActivity.class);
+                    intent.setClass(NewMainActivity.this, DollMachineActivity.class);
                     startActivity(intent);
-                }else if(position == 9){
+                } else if (position == 9) {
                     Intent intent = new Intent();
-                    intent.setClass(NewMainActivity.this,KotlinActivity.class);
+                    intent.setClass(NewMainActivity.this, KotlinActivity.class);
                     startActivity(intent);
-                }else if(position == 10){
+                } else if (position == 10) {
                     Intent intent = new Intent();
-                    intent.setClass(NewMainActivity.this,VideoPlayerActivity.class);
+                    intent.setClass(NewMainActivity.this, VideoPlayerActivity.class);
                     startActivity(intent);
-                }else if(position == 11){
+                } else if (position == 11) {
                     Intent intent = new Intent();
-                    intent.setClass(NewMainActivity.this,ViewPager2Activity.class);
+                    intent.setClass(NewMainActivity.this, ViewPager2Activity.class);
                     startActivity(intent);
-                }else if(position == 12){
+                } else if (position == 12) {
                     Intent intent = new Intent();
-                    intent.setClass(NewMainActivity.this,RoomActivity.class);
+                    intent.setClass(NewMainActivity.this, RoomActivity.class);
                     startActivity(intent);
-                }else if(position == 13){
+                } else if (position == 13) {
                     Intent intent = new Intent();
-                    intent.setClass(NewMainActivity.this,NotifyActivity.class);
+                    intent.setClass(NewMainActivity.this, NotifyActivity.class);
                     startActivity(intent);
-                }else if(position == 14){
+                } else if (position == 14) {
                     Intent intent = new Intent();
-                    intent.setClass(NewMainActivity.this,FaceTestWifi.class);
+                    intent.setClass(NewMainActivity.this, FaceTestWifi.class);
                     startActivity(intent);
-                }else if(position == 15){
+                } else if (position == 15) {
                     Intent intent = new Intent();
-                    intent.setClass(NewMainActivity.this,ProviderActivity.class);
+                    intent.setClass(NewMainActivity.this, ProviderActivity.class);
                     startActivity(intent);
-                }else if(position == 16){
+                } else if (position == 16) {
                     boolean result = false;
-                    AccessibilityManager mAccessibilityManager = (AccessibilityManager)getSystemService(Context.ACCESSIBILITY_SERVICE);
+                    AccessibilityManager mAccessibilityManager = (AccessibilityManager) getSystemService(Context.ACCESSIBILITY_SERVICE);
                     List<AccessibilityServiceInfo> accessibilityServices =
                             mAccessibilityManager.getEnabledAccessibilityServiceList(AccessibilityServiceInfo.FEEDBACK_ALL_MASK);
                     for (AccessibilityServiceInfo info : accessibilityServices) {
@@ -159,45 +159,53 @@ public class NewMainActivity extends AppCompatActivity {
                             result = true;
                         }
                     }
-                    if(result){
-                        Toast.makeText(NewMainActivity.this,"已申请成功",Toast.LENGTH_SHORT).show();
+                    if (result) {
+                        Toast.makeText(NewMainActivity.this, "已申请成功", Toast.LENGTH_SHORT).show();
                         //requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},0x123);
-                    }else {
+                    } else {
                         Intent intent = new Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS);
                         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                         startActivity(intent);
                     }
-                }else if(position == 17){
+                } else if (position == 17) {
                     Intent intent = new Intent();
-                    intent.setClass(NewMainActivity.this,HookServiceActivity.class);
+                    intent.setClass(NewMainActivity.this, HookServiceActivity.class);
                     startActivity(intent);
-                }else if(position == 18){
+                } else if (position == 18) {
                     Intent intent = new Intent();
-                    intent.setClass(NewMainActivity.this,BitmapActivity.class);
+                    intent.setClass(NewMainActivity.this, BitmapActivity.class);
                     startActivity(intent);
-                }else if(position == 19){
+                } else if (position == 19) {
                     Intent intent = new Intent();
-                    intent.setClass(NewMainActivity.this,TouchViewActivity.class);
+                    intent.setClass(NewMainActivity.this, TouchViewActivity.class);
                     startActivity(intent);
-                }else if(position == 20){
+                } else if (position == 20) {
                     Intent intent = new Intent();
-                    intent.setClass(NewMainActivity.this,TestDtkActivity.class);
+                    intent.setClass(NewMainActivity.this, TestDtkActivity.class);
                     startActivity(intent);
-                }else if(position == 21){
+                } else if (position == 21) {
                     Intent intent = new Intent();
-                    intent.setClass(NewMainActivity.this,ShareActivity.class);
+                    intent.setClass(NewMainActivity.this, ShareActivity.class);
                     startActivity(intent);
-                }else if(position == 22){
+                } else if (position == 22) {
                     Intent intent = new Intent();
-                    intent.setClass(NewMainActivity.this,NestScrollActivity.class);
+                    intent.setClass(NewMainActivity.this, NestScrollActivity.class);
                     startActivity(intent);
-                }else if(position == 23){
+                } else if (position == 23) {
                     Intent intent = new Intent();
-                    intent.setClass(NewMainActivity.this,CoordinatorActivity.class);
+                    intent.setClass(NewMainActivity.this, CoordinatorActivity.class);
                     startActivity(intent);
-                }else if(position == 24){
+                } else if (position == 24) {
                     Intent intent = new Intent();
-                    intent.setClass(NewMainActivity.this,RxJavaActivity.class);
+                    intent.setClass(NewMainActivity.this, RxJavaActivity.class);
+                    startActivity(intent);
+                } else if (position == 25) {
+                    Intent intent = new Intent();
+                    intent.setClass(NewMainActivity.this, GreenDaoActivity.class);
+                    startActivity(intent);
+                } else if (position == 26) {
+                    Intent intent = new Intent();
+                    intent.setClass(NewMainActivity.this, FingerActivity.class);
                     startActivity(intent);
                 }/*else if(position == 22){
                     Intent intent = new Intent();
@@ -210,9 +218,11 @@ public class NewMainActivity extends AppCompatActivity {
         setContentView(listView);
     }
 
-    class TitleAdapter extends BaseAdapter{
+    class TitleAdapter extends BaseAdapter {
 
-        private String[] titles = new String[]{"Instrumentation","job","startService","traffic","addWindow","webView","动态壁纸","微信分享","娃娃机","kotlin","video","viewPager2","room","通知栏","FaceTestWifi","provider","辅助服务","hookService","bitmap","touchBall","大淘客","分享","nestScroll","Coordinator","Rxjava"};
+        private String[] titles = new String[]{"Instrumentation", "job", "startService", "traffic", "addWindow", "webView",
+                "动态壁纸", "微信分享", "娃娃机", "kotlin", "video", "viewPager2", "room", "通知栏", "FaceTestWifi", "provider", "辅助服务",
+                "hookService", "bitmap", "touchBall", "大淘客", "分享", "nestScroll", "Coordinator", "Rxjava", "GreenDao","figger"};
 
         @Override
         public int getCount() {
@@ -235,7 +245,7 @@ public class NewMainActivity extends AppCompatActivity {
             textView.setText(titles[position]);
             textView.setTextSize(20);
             int padding = (int) (15 * dip);
-            textView.setPadding(padding,padding,0,padding);
+            textView.setPadding(padding, padding, 0, padding);
             textView.setTextColor(Color.BLUE);
 
             return textView;
@@ -245,8 +255,8 @@ public class NewMainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        Log.d("globalTimeMonitor","onResume");
-        Log.d(TAG,"onResume");
+        Log.d("globalTimeMonitor", "onResume");
+        Log.d(TAG, "onResume");
     }
 
     @Override
@@ -258,20 +268,20 @@ public class NewMainActivity extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
-        Log.d("globalTimeMonitor","onPause");
-        Log.d(TAG,"onPause");
+        Log.d("globalTimeMonitor", "onPause");
+        Log.d(TAG, "onPause");
     }
 
     @Override
     protected void onStop() {
         super.onStop();
-        Log.d(TAG,"onStop");
+        Log.d(TAG, "onStop");
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        Log.d(TAG,"onDestroy");
+        Log.d(TAG, "onDestroy");
     }
 
     @Override

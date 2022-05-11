@@ -6,6 +6,7 @@
     <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.READ_PRIVILEGED_PHONE_STATE" />
+    <uses-permission android:name="android.permission.USE_FINGERPRINT" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission
         android:name="android.permission.PACKAGE_USAGE_STATS"
@@ -34,11 +35,12 @@
     <uses-permission android:name="android.permission.INJECT_EVENTS" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.READ_PRIVILEGED_PHONE_STATE" />
-
-    <!--<queries>
+    <uses-permission android:name="android.permission.USE_BIOMETRIC" />
+    <!--
+<queries>
         <package android:name="com.tencent.mm" />
-    </queries>-->
-
+    </queries>
+    -->
     <instrumentation
         android:name="com.zzp.applicationkotlin.instrumentation.InfoInstrumentation"
         android:targetPackage="com.zzp.applicationkotlin"
@@ -53,9 +55,17 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ApplicationKotlin"
         android:usesCleartextTraffic="true">
+        <activity
+            android:name=".FingerActivity"
+            android:exported="false" />
+        <activity
+            android:name=".GreenDaoActivity"
+            android:exported="false" />
+
         <meta-data
             android:name="com.google.android.actions"
             android:resource="@xml/file_paths_share_img" />
+
         <activity android:name=".XmlActivity" />
         <activity android:name=".NotifyActivity" />
         <activity android:name=".ViewPager2Activity" />
@@ -195,9 +205,9 @@
                 android:name="android.service.wallpaper"
                 android:resource="@xml/live_wallpaper" />
         </service>
-        <service android:name=".service.FirstService"
-            android:process=".cpp"
-            />
+        <service
+            android:name=".service.FirstService"
+            android:process=".cpp" />
         <service android:name=".service.SecondService" />
         <service
             android:name=".service.JobSchedulerService"

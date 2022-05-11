@@ -3,6 +3,7 @@ package com.zzp.applicationkotlin.application;
 import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.util.Log;
 import android.util.Printer;
@@ -13,6 +14,9 @@ import androidx.multidex.MultiDex;
 
 import com.tencent.bugly.crashreport.CrashReport;
 import com.zzp.applicationkotlin.BitmapActivity;
+import com.zzp.applicationkotlin.manager.GreenDaoManager;
+import com.zzp.applicationkotlin.model.DaoMaster;
+import com.zzp.applicationkotlin.model.DaoSession;
 import com.zzp.applicationkotlin.util.TimeMonitor;
 
 import org.jetbrains.annotations.NotNull;
@@ -38,6 +42,7 @@ public class AppApplication extends Application implements Application.ActivityL
     public void onCreate() {
         super.onCreate();
         Log.d(TAG,"onCreate");
+
         TimeMonitor.getGlobalInstance().start("AppApplication onCreate" );
         getMainLooper().setMessageLogging(new Printer() {
             @Override
@@ -45,6 +50,8 @@ public class AppApplication extends Application implements Application.ActivityL
                 //Log.d("getMainLooper","println:" + x);
             }
         });
+
+        GreenDaoManager.getInstance().init(this);
 
         //CrashReport.initCrashReport(getApplicationContext(), "4ab5148389", true);
     }

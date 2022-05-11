@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
+import android.view.ViewGroup;
 
 import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
