@@ -1,6 +1,9 @@
 package com.zzp.applicationkotlin
 
 import android.os.Bundle
+import android.text.Spannable
+import android.text.SpannableStringBuilder
+import android.text.style.ForegroundColorSpan
 import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
@@ -12,11 +15,9 @@ import io.reactivex.*
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.functions.Consumer
-import io.reactivex.observers.SafeObserver
 import io.reactivex.schedulers.Schedulers
 import io.reactivex.subjects.BehaviorSubject
 import kotlinx.android.synthetic.main.activity_rx_java.*
-import java.lang.IllegalArgumentException
 import java.util.concurrent.TimeUnit
 
 
@@ -45,6 +46,9 @@ class RxJavaActivity : AppCompatActivity(), View.OnClickListener,
         merge.setOnClickListener(this)
         exception.setOnClickListener(this)
         callNet.setOnClickListener(this)
+
+        val foregroundColorSpan =
+            ForegroundColorSpan(getResources().getColor(R.color.design_default_color_primary))
     }
 
     override fun onClick(v: View?) {

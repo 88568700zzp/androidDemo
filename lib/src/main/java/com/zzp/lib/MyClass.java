@@ -27,6 +27,7 @@ import java.util.Deque;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Queue;
+import java.util.UUID;
 import java.util.concurrent.Executors;
 
 import javax.imageio.ImageIO;
@@ -184,8 +185,9 @@ public class MyClass {
         }*/
         //TestObject.INSTANCE.zzp(1000);
         //new WaitTest().doTest();
-        SwipeTest.doTest();
-        new Code7().doJob();
+       /* SwipeTest.doTest();
+        new Code7().doJob();*/
+        System.out.println(new UUID("321321321".hashCode(),"fsdafdsafdsafd".hashCode()).toString());
     }
 
     private static int reverse(int x){

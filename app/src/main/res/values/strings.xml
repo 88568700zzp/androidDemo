@@ -157,4 +157,6 @@
 
     <string name="input_mini_program_appid">Mini Program AppId</string>
     <string name="behavior_sample_title">com.zzp.applicationkotlin.view.SampleTitleBehavior</string>
+
+    <string name="night_act_mode">浅色模式</string>
 </resources>

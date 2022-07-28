@@ -3,11 +3,13 @@ package com.zzp.applicationkotlin;
 import android.Manifest;
 import android.accessibilityservice.AccessibilityServiceInfo;
 import android.app.WallpaperManager;
+import android.bluetooth.BluetoothAdapter;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.util.DisplayMetrics;
@@ -76,6 +78,13 @@ public class NewMainActivity extends AppCompatActivity {
 
         listView.animate().alphaBy(10f).setDuration(1000).start();
 
+        Log.d("zzp123","device:" + Build.DEVICE + " model:" + Build.MODEL + " MANUFACTURER:" + Build.MANUFACTURER + " BOARD:" + Build.BOARD + " BRAND:" + Build.BRAND);
+
+        Log.d("zzp123","device:" + Settings.Secure.getString(getContentResolver(), "bluetooth_name"));
+
+        Log.d("zzp123","device:" + Settings.Global.getString(getContentResolver(), Settings.Global.DEVICE_NAME));
+
+        Log.d("zzp123","device:" + BluetoothAdapter.getDefaultAdapter().getName());
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -207,6 +216,14 @@ public class NewMainActivity extends AppCompatActivity {
                     Intent intent = new Intent();
                     intent.setClass(NewMainActivity.this, FingerActivity.class);
                     startActivity(intent);
+                }else if (position == 27) {
+                    Intent intent = new Intent();
+                    intent.setClass(NewMainActivity.this, NightActivity.class);
+                    startActivity(intent);
+                }else if (position == 28) {
+                    Intent intent = new Intent();
+                    intent.setClass(NewMainActivity.this, ImageEditActivity.class);
+                    startActivity(intent);
                 }/*else if(position == 22){
                     Intent intent = new Intent();
                     intent.setClass(NewMainActivity.this,XmlActivity.class);
@@ -222,7 +239,7 @@ public class NewMainActivity extends AppCompatActivity {
 
         private String[] titles = new String[]{"Instrumentation", "job", "startService", "traffic", "addWindow", "webView",
                 "动态壁纸", "微信分享", "娃娃机", "kotlin", "video", "viewPager2", "room", "通知栏", "FaceTestWifi", "provider", "辅助服务",
-                "hookService", "bitmap", "touchBall", "大淘客", "分享", "nestScroll", "Coordinator", "Rxjava", "GreenDao","figger"};
+                "hookService", "bitmap", "touchBall", "大淘客", "分享", "nestScroll", "Coordinator", "Rxjava", "GreenDao","figger","night","imageEdit"};
 
         @Override
         public int getCount() {

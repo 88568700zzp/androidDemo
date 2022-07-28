@@ -65,4 +65,11 @@
         android:layout_height="wrap_content"
         android:text="callNet"
         />
+
+    <TextView
+        android:id="@+id/text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/cardview_dark_background"
+        />
 </LinearLayout>
