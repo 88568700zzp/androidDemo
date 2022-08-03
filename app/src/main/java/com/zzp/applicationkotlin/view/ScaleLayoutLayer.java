@@ -32,6 +32,8 @@ public class ScaleLayoutLayer extends RelativeLayout implements View.OnTouchList
     private float currentX = 0;
     private float currentY = 0;
     private float mTouchSlot = 0;
+    private int mActivePointerId = -1;
+    private float[] mInfos = new float[2];
 
     private float parentLayoutHeight = 0f;//父布局高度
 
@@ -86,14 +88,18 @@ public class ScaleLayoutLayer extends RelativeLayout implements View.OnTouchList
 
     @Override
     public boolean dispatchTouchEvent(MotionEvent event) {
-        Log.v(getClass().getName(), "dispatchTouchEvent:" + pointNum);
         switch (event.getAction() & MotionEvent.ACTION_MASK) {
             case MotionEvent.ACTION_DOWN:
                 pointNum = 1;
                 mStartDrag = false;
                 mStartScale = false;
-                currentX = event.getRawX();
-                currentY = event.getRawY();
+
+                mActivePointerId = event.getPointerId(0);
+
+                getMotionEvent(event);
+                currentX = mInfos[0];
+                currentY = mInfos[1];
+
                 mTouchDownScale = getScaleX();
                 break;
             case MotionEvent.ACTION_UP:
@@ -106,22 +112,45 @@ public class ScaleLayoutLayer extends RelativeLayout implements View.OnTouchList
                 mStartScale = false;
                 currentX = 0;
                 currentY = 0;
+                mActivePointerId = -1;
 
                 break;
             case MotionEvent.ACTION_POINTER_DOWN: {
                 pointNum += 1;
-                //两点按下时的距离
-                oldDist = spacing(event);
+                if(pointNum == 2) {
+                    //两点按下时的距离
+                    oldDist = spacing(event);
+                }
             }
             break;
             case MotionEvent.ACTION_POINTER_UP: {
                 pointNum -= 1;
+                if(pointNum == 1){
+                    onSecondaryPointerUp(event);
+                    getMotionEvent(event);
+                    currentX = mInfos[0];
+                    currentY = mInfos[1];
+                }
+                if(pointNum == 2) {
+                    //两点按下时的距离
+                    oldDist = spacing(event);
+                }
             }
             break;
             default:
                 break;
         }
         return super.dispatchTouchEvent(event);
+    }
+
+    private void onSecondaryPointerUp(MotionEvent ev) {
+        final int pointerIndex = (ev.getAction() & MotionEvent.ACTION_POINTER_INDEX_MASK) >>
+                MotionEvent.ACTION_POINTER_INDEX_SHIFT;
+        final int pointerId = ev.getPointerId(pointerIndex);
+        if (pointerId == mActivePointerId) {
+            final int newPointerIndex = pointerIndex == 0 ? 1 : 0;
+            mActivePointerId = ev.getPointerId(newPointerIndex);
+        }
     }
 
     @Override
@@ -145,9 +174,6 @@ public class ScaleLayoutLayer extends RelativeLayout implements View.OnTouchList
                     moveDist = spacing(event);
                     double space = moveDist - oldDist;
                     float scale = (float) (getScaleX() + space / getWidth());
-                    /*if (mHasClip && scale < mClipScale) {
-                        scale = mClipScale;
-                    }*/
                     if (scale > SCALE_MIN && scale < SCALE_MAX) {
                         setScale(scale);
                     } else if (scale < SCALE_MIN) {
@@ -155,9 +181,10 @@ public class ScaleLayoutLayer extends RelativeLayout implements View.OnTouchList
                     } else if(scale > SCALE_MAX){
                         setScale(SCALE_MAX);
                     }
-                } else if (pointNum == 1 && !mStartScale) {
-                    float diffX = event.getRawX() - currentX;
-                    float diffY = event.getRawY() - currentY;
+                } else if (pointNum == 1) {
+                    getMotionEvent(event);
+                    float diffX =  mInfos[0] - currentX;
+                    float diffY = mInfos[1] - currentY;
                     if (Math.abs(diffX) >= mTouchSlot || Math.abs(diffY) >= mTouchSlot) {
                         mStartDrag = true;
                     }
@@ -185,12 +212,15 @@ public class ScaleLayoutLayer extends RelativeLayout implements View.OnTouchList
                             bottomEdge = mClipBorder.bottom;
                         }
 
-                        if (mRect.width() < (rightEdge - leftEdge)) {
+                        /*if (mRect.width() < (rightEdge - leftEdge)) {
                             if (mRect.left + diffX <= leftEdge) {
                                 diffX = leftEdge - mRect.left;
                             } else if (diffX + mRect.right >= rightEdge) {
                                 diffX = rightEdge - mRect.right;
                             }
+                        }*/
+                        if(mRect.left > leftEdge || mRect.right < rightEdge){
+                            diffX = 0f;
                         } else {
                             if (mRect.left + diffX >= leftEdge) {
                                 diffX = leftEdge - mRect.left;
@@ -199,12 +229,15 @@ public class ScaleLayoutLayer extends RelativeLayout implements View.OnTouchList
                             }
                         }
 
-                        if (mRect.height() < (bottomEdge - topEdge)) {
+                        /*if (mRect.height() < (bottomEdge - topEdge)) {
                             if (diffY + mRect.top <= topEdge) {
                                 diffY = topEdge - mRect.top;
                             } else if (diffY + mRect.bottom >= bottomEdge) {
                                 diffY = bottomEdge - mRect.bottom;
                             }
+                        }*/
+                        if(mRect.top > topEdge ||  mRect.bottom < bottomEdge){
+                            diffY = 0;
                         } else {
                             if (diffY + mRect.top >= topEdge) {
                                 diffY = topEdge - mRect.top;
@@ -213,7 +246,6 @@ public class ScaleLayoutLayer extends RelativeLayout implements View.OnTouchList
                             }
                         }
 
-
                         setTranslationX(getTranslationX() + diffX);
                         setTranslationY(getTranslationY() + diffY);
 
@@ -221,8 +253,9 @@ public class ScaleLayoutLayer extends RelativeLayout implements View.OnTouchList
                             mChangeListener.onTranslateChange(diffX,diffY);
                         }
 
-                        currentX = event.getRawX();
-                        currentY = event.getRawY();
+                        currentX = mInfos[0];
+                        currentY = mInfos[1];
+
                     }
                 }
                 break;
@@ -230,6 +263,25 @@ public class ScaleLayoutLayer extends RelativeLayout implements View.OnTouchList
                 break;
         }
         return true;
+    }
+
+    private void getMotionEvent(MotionEvent event){
+        MotionEvent motionEvent = MotionEvent.obtain(event);
+        if(!getMatrix().isIdentity()) {
+            motionEvent.transform(getMatrix());
+        }
+
+        int pointerIndex = event.findPointerIndex(mActivePointerId);
+
+        if(pointerIndex == -1){
+            pointerIndex = 0;
+            mActivePointerId = event.getPointerId(pointerIndex);
+        }
+
+        mInfos[0] = motionEvent.getX(pointerIndex);
+        mInfos[1] = motionEvent.getY(pointerIndex);
+
+        motionEvent.recycle();
     }
 
 
@@ -256,7 +308,7 @@ public class ScaleLayoutLayer extends RelativeLayout implements View.OnTouchList
      * @return 返回数值
      */
     private double spacing(MotionEvent event) {
-        if (event.getPointerCount() == 2) {
+        if (event.getPointerCount() >= 2) {
             float x = event.getX(0) - event.getX(1);
             float y = event.getY(0) - event.getY(1);
             return Math.sqrt(x * x + y * y);

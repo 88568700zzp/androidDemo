@@ -3,7 +3,6 @@ package com.zzp.applicationkotlin.application;
 import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.util.Log;
 import android.util.Printer;
@@ -12,14 +11,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.multidex.MultiDex;
 
-import com.tencent.bugly.crashreport.CrashReport;
-import com.zzp.applicationkotlin.BitmapActivity;
 import com.zzp.applicationkotlin.manager.GreenDaoManager;
-import com.zzp.applicationkotlin.model.DaoMaster;
-import com.zzp.applicationkotlin.model.DaoSession;
 import com.zzp.applicationkotlin.util.TimeMonitor;
-
-import org.jetbrains.annotations.NotNull;
 
 /**
  * Created by samzhang on 2021/2/24.
@@ -36,12 +29,15 @@ public class AppApplication extends Application implements Application.ActivityL
         MultiDex.install(this);
         //CrashCatchHandler.getInstance().init(this);
         registerActivityLifecycleCallbacks(this);
+
+
     }
 
     @Override
     public void onCreate() {
         super.onCreate();
         Log.d(TAG,"onCreate");
+
 
         TimeMonitor.getGlobalInstance().start("AppApplication onCreate" );
         getMainLooper().setMessageLogging(new Printer() {

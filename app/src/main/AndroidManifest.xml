@@ -57,6 +57,9 @@
         android:theme="@style/Theme.ApplicationKotlin"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".SplashActivity"
+            android:exported="false" />
+        <activity
             android:name=".ImageEditActivity"
             android:exported="false" />
         <activity
