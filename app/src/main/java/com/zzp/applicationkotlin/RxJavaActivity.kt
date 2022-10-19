@@ -1,11 +1,14 @@
 package com.zzp.applicationkotlin
 
 import android.os.Bundle
+import android.os.Handler
 import android.text.Spannable
 import android.text.SpannableStringBuilder
 import android.text.style.ForegroundColorSpan
 import android.util.Log
 import android.view.View
+import android.view.ViewGroup
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.trello.rxlifecycle2.LifecycleProvider
 import com.trello.rxlifecycle2.LifecycleTransformer
@@ -36,6 +39,7 @@ class RxJavaActivity : AppCompatActivity(), View.OnClickListener,
 
         setContentView(R.layout.activity_rx_java)
 
+        result.setOnClickListener(this)
         single.setOnClickListener(this)
         observable.setOnClickListener(this)
         map.setOnClickListener(this)
@@ -53,6 +57,10 @@ class RxJavaActivity : AppCompatActivity(), View.OnClickListener,
 
     override fun onClick(v: View?) {
         when(v){
+            result->{
+                //(result.parent as ViewGroup).removeView(result)
+                result.visibility = View.GONE
+            }
             single->{
                 Single.create(object : SingleOnSubscribe<String>{
                     override fun subscribe(emitter: SingleEmitter<String>) {
@@ -226,6 +234,10 @@ class RxJavaActivity : AppCompatActivity(), View.OnClickListener,
 
         override fun onNext(t: String) {
             Log.d(TAG,"${Thread.currentThread().name} onNext:${t}")
+            //result.setText(t)
+            Handler().postDelayed({
+                Toast.makeText(this@RxJavaActivity,"666",Toast.LENGTH_SHORT).show()
+            },1000)
         }
 
         override fun onError(e: Throwable) {

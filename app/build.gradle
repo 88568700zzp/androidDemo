@@ -23,8 +23,6 @@ android {
         versionName "1.0"
 
 
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-
         manifestPlaceholders = [UMENG_CHANNEL_VALUE: 'release',
                                 UMENG_CHANNEL_VALUE2 : "debug"
         ]
@@ -190,8 +188,6 @@ dependencies {
     implementation files('src\\main\\libs\\builder-3.1.0-sources.jar')
     implementation files('src\\main\\libs\\builder-model-3.1.0-sources.jar')
     implementation 'androidx.biometric:biometric-ktx:1.2.0-alpha03'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.1'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
     implementation 'androidx.multidex:multidex:2.0.1'
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.1.1"
     implementation 'org.greenrobot:eventbus:3.2.0'
@@ -270,6 +266,14 @@ dependencies {
     implementation "com.trello.rxlifecycle2:rxlifecycle-android:2.1.0"
 
     implementation 'org.greenrobot:greendao:3.3.0'
+
+    implementation group: 'org.apache.poi', name: 'poi-ooxml', version: '3.17'
+    implementation group: 'org.apache.xmlbeans', name: 'xmlbeans', version: '3.1.0'
+    implementation 'javax.xml.stream:stax-api:1.0'
+    implementation 'com.fasterxml:aalto-xml:1.2.2'
+
+    implementation 'com.tom-roush:pdfbox-android:2.0.25.0'
+    implementation 'com.gemalto.jp2:jp2-android:1.0.3'
 }
 
 

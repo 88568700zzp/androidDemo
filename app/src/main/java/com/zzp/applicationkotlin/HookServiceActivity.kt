@@ -48,9 +48,9 @@ class HookServiceActivity : AppCompatActivity(){
         //LocationManagerHook.hookService(this)
         //mTimeMonitor.record("LocationManagerHook.hookService")
         //HookSetting.hookService(this)
-        //ActivityManagerHook.hookService(this)
-        //ActivityManagerHook2.hookService(this)
-        PackageManagerHook.hookService(this.baseContext)
+        ActivityManagerHook.hookService(this)
+        ActivityManagerHook2.hookService(this)
+        //PackageManagerHook.hookService(this.baseContext)
     }
 
     fun hook(view: View){
@@ -92,12 +92,15 @@ class HookServiceActivity : AppCompatActivity(){
         }*/
 
 
-        var telphone = getSystemService(Context.TELEPHONY_SERVICE) as TelephonyManager
-        Log.d(TAG,"imei:${telphone.imei} deviceid:${telphone.deviceId}")
+        //var telphone = getSystemService(Context.TELEPHONY_SERVICE) as TelephonyManager
+        //Log.d(TAG,"imei:${telphone.imei} deviceid:${telphone.deviceId}")
 
         /*if(Build.VERSION.SDK_INT >= O) {
             packageManager.canRequestPackageInstalls()
         }*/
+        if(ContextCompat.checkSelfPermission(this,Manifest.permission.READ_PHONE_STATE) == PackageManager.PERMISSION_GRANTED){
+            requestPermissions(arrayOf(Manifest.permission.READ_PHONE_STATE),0x123);
+        }
     }
 
 

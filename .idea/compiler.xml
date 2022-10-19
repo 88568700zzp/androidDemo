@@ -13,6 +13,9 @@
       <module name="ApplicationKotlin.annotation.test" target="1.8" />
       <module name="ApplicationKotlin.app" target="1.8" />
       <module name="ApplicationKotlin.aptdemo" target="1.8" />
+      <module name="ApplicationKotlin.lib" target="1.8" />
+      <module name="ApplicationKotlin.lib2" target="1.8" />
+      <module name="ApplicationKotlin.pdfLib" target="1.8" />
       <module name="gitDemo.buildSrc" target="1.8" />
     </bytecodeTargetLevel>
   </component>

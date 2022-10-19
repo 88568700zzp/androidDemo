@@ -57,6 +57,9 @@
         android:theme="@style/Theme.ApplicationKotlin"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".FormatActivity"
+            android:exported="false" />
+        <activity
             android:name=".SplashActivity"
             android:exported="false" />
         <activity
@@ -201,7 +204,10 @@
             android:name=".RxJavaActivity"
             android:label="@string/app_name"
             android:theme="@style/Theme.ApplicationKotlin.NoActionBar" />
-
+        <activity
+            android:name=".PdfActivity"
+            android:label="@string/app_name"
+            android:theme="@style/Theme.ApplicationKotlin.NoActionBar" />
         <service
             android:name=".StaticWallpaper"
             android:enabled="true"
@@ -224,8 +230,8 @@
             android:exported="true"
             android:permission="android.permission.BIND_JOB_SERVICE" />
         <service
-            android:name=".service.AutoAccessibilityService"
-            android:label="辅助助手"
+            android:name=".service.accessibility.DealAccessibilityService"
+            android:label="头条助手"
             android:permission="android.permission.BIND_ACCESSIBILITY_SERVICE">
             <intent-filter>
                 <action android:name="android.accessibilityservice.AccessibilityService" />

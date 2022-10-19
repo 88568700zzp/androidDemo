@@ -1,6 +1,7 @@
 package com.zzp.applicationkotlin
 
 import android.app.Activity
+import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.graphics.BitmapFactory
 import android.net.Uri
@@ -11,6 +12,7 @@ import android.provider.MediaStore
 import android.provider.OpenableColumns
 import android.util.Log
 import android.view.View
+import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.FileProvider
@@ -24,6 +26,8 @@ import java.io.*
 class ShareActivity : AppCompatActivity(),View.OnClickListener{
 
     private val TAG = "ShareActivity_"
+
+    private var REQUEST_CODE = 0x1234
 
     private val takePicturePreviewLauncher = registerForActivityResult(ActivityResultContracts.TakePicturePreview()) { result ->
         result?.let {
@@ -138,20 +142,34 @@ class ShareActivity : AppCompatActivity(),View.OnClickListener{
             }
 
             query_file ->{
-                contentResolver.query(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, null, null, null, null)?.let {
+                /*contentResolver.query(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, null, null, null, null)?.let {
                     while(it.moveToNext()){
                         var ID = it.getLong(it.getColumnIndex(MediaStore.Images.Media._ID))
                         var DISPLAY_NAME = it.getString(it.getColumnIndex(MediaStore.Images.Media.DISPLAY_NAME))
                         var VOLUME_NAME = it.getString(it.getColumnIndex(MediaStore.Images.Media.VOLUME_NAME))
                         Log.d(TAG,"ID:${ID} DISPLAY_NAME:${DISPLAY_NAME} VOLUME_NAME:${VOLUME_NAME}")
 
-                        /*MediaStore.Images.Media.getBitmap(
+                        *//*MediaStore.Images.Media.getBitmap(
                             contentResolver, MediaStore.Images.Media.getContentUri(VOLUME_NAME)
                         ).let {
                             Log.d(TAG,"width:${it.width} height:${it.height}")
-                        }*/
+                        }*//*
                     }
+                }*/
+                val intent = Intent().apply {
+                    action = Intent.ACTION_GET_CONTENT
 
+
+                    type = "*/*"
+
+                    addCategory(Intent.CATEGORY_OPENABLE)
+                }
+                try {
+                    startActivityForResult(intent, REQUEST_CODE)
+                } catch (exception: ActivityNotFoundException) {
+                    finish()
+                } catch (exception: Exception) {
+                    finish()
                 }
 
             }
@@ -177,8 +195,12 @@ class ShareActivity : AppCompatActivity(),View.OnClickListener{
             contentResolver.query(it, null, null, null, null)?.let {cursor ->
                 val nameIndex = cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME)
                 val sizeIndex = cursor.getColumnIndex(OpenableColumns.SIZE)
+                val mimeIndex = cursor.getColumnIndex("mime_type")
+                cursor.columnNames.forEach {
+                    Log.d(TAG,"columnName:$it");
+                }
                 cursor.moveToFirst()
-                Log.d(TAG,"name:${cursor.getString(nameIndex)} size:${cursor.getLong(sizeIndex)}")
+                Log.d(TAG,"name:${cursor.getString(nameIndex)} size:${cursor.getLong(sizeIndex)} mimeIndex:${cursor.getString(mimeIndex)}}")
             }
         }
     }

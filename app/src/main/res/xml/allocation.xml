@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <accessibility-service xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:accessibilityEventTypes="typeAllMask"
-    android:accessibilityFeedbackType="feedbackSpoken"
+    android:accessibilityFeedbackType="feedbackAllMask"
     android:canRetrieveWindowContent="true"
-    android:notificationTimeout="1000"
+    android:notificationTimeout="500"
     android:accessibilityFlags="flagReportViewIds"
+    android:packageNames="com.ss.android.article.lite,com.zzp.applicationkotlin"
      />

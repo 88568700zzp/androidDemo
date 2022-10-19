@@ -164,7 +164,7 @@ public class NewMainActivity extends AppCompatActivity {
                     List<AccessibilityServiceInfo> accessibilityServices =
                             mAccessibilityManager.getEnabledAccessibilityServiceList(AccessibilityServiceInfo.FEEDBACK_ALL_MASK);
                     for (AccessibilityServiceInfo info : accessibilityServices) {
-                        if (info.getId().contains(".AutoAccessibilityService")) {
+                        if (info.getId().contains(".DealAccessibilityService")) {
                             result = true;
                         }
                     }
@@ -224,6 +224,14 @@ public class NewMainActivity extends AppCompatActivity {
                     Intent intent = new Intent();
                     intent.setClass(NewMainActivity.this, ImageEditActivity.class);
                     startActivity(intent);
+                }else if (position == 29) {
+                    Intent intent = new Intent();
+                    intent.setClass(NewMainActivity.this, FormatActivity.class);
+                    startActivity(intent);
+                }else if (position == 30) {
+                    Intent intent = new Intent();
+                    intent.setClass(NewMainActivity.this, PdfActivity.class);
+                    startActivity(intent);
                 }/*else if(position == 22){
                     Intent intent = new Intent();
                     intent.setClass(NewMainActivity.this,XmlActivity.class);
@@ -239,7 +247,7 @@ public class NewMainActivity extends AppCompatActivity {
 
         private String[] titles = new String[]{"Instrumentation", "job", "startService", "traffic", "addWindow", "webView",
                 "动态壁纸", "微信分享", "娃娃机", "kotlin", "video", "viewPager2", "room", "通知栏", "FaceTestWifi", "provider", "辅助服务",
-                "hookService", "bitmap", "touchBall", "大淘客", "分享", "nestScroll", "Coordinator", "Rxjava", "GreenDao","figger","night","imageEdit"};
+                "hookService", "bitmap", "touchBall", "大淘客", "分享", "nestScroll", "Coordinator", "Rxjava", "GreenDao","figger","night","imageEdit","文档解析","pdf"};
 
         @Override
         public int getCount() {

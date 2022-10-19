@@ -4,7 +4,8 @@
 //include ':annotation'
 //include ':watchapplication'
 //include ':addemo'
-include ':lib'
 //include ':reactapp'
 include ':app'
 rootProject.name = "ApplicationKotlin"
+include ':lib2'
+include ':pdfLib'
