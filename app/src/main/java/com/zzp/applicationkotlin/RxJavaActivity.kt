@@ -139,7 +139,7 @@ class RxJavaActivity : AppCompatActivity(), View.OnClickListener,
                     })
             }
             cutThread->{
-                Observable.just("123","zzp123").observeOn(Schedulers.io()).map (object:io.reactivex.functions.Function<String,String>{
+                Observable.just("123").observeOn(Schedulers.io()).map (object:io.reactivex.functions.Function<String,String>{
                     override fun apply(t: String): String {
                         Log.d(TAG,"1 ${Thread.currentThread().name} apply ${t}")
                         return t
@@ -151,9 +151,15 @@ class RxJavaActivity : AppCompatActivity(), View.OnClickListener,
                     }
                 }).observeOn(Schedulers.io()).doOnNext {
                     Log.d(TAG,"3 ${Thread.currentThread().name} doOnNext ${it}")
-                }.observeOn(AndroidSchedulers.mainThread()).doOnComplete {
-                    Log.d(TAG,"4 ${Thread.currentThread().name} doOnComplete ")
-                }.subscribe()
+                }.observeOn(AndroidSchedulers.mainThread()).doOnNext {
+                    Log.d(TAG,"4 ${Thread.currentThread().name} doOnNext ")
+                }
+                    .subscribe(object: Consumer<String> {
+                        override fun accept(t: String?) {
+                            Log.d(TAG,"${Thread.currentThread().name} accept:${t}")
+                        }
+
+                    })
             }
             count->{
                 Observable.concat(Observable.just(20,12,13,12),Observable.just(1,2)).count().subscribe { it, throwable ->

@@ -6,6 +6,7 @@ import android.graphics.BitmapFactory
 import android.graphics.BitmapRegionDecoder
 import android.graphics.Rect
 import android.os.Bundle
+import android.os.Environment
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -57,16 +58,37 @@ class BitmapFragment :Fragment(){
         Log.d(TAG,"bitmap1 size:${getSize(bitmap1)} width:${bitmap1.width} height:${bitmap1.height} scaleWidth:${bitmap1.getScaledWidth(displayMetrics.densityDpi)} scaleHeight:${bitmap1.getScaledWidth(displayMetrics.densityDpi)}")
         bitmap_1.setImageBitmap(bitmap1)
 
+        var option10 = BitmapFactory.Options()
+        option10.inSampleSize = 7
+        var inBitmap = BitmapFactory.decodeFile(Environment.getExternalStorageDirectory().absolutePath + "/doll_enter_wifi_force.png",option10)
+
+
+        var option11 = BitmapFactory.Options()
+        option11.inJustDecodeBounds = true
+
+        BitmapFactory.decodeFile(Environment.getExternalStorageDirectory().absolutePath + "/doll_enter_wifi_force.png",option11)
+
+        option11.inSampleSize = 4
+        option11.inJustDecodeBounds = false
+        option11.inMutable = true
+        option11.inBitmap = inBitmap
+
+        var fileBitmap = BitmapFactory.decodeFile(Environment.getExternalStorageDirectory().absolutePath + "/doll_enter_wifi_force.png",option11)
+
+
         var option2 = BitmapFactory.Options()
         option2.inTargetDensity = displayMetrics.densityDpi/2
-        option2.inPreferredConfig = Bitmap.Config.RGB_565
+        option2.inPreferredConfig = Bitmap.Config.ARGB_8888
+        option2.inSampleSize = 4
+        option2.inMutable = true
         option2.inBitmap = bitmap1
         var bitmap2 = BitmapFactory.decodeResource(resources,R.drawable.bitmap_test,option2)
         Log.d(TAG,"bitmap2 size:${getSize(bitmap2)} width:${bitmap2.width} height:${bitmap2.height} scaleWidth:${bitmap2.getScaledWidth(displayMetrics.densityDpi)} scaleHeight:${bitmap2.getScaledWidth(displayMetrics.densityDpi)}")
-        bitmap_2.setImageBitmap(bitmap2)
+        bitmap_2.setImageBitmap(fileBitmap)
 
         var option3 = BitmapFactory.Options()
         option3.inSampleSize = 2
+        option3.inMutable = true
         option3.inBitmap = bitmap1
         var bitmap3 = BitmapFactory.decodeResource(resources,R.drawable.bitmap_test,option3)
         Log.d(TAG,"bitmap3 size:${getSize(bitmap3)} width:${bitmap3.width} height:${bitmap3.height} scaleWidth:${bitmap3.getScaledWidth(displayMetrics.densityDpi)} scaleHeight:${bitmap3.getScaledWidth(displayMetrics.densityDpi)}")
@@ -166,6 +188,11 @@ class BitmapFragment :Fragment(){
     override fun onStop() {
         super.onStop()
         Log.i(TAG,"onStop")
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        Log.i(TAG,"onDestroy")
     }
 
     override fun onDestroyView() {

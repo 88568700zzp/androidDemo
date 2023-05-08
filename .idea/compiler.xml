@@ -1,22 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="CompilerConfiguration">
-    <bytecodeTargetLevel target="1.7">
-      <module name="androidDemo.buildSrc" target="1.8" />
-      <module name="androidDemo.buildSrc.main" target="1.8" />
-      <module name="androidDemo.buildSrc.test" target="1.8" />
-      <module name="ApplicationKotlin.annotation" target="1.8" />
-      <module name="ApplicationKotlin.annotation-compiler" target="1.8" />
-      <module name="ApplicationKotlin.annotation-compiler.main" target="1.8" />
-      <module name="ApplicationKotlin.annotation-compiler.test" target="1.8" />
-      <module name="ApplicationKotlin.annotation.main" target="1.8" />
-      <module name="ApplicationKotlin.annotation.test" target="1.8" />
-      <module name="ApplicationKotlin.app" target="1.8" />
-      <module name="ApplicationKotlin.aptdemo" target="1.8" />
-      <module name="ApplicationKotlin.lib" target="1.8" />
-      <module name="ApplicationKotlin.lib2" target="1.8" />
-      <module name="ApplicationKotlin.pdfLib" target="1.8" />
-      <module name="gitDemo.buildSrc" target="1.8" />
+    <bytecodeTargetLevel target="1.8">
+      <module name="ApplicationKotlin.app" target="11" />
     </bytecodeTargetLevel>
   </component>
 </project>

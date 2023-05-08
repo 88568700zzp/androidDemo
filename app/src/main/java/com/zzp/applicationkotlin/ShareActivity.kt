@@ -28,6 +28,7 @@ class ShareActivity : AppCompatActivity(),View.OnClickListener{
     private val TAG = "ShareActivity_"
 
     private var REQUEST_CODE = 0x1234
+    private var REQUEST_PHOTO_CODE = 0x1235
 
     private val takePicturePreviewLauncher = registerForActivityResult(ActivityResultContracts.TakePicturePreview()) { result ->
         result?.let {
@@ -51,6 +52,7 @@ class ShareActivity : AppCompatActivity(),View.OnClickListener{
         btn_pic.setOnClickListener(this)
         btn_photo.setOnClickListener(this)
         query_file.setOnClickListener(this)
+        btn_photo_system.setOnClickListener(this)
 
         Log.d(TAG,"getRootDirectory:${Environment.getRootDirectory().absolutePath}")
         Log.d(TAG,"getExternalStoragePublicDirectory:${Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM).absolutePath}")
@@ -68,7 +70,7 @@ class ShareActivity : AppCompatActivity(),View.OnClickListener{
     }
 
     private fun filelist(file:File){
-        if(!file.exists() || file == null){
+        if(!file.exists()){
             return
         }
         if(file.isDirectory){
@@ -173,6 +175,19 @@ class ShareActivity : AppCompatActivity(),View.OnClickListener{
                 }
 
             }
+            btn_photo_system->{
+                val takePhotoIntent = Intent()
+                takePhotoIntent.action = MediaStore.ACTION_IMAGE_CAPTURE
+
+                val fileName = "TEMP_" + System.currentTimeMillis() + ".jpg"
+                val photoFile = File(cacheDir, fileName)
+
+                var currentTakePhotoUri = Uri.fromFile(photoFile)
+
+                takePhotoIntent.putExtra(MediaStore.EXTRA_OUTPUT, currentTakePhotoUri);
+                startActivityForResult(takePhotoIntent, REQUEST_PHOTO_CODE);
+
+            }
         }
 
     }
@@ -184,24 +199,32 @@ class ShareActivity : AppCompatActivity(),View.OnClickListener{
             // Exit without doing anything else
             return
         }
-        returnIntent?.data?.let {
-            Log.d(TAG,"onActivityResult:${it.toString()}")
-            contentResolver.openFileDescriptor(it, "r")?.apply {
-                var fileReader = FileReader(fileDescriptor)
-                fileReader.readLines().forEach {line->
-                    Log.d(TAG,"${line}")
+        if(requestCode == REQUEST_CODE) {
+            returnIntent?.data?.let {
+                Log.d(TAG, "onActivityResult:${it.toString()}")
+                contentResolver.openFileDescriptor(it, "r")?.apply {
+                    var fileReader = FileReader(fileDescriptor)
+                    fileReader.readLines().forEach { line ->
+                        Log.d(TAG, "${line}")
+                    }
+                }
+                contentResolver.query(it, null, null, null, null)?.let { cursor ->
+                    val nameIndex = cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME)
+                    val sizeIndex = cursor.getColumnIndex(OpenableColumns.SIZE)
+                    val mimeIndex = cursor.getColumnIndex("mime_type")
+                    cursor.columnNames.forEach {
+                        Log.d(TAG, "columnName:$it");
+                    }
+                    cursor.moveToFirst()
+                    Log.d(
+                        TAG,
+                        "name:${cursor.getString(nameIndex)} size:${cursor.getLong(sizeIndex)} mimeIndex:${
+                            cursor.getString(mimeIndex)
+                        }}"
+                    )
                 }
             }
-            contentResolver.query(it, null, null, null, null)?.let {cursor ->
-                val nameIndex = cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME)
-                val sizeIndex = cursor.getColumnIndex(OpenableColumns.SIZE)
-                val mimeIndex = cursor.getColumnIndex("mime_type")
-                cursor.columnNames.forEach {
-                    Log.d(TAG,"columnName:$it");
-                }
-                cursor.moveToFirst()
-                Log.d(TAG,"name:${cursor.getString(nameIndex)} size:${cursor.getLong(sizeIndex)} mimeIndex:${cursor.getString(mimeIndex)}}")
-            }
+        }else if(requestCode == REQUEST_PHOTO_CODE){
         }
     }
 }

@@ -1,5 +1,6 @@
 package com.zzp.applicationkotlin
 
+import android.content.res.Configuration
 import android.graphics.Color
 import android.graphics.Matrix
 import android.graphics.Rect

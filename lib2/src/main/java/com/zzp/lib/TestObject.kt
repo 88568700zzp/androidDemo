@@ -11,5 +11,9 @@ object TestObject {
             val adUnitIdSplit = adUnitIdStr.split(",")
             System.out.println(adUnitIdSplit[1])
         }
+
     }
+
+
 }
+

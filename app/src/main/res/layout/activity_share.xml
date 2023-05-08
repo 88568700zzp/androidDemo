@@ -46,4 +46,11 @@
         android:text="文件查找"
         android:layout_marginTop="10dp"
         />
+    <Button
+        android:id="@+id/btn_photo_system"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="拍照"
+        android:layout_marginTop="10dp"
+        />
 </LinearLayout>

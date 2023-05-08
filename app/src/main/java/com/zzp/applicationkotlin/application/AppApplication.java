@@ -19,7 +19,7 @@ import com.zzp.applicationkotlin.util.TimeMonitor;
  */
 public class AppApplication extends Application implements Application.ActivityLifecycleCallbacks {
 
-    private final String TAG = "AppApplication";
+    private final String TAG = "zzp12AppApplication";
 
 
     @Override

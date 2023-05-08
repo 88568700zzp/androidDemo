@@ -23,5 +23,21 @@
             android:text="startService"
             />
 
+        <Button
+            android:id="@+id/bindService"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="bindService"
+            android:layout_marginTop="10dp"
+            />
+
+        <Button
+            android:id="@+id/stopService"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="stopService"
+            android:layout_marginTop="10dp"
+            />
+
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

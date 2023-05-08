@@ -10,6 +10,8 @@ import androidx.lifecycle.ViewModel
 class RoomViewModel: ViewModel() {
     var mutableLiveDatas = MutableLiveData<String>()
 
+    var netData = MutableLiveData<String>()
+
     fun getValue(): MutableLiveData<String> {
         return mutableLiveDatas
     }

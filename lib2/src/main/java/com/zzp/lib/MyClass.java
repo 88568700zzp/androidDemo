@@ -1,6 +1,7 @@
 package com.zzp.lib;
 
 import com.zzp.lib.algorithm.Code1;
+import com.zzp.lib.algorithm.Code10;
 import com.zzp.lib.algorithm.Code2;
 import com.zzp.lib.algorithm.Code3;
 import com.zzp.lib.algorithm.Code4;
@@ -8,10 +9,12 @@ import com.zzp.lib.algorithm.Code5;
 import com.zzp.lib.algorithm.Code6;
 import com.zzp.lib.algorithm.Code7;
 import com.zzp.lib.algorithm.Code8;
+import com.zzp.lib.design.DesignMain;
 
 import org.apache.poi.ss.formula.functions.Column;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Sheet;
+import org.jetbrains.annotations.NotNull;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -33,7 +36,15 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Queue;
 import java.util.UUID;
+import java.util.concurrent.ArrayBlockingQueue;
+import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.Executors;
+import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.PriorityBlockingQueue;
+import java.util.concurrent.SynchronousQueue;
+import java.util.concurrent.ThreadFactory;
+import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
 
 import javax.imageio.ImageIO;
 
@@ -195,7 +206,64 @@ public class MyClass {
         //System.out.println(new UUID("321321321".hashCode(),"fsdafdsafdsafd".hashCode()).toString());
 
         //new Code8().test();
-        new ExcelTest().test();
+        //int[] nums = new int[]{7,3,9,6};
+        //new Code10().combinationSum(nums ,6);
+
+        //int[][] nums = new int[][]{{1,2,3},{4,5,6}};
+        //System.out.println(Arrays.toString(nums[1]));
+        //PvKt.Companion.doJob();
+        new ShenjiFile().doJob();
+        //caculate();
+        //testThreadPool();
+        //new DesignMain().doMain();
+    }
+
+    public static void caculate(){
+        float total = 0f;
+        for(int i = 0;i < 300;i++){
+            total = total + 1000;
+            total = total * (1 + 0.03f/12);
+        }
+        System.out.println("result:" + total);
+    }
+
+    public static void testThreadPool(){
+        BlockingQueue<Runnable> queue = new PriorityBlockingQueue<>();
+        ThreadPoolExecutor executor = new ThreadPoolExecutor(1,10,0L, TimeUnit.SECONDS,queue, new ThreadFactory() {
+            int index = 0;
+
+            @Override
+            public Thread newThread(@NotNull Runnable runnable) {
+                index++;
+                return new Thread(runnable,"name-" + index);
+            }
+        });
+        for(int i = 1;i <= 100;i++) {
+            executor.execute(new CCRunnbale(i));
+                    /*try {
+                        Thread.sleep(100);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }*/
+        }
+    }
+
+    static class CCRunnbale implements Runnable,Comparable<CCRunnbale>{
+        public int index;
+
+        public CCRunnbale(int index) {
+            this.index = index;
+        }
+
+        @Override
+        public int compareTo(@NotNull CCRunnbale runnbale) {
+            return runnbale.index - index;
+        }
+
+        @Override
+        public void run() {
+            System.out.println("thread:" + Thread.currentThread().getName() + " index:" + index);
+        }
     }
 
     private static int reverse(int x){

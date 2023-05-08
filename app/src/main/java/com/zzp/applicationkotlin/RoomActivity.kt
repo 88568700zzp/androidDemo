@@ -9,9 +9,16 @@ import androidx.lifecycle.*
 import androidx.lifecycle.Observer
 import com.zzp.applicationkotlin.database.DataBaseManager
 import com.zzp.applicationkotlin.database.Song
+import com.zzp.applicationkotlin.http.HttpEngine
 import com.zzp.applicationkotlin.util.GradientUtil
 import com.zzp.applicationkotlin.viewmodel.RoomViewModel
+import io.reactivex.Observable
+import io.reactivex.android.schedulers.AndroidSchedulers
 import kotlinx.android.synthetic.main.activity_room.*
+import okhttp3.Call
+import okhttp3.Callback
+import okhttp3.Response
+import java.io.IOException
 import java.util.*
 
 /**
@@ -52,17 +59,37 @@ class RoomActivity:AppCompatActivity(){
             song.id = 1
             DataBaseManager.getDataBase(RoomActivity@this).songDao.delete(song)
         }
+        queryNet.setOnClickListener {
+            HttpEngine.getInstance().requestGet("http://www.baidu.com", null, object : Callback {
+                override fun onFailure(call: Call, e: IOException) {
+                }
 
-        querySong.background = GradientUtil.createGradientDrawable(Color.RED,10f)
+                override fun onResponse(call: Call, response: Response) {
+                    response.body()?.let {
+                        Observable.just(it.string()).observeOn(AndroidSchedulers.mainThread()).subscribe {body->
+                            var roomViewModel = mViewModelProvider?.get(RoomViewModel::class.java)
+                            roomViewModel?.netData?.value = body
+                        }
+                    }
+                }
+
+            })
+        }
+
+        //querySong.background = GradientUtil.createGradientDrawable(Color.RED,10f)
 
         mViewModelProvider = ViewModelProviders.of(this)
 
         var roomViewModel = mViewModelProvider?.get(RoomViewModel::class.java)
 
         roomViewModel?.getValue()?.observe(this, Observer<String> {
-            Log.d(TAG,"onChanged ${it}")
+            Log.d(TAG,"onValueChanged ${it} ${Thread.currentThread().name}")
         })
-        roomViewModel?.setValue("AndroidID：${getAndroidId()}")
+
+
+        roomViewModel?.netData?.observe(this, Observer<String> {
+            Log.d(TAG,"onNetChanged ${it} ${Thread.currentThread().name}")
+        })
 
     }
 

@@ -13,12 +13,16 @@ import android.net.*
 import android.net.wifi.WifiManager
 import android.os.Build
 import android.os.Bundle
+import android.os.Handler
 import android.util.Log
 import android.view.View
+import android.widget.ImageView
 import android.widget.RemoteViews
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.NotificationCompat
+import com.zzp.applicationkotlin.util.UtilObject.loadUrl
+import com.zzp.applicationkotlin.util.UtilObject.logInvoke
 import kotlinx.android.synthetic.main.activity_notify.*
 
 
@@ -74,6 +78,7 @@ class NotifyActivity : AppCompatActivity() , View.OnClickListener{
         importance: Int
     ) {
         val channel = NotificationChannel(channelId, channelName, importance)
+        channel.lockscreenVisibility = NotificationCompat.VISIBILITY_PUBLIC
         val notificationManager = getSystemService(
             Context.NOTIFICATION_SERVICE
         ) as NotificationManager
@@ -92,7 +97,7 @@ class NotifyActivity : AppCompatActivity() , View.OnClickListener{
         remoteViews.setOnClickPendingIntent(R.id.notify_speed_check, PendingIntent.getBroadcast(this,0,intent1, PendingIntent.FLAG_UPDATE_CURRENT))
 
         var intent2 = Intent()
-        intent2.setAction("zzp")
+        intent2.setAction("zzy")
         intent2.putExtra("zzp",1)
         remoteViews.setOnClickPendingIntent(R.id.notify_boost, PendingIntent.getBroadcast(this,0,intent2, PendingIntent.FLAG_UPDATE_CURRENT))
 
@@ -107,7 +112,7 @@ class NotifyActivity : AppCompatActivity() , View.OnClickListener{
             .setAutoCancel(true)
             .setOngoing(false)
             .setCustomContentView(remoteViews)
-
+            .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
             .build()
         manager.notify(id, notification)
     }
@@ -130,6 +135,14 @@ class NotifyActivity : AppCompatActivity() , View.OnClickListener{
             }
         }
 
+    }
+
+    override fun onPause() {
+        super.onPause()
+
+        Handler().postDelayed({
+            doNotify(100)
+        },3000L)
     }
 
     private var callBack = object: ConnectivityManager.NetworkCallback(){

@@ -9,8 +9,13 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
+import android.graphics.pdf.PdfDocument;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.HandlerThread;
+import android.os.Looper;
+import android.print.PrintManager;
 import android.provider.Settings;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -28,7 +33,10 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
+import androidx.print.PrintHelper;
 
+import com.jingdong.common.utils.BitmapkitUtils;
+import com.zzp.applicationkotlin.dialog.EditDialog;
 import com.zzp.applicationkotlin.model.SwipeData;
 import com.zzp.applicationkotlin.util.TimeMonitor;
 
@@ -41,9 +49,10 @@ import java.util.List;
  */
 public class NewMainActivity extends AppCompatActivity {
 
-    private String TAG = "NewMainActivity_";
+    private String TAG = "NewMainActivityTag_";
 
     private float dip;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -85,6 +94,10 @@ public class NewMainActivity extends AppCompatActivity {
         Log.d("zzp123","device:" + Settings.Global.getString(getContentResolver(), Settings.Global.DEVICE_NAME));
 
         Log.d("zzp123","device:" + BluetoothAdapter.getDefaultAdapter().getName());
+
+        Log.d("zzp123","appName:" + getResources().getString(getApplication().getApplicationInfo().labelRes));
+
+        //BitmapkitUtils.load(getBaseContext());
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -140,7 +153,7 @@ public class NewMainActivity extends AppCompatActivity {
                     startActivity(intent);
                 } else if (position == 11) {
                     Intent intent = new Intent();
-                    intent.setClass(NewMainActivity.this, ViewPager2Activity.class);
+                    intent.setClass(NewMainActivity.this, ViewPagerActivity.class);
                     startActivity(intent);
                 } else if (position == 12) {
                     Intent intent = new Intent();
@@ -230,7 +243,15 @@ public class NewMainActivity extends AppCompatActivity {
                     startActivity(intent);
                 }else if (position == 30) {
                     Intent intent = new Intent();
-                    intent.setClass(NewMainActivity.this, PdfActivity.class);
+                    intent.setClass(NewMainActivity.this, PdfViewActivity.class);
+                    startActivity(intent);
+                }else if (position == 31) {
+                    Intent intent = new Intent();
+                    intent.setClass(NewMainActivity.this, PrintActivity.class);
+                    startActivity(intent);
+                }else if (position == 32) {
+                    Intent intent = new Intent();
+                    intent.setClass(NewMainActivity.this, RecyclerViewActivity.class);
                     startActivity(intent);
                 }/*else if(position == 22){
                     Intent intent = new Intent();
@@ -241,13 +262,34 @@ public class NewMainActivity extends AppCompatActivity {
         });
 
         setContentView(listView);
+
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                Log.d("zzp1234","Looper name:" + Thread.currentThread().getName());
+
+                Looper.prepare();
+
+                Handler handler = new Handler();
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        Log.d("zzp1234","name:" + Thread.currentThread().getName());
+                        handler.getLooper().quitSafely();
+                    }
+                },1000);
+                Looper.loop();
+                Log.d("zzp1234","end");
+            }
+        },"zzp-thread");
+        thread.start();
     }
 
     class TitleAdapter extends BaseAdapter {
 
         private String[] titles = new String[]{"Instrumentation", "job", "startService", "traffic", "addWindow", "webView",
                 "动态壁纸", "微信分享", "娃娃机", "kotlin", "video", "viewPager2", "room", "通知栏", "FaceTestWifi", "provider", "辅助服务",
-                "hookService", "bitmap", "touchBall", "大淘客", "分享", "nestScroll", "Coordinator", "Rxjava", "GreenDao","figger","night","imageEdit","文档解析","pdf"};
+                "hookService", "bitmap", "touchBall", "大淘客", "分享", "nestScroll", "Coordinator", "Rxjava", "GreenDao","figger","night","imageEdit","文档解析","pdf","print","recyclerView"};
 
         @Override
         public int getCount() {

@@ -49,8 +49,12 @@ public class HttpEngine {
     }
 
     public void requestGet(String url, TreeMap<String,String> param, Callback responseCallback){
-        Request request = new Request.Builder().url(url + "?" + toGetParam(param)).get().build();
-        getClient().newCall(request).enqueue(responseCallback);
+        Request request;
+        if(param == null){
+            request = new Request.Builder().url(url).get().build();
+        }else {
+            request = new Request.Builder().url(url + "?" + toGetParam(param)).get().build();
+        }
     }
 
     private String toGetParam(TreeMap<String, String> paraMap) {

@@ -15,10 +15,14 @@ android {
     compileSdkVersion 30
     buildToolsVersion "30.0.3"
 
+    aaptOptions {
+        noCompress "pdf"  //表示不让aapt压缩的文件后缀
+    }
+
     defaultConfig {
         applicationId "com.zzp.applicationkotlin"
         minSdkVersion 24
-        targetSdkVersion 30
+        targetSdkVersion 28
         versionCode 1
         versionName "1.0"
 
@@ -29,7 +33,6 @@ android {
 
         ndk {
             abiFilter "armeabi-v7a"
-            abiFilter "x86"
         }
 
         javaCompileOptions {
@@ -55,8 +58,8 @@ android {
 
     lintOptions {
         abortOnError false
-        htmlReport true
-        setHtmlOutput(new File("D://c.html"))
+        //htmlReport true
+        //setHtmlOutput(new File("D://c.html"))
     }
 
     /*println "getSourceSets size:" + getSourceSets().size()
@@ -95,9 +98,11 @@ android {
                 path 'src/main/jni/Android.mk'
             }
         }*/
-        sourceSets.main {
-            jni.srcDirs = []
-            jniLibs.srcDirs = ['src/main/jniLibs']
+
+        sourceSets {
+            main {
+                jniLibs.srcDirs = ['libs']//添加这个
+            }
         }
     }
 
@@ -173,6 +178,8 @@ def printlnSourceSet(SourceSet sourceSet){
 
 dependencies {
 
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     implementation 'androidx.core:core-ktx:1.2.0'
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.3.1"
@@ -181,12 +188,7 @@ dependencies {
     implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
     implementation 'androidx.navigation:navigation-fragment-ktx:2.2.2'
     implementation 'androidx.navigation:navigation-ui-ktx:2.2.2'
-    implementation files('src\\main\\libs\\gradle-core-3.1.0-sources.jar')
-    implementation files('src\\main\\libs\\gradle-api-3.1.0-sources.jar')
-    implementation files('src\\main\\libs\\gradle-3.1.0-sources.jar')
-    implementation files('src\\main\\libs\\gradle-3.1.0-sources.jar')
-    implementation files('src\\main\\libs\\builder-3.1.0-sources.jar')
-    implementation files('src\\main\\libs\\builder-model-3.1.0-sources.jar')
+
     implementation 'androidx.biometric:biometric-ktx:1.2.0-alpha03'
     implementation 'androidx.multidex:multidex:2.0.1'
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.1.1"
@@ -196,6 +198,7 @@ dependencies {
     implementation 'com.facebook.network.connectionclass:connectionclass:1.0.1'
 
     implementation 'com.github.bumptech.glide:glide:4.12.0'
+    implementation 'androidx.print:print:1.0.0'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.12.0'
 
     //retrofit网络请求框架
@@ -272,8 +275,12 @@ dependencies {
     implementation 'javax.xml.stream:stax-api:1.0'
     implementation 'com.fasterxml:aalto-xml:1.2.2'
 
-    implementation 'com.tom-roush:pdfbox-android:2.0.25.0'
-    implementation 'com.gemalto.jp2:jp2-android:1.0.3'
+    //implementation 'com.tom-roush:pdfbox-android:2.0.25.0'
+    //implementation 'com.gemalto.jp2:jp2-android:1.0.3'
+
+    implementation 'com.tom-roush:pdfbox-android:2.0.27.0'
+
+    //implementation 'com.github.barteksc:android-pdf-viewer:2.8.2'
 }
 
 

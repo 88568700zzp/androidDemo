@@ -9,6 +9,7 @@ import android.content.Intent
 import android.os.Binder
 import android.os.Build
 import android.os.IBinder
+import android.os.Process
 import android.provider.Settings
 import android.util.Log
 import com.zzp.applicationkotlin.R
@@ -32,6 +33,12 @@ class FirstService :Service(){
             return "success"
         }
 
+    }
+
+
+    override fun onStart(intent: Intent?, startId: Int) {
+        super.onStart(intent, startId)
+        Log.e("FirstService","onStart:$startId")
     }
 
     override fun onBind(intent: Intent?): IBinder? {

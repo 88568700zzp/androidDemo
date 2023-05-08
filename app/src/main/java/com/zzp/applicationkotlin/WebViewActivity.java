@@ -5,10 +5,16 @@ import android.content.ClipboardManager;
 import android.content.ClipboardManager.OnPrimaryClipChangedListener;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.net.http.SslError;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.InputFilter;
+import android.text.Spanned;
 import android.text.TextUtils;
+import android.text.TextWatcher;
+import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
@@ -23,6 +29,7 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.EditText;
+import android.widget.Filter;
 import android.widget.Switch;
 import android.widget.Toast;
 
@@ -41,6 +48,7 @@ public class WebViewActivity extends AppCompatActivity implements View.OnClickLi
 
     private WebView mWebView;
     private Switch mSwitch;
+    private EditText mEditText;
 
     private ClipboardManager mClipboardManager;
 
@@ -50,6 +58,29 @@ public class WebViewActivity extends AppCompatActivity implements View.OnClickLi
         setContentView(R.layout.activity_web);
         mWebView = findViewById(R.id.webview);
         mSwitch = findViewById(R.id.dialog_switch);
+        mEditText = findViewById(R.id.edit_text);
+
+        mEditText.setRawInputType(Configuration.KEYBOARD_QWERTY);
+
+        InputFilter[] filters = new InputFilter[1];
+        filters[0] = new InputFilter() {
+
+            @Override
+            public CharSequence filter(CharSequence source, int start, int end, Spanned dest, int dstart, int dend) {
+                for(int i = 0;i < source.length();i++){
+                    char ch = source.charAt(i);
+                    Log.d("zzp1234","char:" + ch + " " +  Integer.toHexString(Integer.valueOf(ch)));
+                    if(!isSymbol(ch)){
+                        return "";
+                    }
+                }
+                return source;
+            }
+        };
+
+        mEditText.setFilters(filters);
+
+        //mEditText.setTransformationMethod(PasswordTransformationMethod.getInstance());
 
         WebSettings webSettings = mWebView.getSettings();
 
@@ -139,11 +170,11 @@ public class WebViewActivity extends AppCompatActivity implements View.OnClickLi
         findViewById(R.id.doSend).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                EditText editText = findViewById(R.id.edit_text);
-                if(TextUtils.isEmpty(editText.getText())){
+                mEditText.setTransformationMethod(null);
+                if(TextUtils.isEmpty(mEditText.getText())){
                     mWebView.loadUrl("javascript:javacalljs()");
                 }else{
-                    mWebView.loadUrl("javascript:javacalljswithargs('" + editText.getText() +"')");
+                    mWebView.loadUrl("javascript:javacalljswithargs('" + mEditText.getText() +"')");
                 }
             }
         });
@@ -252,4 +283,11 @@ public class WebViewActivity extends AppCompatActivity implements View.OnClickLi
             Log.e("startFunction", "----有参" + data);
         }
     }
+
+    static boolean isSymbol(char ch)
+    {
+        if(0x21 <= ch && ch <= 0x7E) return true;
+        return false;
+    }
+
 }

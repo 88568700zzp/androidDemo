@@ -21,7 +21,7 @@ import com.zzp.applicationkotlin.viewmodel.BitmapViewModel
  */
 class BitmapActivity : AppCompatActivity() {
 
-    private val TAG = "BitmapActivityTag"
+    private val TAG = "BitmapActivityTag_"
 
     private lateinit var mFragmentTransaction: FragmentTransaction
 

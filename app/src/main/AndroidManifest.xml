@@ -8,6 +8,7 @@
     <uses-permission android:name="android.permission.READ_PRIVILEGED_PHONE_STATE" />
     <uses-permission android:name="android.permission.USE_FINGERPRINT" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.BIND_PRINT_SERVICE" />
     <uses-permission
         android:name="android.permission.PACKAGE_USAGE_STATS"
         tools:ignore="ProtectedPermissions" />
@@ -57,6 +58,18 @@
         android:theme="@style/Theme.ApplicationKotlin"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".ViewPagerActivity"
+            android:exported="true" />
+        <activity
+            android:name=".RecyclerViewActivity"
+            android:exported="true" />
+        <activity
+            android:name=".PrintActivity"
+            android:exported="true" />
+        <activity
+            android:name=".PdfViewActivity"
+            android:exported="true" />
+        <activity
             android:name=".FormatActivity"
             android:exported="false" />
         <activity
@@ -92,6 +105,7 @@
         <activity
             android:name=".ForegroundServiceActivity"
             android:label="@string/title_activity_work_manager_actiivty"
+            android:launchMode="singleTop"
             android:theme="@style/Theme.ApplicationKotlin.NoActionBar" />
         <activity
             android:name=".AddWindowActivity"
@@ -204,10 +218,7 @@
             android:name=".RxJavaActivity"
             android:label="@string/app_name"
             android:theme="@style/Theme.ApplicationKotlin.NoActionBar" />
-        <activity
-            android:name=".PdfActivity"
-            android:label="@string/app_name"
-            android:theme="@style/Theme.ApplicationKotlin.NoActionBar" />
+
         <service
             android:name=".StaticWallpaper"
             android:enabled="true"

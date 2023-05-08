@@ -9,3 +9,4 @@ include ':app'
 rootProject.name = "ApplicationKotlin"
 include ':lib2'
 include ':pdfLib'
+include ':jdLib'

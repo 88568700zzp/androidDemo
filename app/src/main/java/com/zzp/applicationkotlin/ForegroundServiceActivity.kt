@@ -6,16 +6,14 @@ import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
 import android.content.ServiceConnection
-import android.os.Build
-import android.os.Bundle
-import android.os.Handler
-import android.os.IBinder
+import android.os.*
 import android.telephony.TelephonyManager
 import android.util.Log
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.zzp.applicationkotlin.aidl.IITalk
 import com.zzp.applicationkotlin.service.FirstService
+import com.zzp.applicationkotlin.service.SecondService
 import kotlinx.android.synthetic.main.activity_foreground_service.*
 
 /**
@@ -24,31 +22,31 @@ import kotlinx.android.synthetic.main.activity_foreground_service.*
  */
 class ForegroundServiceActivity: AppCompatActivity() {
 
+    companion object{
+        var REQUEST_CODE = 0x123
+    }
+
     private var mConnect = false
 
     private var mTalk:IITalk ?= null
+
+    private var mHandler = Handler(Looper.getMainLooper())
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         setContentView(R.layout.activity_foreground_service)
         startService.setOnClickListener{
-            if(!mConnect) {
-                var intent = Intent()
-                Log.e("zzp123", "startFirstService")
-                intent.setClassName(packageName, FirstService::class.java.name)
-                /*if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            var intent = Intent()
+            Log.e("zzp123", "startService")
+            intent.setClassName(packageName, SecondService::class.java.name)
+            intent.putExtra("key",100)
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                 startForegroundService(intent)
             }else{
                 startService(intent)
-            }*/
-                bindService(intent, conn, android.content.Context.BIND_AUTO_CREATE)
             }
-
-            if(mTalk != null){
-                mTalk?.doTalk("6666")
-            }
-
+            //startService(intent)
             /*var dialog =  AlertDialog.Builder(this).setMessage("zzp").create()
             dialog.show()
             Handler().postDelayed({
@@ -67,6 +65,30 @@ class ForegroundServiceActivity: AppCompatActivity() {
             }
 
         },7000L)*/
+
+        bindService.setOnClickListener {
+            if(!mConnect) {
+                var intent = Intent()
+                Log.e("zzp123", "bindService")
+                intent.setClassName(packageName, FirstService::class.java.name)
+                bindService(intent, conn, Context.BIND_AUTO_CREATE)
+            }
+
+            if(mTalk != null){
+                mTalk?.doTalk("6666")
+            }
+        }
+
+        stopService.setOnClickListener {
+           with(Intent(this@ForegroundServiceActivity, SecondService::class.java)){
+               stopService(this)
+           }
+
+        }
+
+        mHandler.postDelayed({
+            startService.performClick()
+        },3000L)
     }
 
     var conn = object:ServiceConnection{
@@ -101,4 +123,13 @@ class ForegroundServiceActivity: AppCompatActivity() {
         return intent
     }
 
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        Log.d("zzp1234","onActivityResult:$requestCode")
+    }
+
+    override fun onNewIntent(intent: Intent?) {
+        super.onNewIntent(intent)
+        Log.d("zzp1234","onNewIntent")
+    }
 }

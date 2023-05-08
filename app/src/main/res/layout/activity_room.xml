@@ -20,6 +20,13 @@
         android:text="querySong"
         android:layout_marginTop="10dp"
         />
+    <Button
+        android:id="@+id/queryNet"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="queryNet"
+        android:layout_marginTop="10dp"
+        />
     <com.zzp.applicationkotlin.view.RoundTextView
         android:id="@+id/deleteSong"
         android:layout_width="wrap_content"

@@ -15,7 +15,7 @@ import kotlin.collections.ArrayList
  */
 class DatabaseProvider : ContentProvider() {
 
-    private val TAG = "DatabaseProvider"
+    private val TAG = "zzp12DatabaseProvider"
 
     val AUTOHORITY = "com.zzp.databaseprovider"
 
