@@ -97,6 +97,8 @@ public class NewMainActivity extends AppCompatActivity {
 
         Log.d("zzp123","appName:" + getResources().getString(getApplication().getApplicationInfo().labelRes));
 
+        Log.d("zzp123","force_fsg_nav_bar:" + Settings.Global.getInt(getContentResolver(), "force_fsg_nav_bar", 0));
+
         //BitmapkitUtils.load(getBaseContext());
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -253,6 +255,10 @@ public class NewMainActivity extends AppCompatActivity {
                     Intent intent = new Intent();
                     intent.setClass(NewMainActivity.this, RecyclerViewActivity.class);
                     startActivity(intent);
+                }else if (position == 33) {
+                    Intent intent = new Intent();
+                    intent.setClass(NewMainActivity.this, SensorActivity.class);
+                    startActivity(intent);
                 }/*else if(position == 22){
                     Intent intent = new Intent();
                     intent.setClass(NewMainActivity.this,XmlActivity.class);
@@ -289,7 +295,8 @@ public class NewMainActivity extends AppCompatActivity {
 
         private String[] titles = new String[]{"Instrumentation", "job", "startService", "traffic", "addWindow", "webView",
                 "动态壁纸", "微信分享", "娃娃机", "kotlin", "video", "viewPager2", "room", "通知栏", "FaceTestWifi", "provider", "辅助服务",
-                "hookService", "bitmap", "touchBall", "大淘客", "分享", "nestScroll", "Coordinator", "Rxjava", "GreenDao","figger","night","imageEdit","文档解析","pdf","print","recyclerView"};
+                "hookService", "bitmap", "touchBall", "大淘客", "分享", "nestScroll", "Coordinator", "Rxjava", "GreenDao","figger","night"
+                ,"imageEdit","文档解析","pdf","print","recyclerView","sensor"};
 
         @Override
         public int getCount() {

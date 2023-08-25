@@ -1,8 +1,8 @@
 package com.jd.lib;
 
+import com.alibaba.fastjson.JSONObject;
 import com.jd.lib.util.MantoCryptoUtils;
 
-import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
 import java.net.InetSocketAddress;
@@ -16,6 +16,8 @@ import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
+import java.util.Set;
 import java.util.TreeMap;
 
 import javax.net.ssl.SSLContext;
@@ -26,17 +28,18 @@ import javax.net.ssl.X509TrustManager;
 import netscape.javascript.JSObject;
 import okhttp3.CacheControl;
 import okhttp3.FormBody;
+import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 
 public class SimpleTest {
-    void request() {
+    void requestJD() {
         try {
             OkHttpClient client = new OkHttpClient.Builder()
-                    .proxy(new Proxy(Proxy.Type.HTTP, new InetSocketAddress("127.0.0.1", 8002)))
-                    .sslSocketFactory(createTrustAllSSLSocketFactory(), new TrustAllManager())
+                    //.proxy(new Proxy(Proxy.Type.HTTP, new InetSocketAddress("127.0.0.1", 8002)))
+                    //.sslSocketFactory(createTrustAllSSLSocketFactory(), new TrustAllManager())
                     .build();
 
 
@@ -64,6 +67,11 @@ public class SimpleTest {
         }
     }
 
+    void request1(){
+        OkHttpClient client = new OkHttpClient.Builder().build();
+
+    }
+
     public static SSLSocketFactory createTrustAllSSLSocketFactory() {
         SSLSocketFactory sSLSocketFactory = null;
         try {
@@ -80,35 +88,31 @@ public class SimpleTest {
     }
 
     public void doTest() throws UnsupportedEncodingException {
-        String bodyStr = "{\"abTest800\":true,\"avoidLive\":false,\"brand\":\"Redmi\",\"cityId\":1601,\"cpsNoTuan\":null,\"darkModelEnum\":3,\"districtId\":3633,\"eventId\":\"Searchlist_Productid\",\"fromType\":0,\"isDesCbc\":true,\"latitude\":\"23.133399\",\"lego\":true,\"longitude\":\"113.380193\",\"model\":\"M2012K11AC\",\"ocrFlag\":false,\"pluginVersion\":100060,\"plusClickCount\":0,\"plusLandedFatigue\":0,\"provinceId\":\"19\",\"skuId\":\"100012043978\",\"source_type\":\"search\",\"source_value\":\"飞天茅台53度\",\"townId\":63252,\"uAddrId\":\"0\",\"utmMedium\":null}";
+        String bodyStr = "{\"action\":\"gis\",\"appid\":\"e0a684c49d77e7749cdf7c2ab92e2d1a\",\"ifdetail\":\"0\",\"isdefaultipaddr\":\"1\",\"lat\":\"23.12705\",\"lng\":\"113.374735\"}";
 
         JSONObject jSONObject = new JSONObject();
-        jSONObject.put("st","1667388635323");
-        jSONObject.put("functionId","wareBusiness");
-        jSONObject.put("build","89053");
-        jSONObject.put("clientVersion","10.0.8");
-        //jSONObject.put("appid","MessageCenter");
+        jSONObject.put("functionId","lbsapi");
+        jSONObject.put("clientVersion","8.5.12");
+        jSONObject.put("build","73078");
         jSONObject.put("client","android");
         jSONObject.put("brand","Xiaomi");
         jSONObject.put("d_model","M2012K11AC");
-        jSONObject.put("osVersion","12");
+        jSONObject.put("osVersion","13");
         jSONObject.put("screen","2276*1080");
-        jSONObject.put("partner","jdtopc");
-        jSONObject.put("oaid","19baa93b587dae9b");
-        jSONObject.put("eid","eidAebe68121dds69etFOUb+QCOAeHyK9MoHp/XrRr1jnI+ecPBrrbGPGxwv8oPZxtojq0hMm2bzK1cv3+defLNUJlGDLGrjEl0xS0Fi7YR5f3DaV45D");
-        jSONObject.put("sdkVersion","31");
-        jSONObject.put("lang","zh_CN");
-        jSONObject.put("uuid","1c6c6d648870f216");
+        jSONObject.put("partner","ks007");
         jSONObject.put("aid","1c6c6d648870f216");
+        jSONObject.put("oaid","19baa93b587dae9b");
         jSONObject.put("openudid","1c6c6d648870f216");
+        jSONObject.put("eid","eidAee068121bes7 wCbelsrT4u0qYr9SOKbYfsAnQQmkOkrXIZDJ1CwR4XaRWcUE8q63UExKC2mEnagZE8eeEb1GVnwv4L8gQMlc8A28H8Ful58dgBx");
+        jSONObject.put("sdkVersion","33");
+        jSONObject.put("lang","zh_CN");
         jSONObject.put("area","19_1601_3633_63243");
         jSONObject.put("networkType","wifi");
-        jSONObject.put("wifiBssid","fbf96989d5f0c394f66ff4b28f86b490");
-        jSONObject.put("uts","0f31TVRjBSt+bgdu7jx7XmiJYNLbjakrVhAWtTn2yx3FJLvWxisVXxt2ZJMQZrlcJ0nlSK0D6YSTmqsn0XNkNQPrPbofHsW4QuAZwBH2omi0e5iEANXVg8bWCcqy63orVDyze+JOPjTdbDvpww8QiI++e2NXU5xG7Qx9jhV3dkTc00yxzFGKMRlGbQVjNJUQbJpfmtFZ0oWHN0q62GSn2g==");
-        jSONObject.put("uemps","0-2");
-        jSONObject.put("harmonyOs","0");
-        jSONObject.put("scval","100012043978");
-        jSONObject.put("sv","102");
+        jSONObject.put("wifiBssid","0138342a286d3695e7c8b2482e33acd6");
+        jSONObject.put("uts","0f31TVRjBSvCR1jK0VPLOO1wBm1QK0Qz06haTzVgBHLIWZI/9cApvFvTRbPRb0xb7oMU8fvdKGQz+UkjvLemfkMCW9//uH5VNVeZW5DAbE44F+wXRiOv4hFy2VD08xSDNC1DSgDdmaE1IY6BWiyjhLIIHnoZbRiuSbKgpkzRIbww15iNUmcaCkQDctc02W+IH8zveeS0hf5P2NLj2NbSjw==");
+        jSONObject.put("uuid","1c6c6d648870f216");
+        jSONObject.put("st","1691375143768");
+        jSONObject.put("sv","110");
 
         jSONObject.put("body",bodyStr);
 
@@ -118,13 +122,14 @@ public class SimpleTest {
             }
         });
         if (jSONObject != null) {
-            Iterator keys = jSONObject.keys();
-            while (keys.hasNext()) {
-                String str3 = (String) keys.next();
-                if (!isEmpty(jSONObject.optString(str3))) {
-                    treeMap.put(str3, jSONObject.optString(str3));
+            Set<Map.Entry<String, Object>> entrySet = jSONObject.entrySet();
+            for(Map.Entry<String, Object> entry:entrySet){
+                String key = entry.getKey();
+                if (!isEmpty(jSONObject.getString(key))) {
+                    treeMap.put(key, jSONObject.getString(key));
                 }
             }
+
         }
 
         StringBuilder sb = new StringBuilder();
@@ -137,22 +142,25 @@ public class SimpleTest {
         }
 
 
-
-
         StringBuilder sb2 = new StringBuilder();
         sb2.append("2AA64BD44C4381F31D9DA68EFE377874");
         sb2.append("7D6D16CC3D2BE89108F9DCFC9A855253");
-        String cP = MantoCryptoUtils.m3783c(sb2.toString(), "616E746F");
+        String cP = MantoCryptoUtils.m21640c(sb2.toString(), "616E746F");
 
         System.out.println("--->data:" + sb.toString());
-
         System.out.println("--->secretKey:" + cP);
 
         String a2 = MantoCryptoUtils.m3779a(sb.toString().getBytes("UTF-8"), cP.getBytes("UTF-8"));
 
-        System.out.println("--->result:" + a2.toLowerCase());
+        System.out.println("--->sign:" + a2.toLowerCase());
+        System.out.println("--->length0:" + cP.length());
+        System.out.println("--->length1:" + a2.toLowerCase().length());
+        System.out.println("--->length2:" + "694026a659347423c21a061cc9e571da".length());
+
     }
 
+    public static void request2(){
+    }
 
     /**
      * 信任所有的证书

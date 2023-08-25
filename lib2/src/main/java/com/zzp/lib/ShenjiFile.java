@@ -14,8 +14,8 @@ public class ShenjiFile {
 
     String diffFile = "C:\\android\\check.txt";
 
-    String inputParentFile = "C:\\android\\AsrSdk_Android";
-    String outputParentFile = "C:\\android\\AsrSdk_Android_Output";
+    String inputParentFile = "C:\\android\\AiOffice_Android";
+    String outputParentFile = "C:\\android\\AiOffice_Android_Output";
 
     String[] codes = new String[]{"192.","221.","168.","121.","1234","pwd","passwd","password"};
 

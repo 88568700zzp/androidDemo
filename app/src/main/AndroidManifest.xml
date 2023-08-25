@@ -38,6 +38,8 @@
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.READ_PRIVILEGED_PHONE_STATE" />
     <uses-permission android:name="android.permission.USE_BIOMETRIC" />
+    <uses-feature android:name="android.hardware.sensor.accelerometer"/>
+
     <!--
 <queries>
         <package android:name="com.tencent.mm" />
@@ -57,6 +59,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ApplicationKotlin"
         android:usesCleartextTraffic="true">
+        <activity
+            android:name=".SensorActivity"
+            android:exported="true" />
         <activity
             android:name=".ViewPagerActivity"
             android:exported="true" />

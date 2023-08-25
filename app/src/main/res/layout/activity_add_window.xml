@@ -3,7 +3,6 @@
     xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:gravity="center"
     >
     <Button
         android:id="@+id/btn_add"
@@ -18,5 +17,14 @@
         android:text="removeWindow"
         android:layout_marginTop="20dp"
         />
-
+    <com.zzp.applicationkotlin.view.LineEditText
+        android:layout_width="300dp"
+        android:layout_height="300dp"
+        android:maxHeight="100dp"
+        android:lineSpacingExtra="10dp"
+        android:paddingBottom="15dp"
+        android:paddingTop="15dp"
+        android:background="@color/white"
+        android:gravity="top"
+        />
 </LinearLayout>

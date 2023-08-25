@@ -212,10 +212,13 @@ public class MyClass {
         //int[][] nums = new int[][]{{1,2,3},{4,5,6}};
         //System.out.println(Arrays.toString(nums[1]));
         //PvKt.Companion.doJob();
-        new ShenjiFile().doJob();
+        //new ShenjiFile().doJob();
         //caculate();
         //testThreadPool();
         //new DesignMain().doMain();
+        //caculate1();
+        String s = "123456";
+        System.out.println(s.substring(0,6));
     }
 
     public static void caculate(){
@@ -225,6 +228,26 @@ public class MyClass {
             total = total * (1 + 0.03f/12);
         }
         System.out.println("result:" + total);
+    }
+
+    public static void caculate1(){
+        float perCoin = 32151.6f;
+        float rate = 1.032f;
+        int year = 6;
+        int leftYear = 26;
+
+        float total = 0f;
+        for(int i = 0;i < year;i++){
+            total = total + perCoin;
+            total = total * rate;
+        }
+        System.out.println("result1:" + total);
+
+        for(int i = 0;i < leftYear;i++){
+            total = total * rate;
+        }
+
+        System.out.println("result2:" + total);
     }
 
     public static void testThreadPool(){

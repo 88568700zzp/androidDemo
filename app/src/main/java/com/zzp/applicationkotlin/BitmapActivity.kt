@@ -12,6 +12,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.zzp.applicationkotlin.application.AppApplication
 import com.zzp.applicationkotlin.fragment.BitmapFragment
+import com.zzp.applicationkotlin.fragment.ImageBitmapFragment
 import com.zzp.applicationkotlin.viewmodel.BitmapViewModel
 
 
@@ -37,7 +38,7 @@ class BitmapActivity : AppCompatActivity() {
         mFragmentTransaction.commitAllowingStateLoss()*/
 
         mFragmentTransaction = supportFragmentManager.beginTransaction()
-        mFragmentTransaction.add(R.id.bitmap_content,BitmapFragment())
+        mFragmentTransaction.add(R.id.bitmap_content, ImageBitmapFragment())
         mFragmentTransaction.commitAllowingStateLoss()
 
         Log.d("zzpliveData","BitmapViewModel class1:${BitmapViewModel::class.java} class2:${BitmapViewModel::javaClass}}")

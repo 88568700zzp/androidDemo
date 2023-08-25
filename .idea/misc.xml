@@ -3,13 +3,17 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/android/androidDemo/app/src/main/res/layout/activity_add_window.xml" value="0.16757246376811594" />
         <entry key="..\:/android/androidDemo/app/src/main/res/layout/activity_notify.xml" value="0.18697916666666667" />
         <entry key="..\:/android/androidDemo/app/src/main/res/layout/activity_pdf_view.xml" value="0.1109375" />
         <entry key="..\:/android/androidDemo/app/src/main/res/layout/activity_print.xml" value="0.18697916666666667" />
         <entry key="..\:/android/androidDemo/app/src/main/res/layout/activity_recycler_view.xml" value="0.18697916666666667" />
         <entry key="..\:/android/androidDemo/app/src/main/res/layout/activity_room.xml" value="0.18697916666666667" />
+        <entry key="..\:/android/androidDemo/app/src/main/res/layout/activity_sensor.xml" value="0.11666666666666667" />
         <entry key="..\:/android/androidDemo/app/src/main/res/layout/activity_view_pager.xml" value="0.1" />
         <entry key="..\:/android/androidDemo/app/src/main/res/layout/activity_web.xml" value="0.1" />
+        <entry key="..\:/android/androidDemo/app/src/main/res/layout/fragment_bitmap.xml" value="0.1" />
+        <entry key="..\:/android/androidDemo/app/src/main/res/layout/fragment_image_bitmap.xml" value="0.1" />
       </map>
     </option>
   </component>

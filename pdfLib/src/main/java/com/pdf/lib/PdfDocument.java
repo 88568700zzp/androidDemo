@@ -55,7 +55,7 @@ import javax.imageio.ImageIO;
 public class PdfDocument {
 
     public static void main(String[] args) throws Exception {
-        //createPdf();
+        createPdf();
         //editExistPdf();
         //extractText();
         //pdfToImage();
@@ -121,9 +121,9 @@ public class PdfDocument {
 
         try (PDDocument doc = new PDDocument())
         {
-            for(int i = 0;i < 2;i++) {
+            for(int i = 0;i < 1;i++) {
 
-                Matrix matrix = new Matrix();
+
 
                 PDPage page = new PDPage(PDRectangle.A4);
                 doc.addPage(page);
@@ -137,26 +137,60 @@ public class PdfDocument {
 
                 PDRectangle pdRectangle = page.getMediaBox();
                 System.out.println("pdRectangle:" + pdRectangle.toString());
+                System.out.println("pageWidth:" + pageWidth + " pageHeight:" + pageHeight);
 
                 PDImageXObject pdImage = PDImageXObject.createFromFile(imagePath, doc);
 
                 // create a page with the message
                 try (PDPageContentStream contents = new PDPageContentStream(doc, page)) {
+
+                    PDExtendedGraphicsState r = new PDExtendedGraphicsState();
+
+                    // 设置透明度
+                    r.setNonStrokingAlphaConstant(0.2f);
+                    r.setAlphaSourceFlag(true);
+                    contents.setGraphicsStateParameters(r);
+
+                    float fontSize = 12;
+
+                    double cRadians = Math.toRadians(10);
+
+                    float cTx = (float) (Math.sin(cRadians) * pageHeight/2);
+                    float cTy = (float) (Math.sin(cRadians) * pageWidth/2);
+
+                    contents.transform(Matrix.getRotateInstance(cRadians,cTx,-cTy));
+
                     String pageText = "test new text create ";
 
-                    float textWidth = font.getStringWidth(pageText) / 1000 * 12;
+                    float textWidth = font.getStringWidth(pageText) / 1000 * fontSize;
+                    float textHeight = font.getFontDescriptor().getCapHeight()/1000 * fontSize;
 
                     contents.beginText();
-                    contents.setFont(font, 12);
-                    contents.setLeading(12);
+                    contents.setFont(font, fontSize);
+                    //contents.setLeading(12);
                     //contents.newLineAtOffset((pageWidth - textWidth)/2, pageHeight - 72/2);
 
-                    matrix.translate((pageWidth - textWidth) / 2, pageHeight - 144);
+                    float ty = pageHeight - textHeight;
 
-                    contents.setTextMatrix(matrix);
+                    float tx = 0;
 
-                    contents.showText(pageText);
-                    contents.newLine();
+                    while(ty > 0) {
+                        tx = 0;
+                        while (tx < pageWidth) {
+                            Matrix matrix = new Matrix();
+                            matrix.translate(tx, ty);
+                            contents.setTextMatrix(matrix);
+                            contents.newLineAtOffset(0, 0);
+                            contents.showText(pageText);
+
+                            tx = tx + textWidth + 10;
+                        }
+                        ty = ty - textHeight - 10;
+                    }
+
+
+
+                    /*contents.newLine();
 
                     contents.showText(pageText);
 
@@ -169,12 +203,12 @@ public class PdfDocument {
                     contents.beginText();
                     contents.setFont(font, 25);
                     contents.setLeading(25);
-                    contents.newLineAtOffset(0, 150);
+                    contents.newLineAtOffset(0, 100);
                     contents.showText("zzp123");
 
                     contents.newLine();
 
-                    contents.showText("zzp124");
+                    contents.showText("zzp124");*/
 
                     contents.endText();
 

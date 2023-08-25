@@ -169,10 +169,19 @@ class RxJavaActivity : AppCompatActivity(), View.OnClickListener,
                 }
             }
             merge->{
-                Observable.merge(
-                    Observable.intervalRange(1,2,1,1, TimeUnit.SECONDS),
-                    Observable.just("123")
-                ).observeOn(Schedulers.io()).subscribe(object:Consumer<Any>{
+
+                var observale =  Observable.merge(
+                    Observable.just("123"),
+                    Observable.just("124"),
+                    Observable.just("125")
+                )
+
+                Observable.just("666").map {it->
+                    Log.d(TAG,"${it}")
+                    "55"
+                }.flatMap { it->
+                    observale
+                }.observeOn(Schedulers.io()).subscribe(object:Consumer<Any>{
                     override fun accept(t: Any?) {
                         Log.d(TAG,"${Thread.currentThread().name} doOnNext ${t}")
                     }
