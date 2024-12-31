@@ -53,6 +53,7 @@
             android:layout_margin="10dp"
             android:text="@string/jump_to_offline_pay"/>
 
+
     </LinearLayout>
 
 </ScrollView>

@@ -1,11 +1,7 @@
-import org.gradle.api.internal.TaskInputsInternal
-import org.gradle.api.internal.TaskOutputsInternal
-
 plugins {
     id 'com.android.application'
     id 'kotlin-android'
     id 'kotlin-android-extensions'
-    id 'AndResGuard'
     id 'org.greenrobot.greendao'
 }
 
@@ -31,9 +27,9 @@ android {
                                 UMENG_CHANNEL_VALUE2 : "debug"
         ]
 
-        ndk {
+        /*ndk {
             abiFilter "armeabi-v7a"
-        }
+        }*/
 
         javaCompileOptions {
             annotationProcessorOptions {
@@ -115,70 +111,11 @@ android {
     }
 }
 
-def checkData() {
-    TaskOutputsInternal out = packageDebug.getOutputs()
-    if(out.hasOutput){
-        out.files.each {
-            println 'checkData hasOutput:' + it.absolutePath
-        }
 
-    }else{
-        println 'noOutput'
-    }
-    println '-----------------------'
-    TaskInputsInternal input = packageDebug.getInputs()
-    if(input.hasInputs){
-        input.files.each {
-            println 'checkData hasInputs:' + it.absolutePath
-        }
-    }else{
-        println 'noInput'
-    }
-}
-
-def createFile(){
-    File file = new File("D://myAndroidProject//androidDemo//app//build//intermediates//packaged_manifests//debug//AndroidManifest.xml");
-    FileReader reader = new FileReader(file)
-    StringBuffer stringBuffer = new StringBuffer()
-    String contentLine
-    while((contentLine = reader.readLine()) != null)
-    {
-        System.out.println(contentLine)
-        if(contentLine.contains("XmlActivity")){
-            stringBuffer.append(contentLine.replace("XmlActivity","Xml123Activity"))
-        }else{
-            stringBuffer.append(contentLine)
-        }
-    }
-    FileWriter writer = new FileWriter(file)
-    writer.write(stringBuffer.toString())
-    writer.flush()
-
-    reader.close()
-    writer.close()
-
-    System.out.println("createFile success")
-}
-
-
-/*preBuild.doLast {
-    checkData()
-}*/
-
-def printlnSourceSet(SourceSet sourceSet){
-    /*Set<File> files = sourceSet.java.srcDirs
-    for(File file:files){
-        println("file:${file.absolutePath}")
-    }
-    Set<File> refiles = sourceSet.resources.srcDirs
-    for(File file:refiles){
-        println("file:${file.absolutePath}")
-    }*/
-}
 
 dependencies {
 
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation fileTree(dir: 'libs', include: ['*.jar','*.aar'])
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     implementation 'androidx.core:core-ktx:1.2.0'
@@ -199,6 +136,7 @@ dependencies {
 
     implementation 'com.github.bumptech.glide:glide:4.12.0'
     implementation 'androidx.print:print:1.0.0'
+    implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.12.0'
 
     //retrofit网络请求框架
@@ -227,14 +165,14 @@ dependencies {
 
     api 'com.tencent.mm.opensdk:wechat-sdk-android-without-mta:+'
 
-    implementation 'org.salient.artvideoplayer:artplayer-core:1.1.0'
+   /* implementation 'org.salient.artvideoplayer:artplayer-core:1.1.0'
 
     implementation 'org.salient.artvideoplayer:artplayer-ijk:1.1.0'
     implementation "org.salient.artvideoplayer:artplayer-armv7a:1.1.0"
     implementation "org.salient.artvideoplayer:artplayer-armv5:1.1.0"
     implementation "org.salient.artvideoplayer:artplayer-x86:1.1.0"
 //下面两个需要minSdk version >= 21
-    implementation "org.salient.artvideoplayer:artplayer-arm64:1.1.0"
+    implementation "org.salient.artvideoplayer:artplayer-arm64:1.1.0"*/
 
     // ViewModel and LiveData
     implementation "android.arch.lifecycle:extensions:1.1.0"
@@ -280,129 +218,19 @@ dependencies {
 
     implementation 'com.tom-roush:pdfbox-android:2.0.27.0'
 
+    compile 'com.huxq17.xrefreshview:xrefreshview:3.6.9'
+
     //implementation 'com.github.barteksc:android-pdf-viewer:2.8.2'
 }
 
 
-andResGuard {
-    // mappingFile = file("./resource_mapping.txt")
-    mappingFile = null
-    use7zip = true
-    useSign = true
-    // It will keep the origin path of your resources when it's true
-    keepRoot = false
-    // If set, name column in arsc those need to proguard will be kept to this value
-    fixedResName = "arg"
-    // It will merge the duplicated resources, but don't rely on this feature too much.
-    // it's always better to remove duplicated resource from repo
-    mergeDuplicatedRes = true
-    whiteList = [
-            // your icon
-            "R.drawable.icon",
-            // for fabric
-            "R.string.com.crashlytics.*",
-            // for google-services
-            "R.string.google_app_id",
-            "R.string.gcm_defaultSenderId",
-            "R.string.default_web_client_id",
-            "R.string.ga_trackingId",
-            "R.string.firebase_database_url",
-            "R.string.google_api_key",
-            "R.string.google_crash_reporting_api_key",
-            "R.string.project_id",
-    ]
-    compressFilePattern = [
-            "*.png",
-            "*.jpg",
-            "*.jpeg",
-            "*.gif",
-    ]
-    sevenzip {
-        artifact = 'com.tencent.mm:SevenZip:1.2.21'
-        //path = "/usr/local/bin/7za"
-    }
-
-    /**
-     * Optional: if finalApkBackupPath is null, AndResGuard will overwrite final apk
-     * to the path which assemble[Task] write to
-     **/
-    // finalApkBackupPath = "${project.rootDir}/final.apk"
-
-    /**
-     * Optional: Specifies the name of the message digest algorithm to user when digesting the entries of JAR file
-     * Only works in V1signing, default value is "SHA-1"
-     **/
-    // digestalg = "SHA-256"
-}
 
 
 
-class NewTask extends DefaultTask{
 
-    private File outputFile
-
-    NewTask(){
-        setGroup("zzp")
-    }
-
-    void setOutputFile(File outputFile){
-        this.outputFile = outputFile
-    }
-
-    //生成activity文件
-    private void createActivityFile(String targetFilePath){
-        File targetFile = new File(targetFilePath)
-        if(!targetFile.exists()){
-            targetFile.getParentFile().mkdirs()
-        }
-        println("createActivityFile:${targetFilePath}")
-        FileWriter writer = new FileWriter(targetFile)
-        writer.write("package zzp.com;\n")
-        writer.write("public class Utils{\n")
-        writer.write("public void str(){System.out.println(\"zzp\");}\n")
-        writer.write("}\n")
-        writer.flush()
-        writer.close()
-    }
-
-    @TaskAction
-    void task(){
-        println("println task")
-        createActivityFile(outputFile.absolutePath + "/zzp/com/Utils.java")
-    }
-}
 
 greendao {
     schemaVersion 1000
 }
 
-
-afterEvaluate {
-    android.applicationVariants.all { variant ->
-        println("ApplicationId:" + variant.getApplicationId())
-        println("buildType:" + variant.getBuildType().getName())
-
-        println("buildFile:" + project.buildDir.absolutePath)
-
-       /* File outputDir = new File(project.buildDir,"newTask")
-        if(!outputDir.exists()){
-            outputDir.mkdir()
-        }
-
-        //variant.addJavaSourceFoldersToModel(rootProject.file("extra_java"))
-        NewTask task = project.tasks.create("genrate${variant.name.capitalize()}NewTask",NewTask.class)
-        task.setOutputFile(outputDir)
-
-        variant.registerJavaGeneratingTask(task, outputDir)*/
-
-        variant.getProductFlavors().each{
-            println("getProductFlavors:" + it.name)
-        }
-
-        variant.getSourceSets().each{
-            println(it.name)
-            println(it.getJavaDirectories())
-        }
-    }
-}
 

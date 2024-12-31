@@ -7,12 +7,12 @@ import android.os.PersistableBundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_video_player.*
-import org.salient.artplayer.MediaPlayerManager
+/*import org.salient.artplayer.MediaPlayerManager
 import org.salient.artplayer.ijk.IjkPlayer
 import org.salient.artplayer.player.SystemMediaPlayer
 import org.salient.artplayer.ui.FullscreenVideoView
 import org.salient.artplayer.ui.VideoView
-import org.salient.artplayer.ui.extend.OrientationEventManager
+import org.salient.artplayer.ui.extend.OrientationEventManager*/
 
 /**
  *
@@ -20,7 +20,7 @@ import org.salient.artplayer.ui.extend.OrientationEventManager
  */
 class VideoPlayerActivity:AppCompatActivity(){
 
-    private val orientationEventManager = OrientationEventManager()
+  /*  private val orientationEventManager = OrientationEventManager()
     private val orientationEventListener = object : OrientationEventManager.OnOrientationChangeListener {
         override fun onOrientationLandscape(videoView: VideoView?) {
             //横屏
@@ -88,5 +88,5 @@ class VideoPlayerActivity:AppCompatActivity(){
 
     override fun onBackPressed() {
         super.onBackPressed()
-    }
+    }*/
 }

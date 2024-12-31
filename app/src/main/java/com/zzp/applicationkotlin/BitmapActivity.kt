@@ -1,5 +1,6 @@
 package com.zzp.applicationkotlin
 
+import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.os.PersistableBundle
 import android.util.Log
@@ -14,6 +15,17 @@ import com.zzp.applicationkotlin.application.AppApplication
 import com.zzp.applicationkotlin.fragment.BitmapFragment
 import com.zzp.applicationkotlin.fragment.ImageBitmapFragment
 import com.zzp.applicationkotlin.viewmodel.BitmapViewModel
+
+
+import android.content.res.AssetManager
+import android.graphics.Bitmap
+import android.os.Environment
+import android.util.Base64
+import java.io.ByteArrayOutputStream
+import java.io.File
+import java.io.FileOutputStream
+import java.io.InputStream
+import java.nio.charset.Charset
 
 
 /**
@@ -44,6 +56,40 @@ class BitmapActivity : AppCompatActivity() {
         Log.d("zzpliveData","BitmapViewModel class1:${BitmapViewModel::class.java} class2:${BitmapViewModel::javaClass}}")
 
         Log.d("zzpliveData","activity:${ViewModelProviders.of(this).get(BitmapViewModel::class.java)}")
+
+        testBitmap()
+    }
+
+    fun testBitmap(){
+        val assetManager: AssetManager = getAssets()
+
+        try {
+            val options = BitmapFactory.Options()
+
+            options.inSampleSize = 9
+            options.inJustDecodeBounds = false
+            options.inPreferredConfig = Bitmap.Config.RGB_565
+
+            val bitmapStream: InputStream = assetManager.open("word1.jpg")
+            var bitmap = BitmapFactory.decodeStream(bitmapStream,null,options)
+
+            bitmap?.let {
+                var file = File(Environment.getExternalStorageDirectory() ,"12.txt")
+                file.deleteOnExit()
+                file.createNewFile()
+
+                var baos = ByteArrayOutputStream()
+
+                bitmap.compress(Bitmap.CompressFormat.JPEG,50,baos)
+
+                val base64Str = Base64.encodeToString(baos.toByteArray(), Base64.NO_WRAP)
+
+                file.writeText(base64Str, Charset.forName("US-ASCII"))
+            }
+
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
     }
 
     fun remove(v: View?){

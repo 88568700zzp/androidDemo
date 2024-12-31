@@ -35,7 +35,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.print.PrintHelper;
 
-import com.jingdong.common.utils.BitmapkitUtils;
+import com.amap.api.maps.MapsInitializer;
 import com.zzp.applicationkotlin.dialog.EditDialog;
 import com.zzp.applicationkotlin.model.SwipeData;
 import com.zzp.applicationkotlin.util.TimeMonitor;
@@ -59,7 +59,7 @@ public class NewMainActivity extends AppCompatActivity {
         DisplayMetrics displayMetrics = getResources().getDisplayMetrics();
         Log.d("zzp", "displayMetrics:" + displayMetrics.toString());
         //displayMetrics.scaledDensity = displayMetrics.density * 2;
-
+        Log.d("zzp", "RELEASE:" + Build.VERSION.RELEASE);
         super.onCreate(savedInstanceState);
 
         DisplayMetrics displayMetric = getResources().getDisplayMetrics();
@@ -75,11 +75,14 @@ public class NewMainActivity extends AppCompatActivity {
         Log.d("zzp_resource","name:" + name + " type:"+ type + " resourceName:" + resourceName);
         Log.d("zzp_resource","id:" + Integer.toHexString(getResources().getIdentifier(name,type,getPackageName())));*/
 
+        Log.d("zzp", "density:" + displayMetric.density + " densityDpi:" + displayMetric.densityDpi);
         Log.d("zzp", "displayMetrics:" + displayMetric.toString());
 
         //Log.d("zzp","ndk:" + NDKTool.getStringFromNDK());
 
         ListView listView = new ListView(this);
+
+        listView.setBackgroundColor(Color.WHITE);
 
         TitleAdapter adapter = new TitleAdapter();
 
@@ -87,17 +90,18 @@ public class NewMainActivity extends AppCompatActivity {
 
         listView.animate().alphaBy(10f).setDuration(1000).start();
 
-        Log.d("zzp123","device:" + Build.DEVICE + " model:" + Build.MODEL + " MANUFACTURER:" + Build.MANUFACTURER + " BOARD:" + Build.BOARD + " BRAND:" + Build.BRAND);
+        Log.d("zzp123", "device:" + Build.DEVICE + " model:" + Build.MODEL + " MANUFACTURER:" + Build.MANUFACTURER + " BOARD:" + Build.BOARD + " BRAND:" + Build.BRAND);
 
-        Log.d("zzp123","device:" + Settings.Secure.getString(getContentResolver(), "bluetooth_name"));
+        Log.d("zzp123", "device:" + Settings.Secure.getString(getContentResolver(), "bluetooth_name"));
 
-        Log.d("zzp123","device:" + Settings.Global.getString(getContentResolver(), Settings.Global.DEVICE_NAME));
+        Log.d("zzp123", "device:" + Settings.Global.getString(getContentResolver(), Settings.Global.DEVICE_NAME));
 
-        Log.d("zzp123","device:" + BluetoothAdapter.getDefaultAdapter().getName());
+        Log.d("zzp123", "device:" + BluetoothAdapter.getDefaultAdapter().getName());
 
-        Log.d("zzp123","appName:" + getResources().getString(getApplication().getApplicationInfo().labelRes));
+        Log.d("zzp123", "appName:" + getResources().getString(getApplication().getApplicationInfo().labelRes));
 
-        Log.d("zzp123","force_fsg_nav_bar:" + Settings.Global.getInt(getContentResolver(), "force_fsg_nav_bar", 0));
+        Log.d("zzp123", "force_fsg_nav_bar:" + Settings.Global.getInt(getContentResolver(), "force_fsg_nav_bar", 0));
+
 
         //BitmapkitUtils.load(getBaseContext());
 
@@ -231,35 +235,44 @@ public class NewMainActivity extends AppCompatActivity {
                     Intent intent = new Intent();
                     intent.setClass(NewMainActivity.this, FingerActivity.class);
                     startActivity(intent);
-                }else if (position == 27) {
+                } else if (position == 27) {
                     Intent intent = new Intent();
                     intent.setClass(NewMainActivity.this, NightActivity.class);
                     startActivity(intent);
-                }else if (position == 28) {
+                } else if (position == 28) {
                     Intent intent = new Intent();
                     intent.setClass(NewMainActivity.this, ImageEditActivity.class);
                     startActivity(intent);
-                }else if (position == 29) {
+                } else if (position == 29) {
                     Intent intent = new Intent();
                     intent.setClass(NewMainActivity.this, FormatActivity.class);
                     startActivity(intent);
-                }else if (position == 30) {
+                } else if (position == 30) {
                     Intent intent = new Intent();
                     intent.setClass(NewMainActivity.this, PdfViewActivity.class);
                     startActivity(intent);
-                }else if (position == 31) {
+                } else if (position == 31) {
                     Intent intent = new Intent();
                     intent.setClass(NewMainActivity.this, PrintActivity.class);
                     startActivity(intent);
-                }else if (position == 32) {
+                } else if (position == 32) {
                     Intent intent = new Intent();
                     intent.setClass(NewMainActivity.this, RecyclerViewActivity.class);
                     startActivity(intent);
-                }else if (position == 33) {
+                } else if (position == 33) {
                     Intent intent = new Intent();
                     intent.setClass(NewMainActivity.this, SensorActivity.class);
                     startActivity(intent);
-                }/*else if(position == 22){
+                } else if (position == 34) {
+                    Intent intent = new Intent();
+                    intent.setClass(NewMainActivity.this, AMapActivity.class);
+                    startActivity(intent);
+                }else if (position == 35) {
+                    Intent intent = new Intent();
+                    intent.setClass(NewMainActivity.this, TestFragmentActivity.class);
+                    startActivity(intent);
+                }
+                /*else if(position == 22){
                     Intent intent = new Intent();
                     intent.setClass(NewMainActivity.this,XmlActivity.class);
                     startActivity(intent);
@@ -272,7 +285,7 @@ public class NewMainActivity extends AppCompatActivity {
         Thread thread = new Thread(new Runnable() {
             @Override
             public void run() {
-                Log.d("zzp1234","Looper name:" + Thread.currentThread().getName());
+                Log.d("zzp1234", "Looper name:" + Thread.currentThread().getName());
 
                 Looper.prepare();
 
@@ -280,23 +293,26 @@ public class NewMainActivity extends AppCompatActivity {
                 handler.postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        Log.d("zzp1234","name:" + Thread.currentThread().getName());
+                        Log.d("zzp1234", "name:" + Thread.currentThread().getName());
                         handler.getLooper().quitSafely();
                     }
-                },1000);
+                }, 1000);
                 Looper.loop();
-                Log.d("zzp1234","end");
+                Log.d("zzp1234", "end");
             }
-        },"zzp-thread");
+        }, "zzp-thread");
         thread.start();
-    }
 
+
+        MapsInitializer.updatePrivacyShow(this, true, true);
+        MapsInitializer.updatePrivacyAgree(this, true);
+    }
     class TitleAdapter extends BaseAdapter {
 
         private String[] titles = new String[]{"Instrumentation", "job", "startService", "traffic", "addWindow", "webView",
                 "动态壁纸", "微信分享", "娃娃机", "kotlin", "video", "viewPager2", "room", "通知栏", "FaceTestWifi", "provider", "辅助服务",
                 "hookService", "bitmap", "touchBall", "大淘客", "分享", "nestScroll", "Coordinator", "Rxjava", "GreenDao","figger","night"
-                ,"imageEdit","文档解析","pdf","print","recyclerView","sensor"};
+                ,"imageEdit","文档解析","pdf","print","recyclerView","sensor","map","testFragment"};
 
         @Override
         public int getCount() {

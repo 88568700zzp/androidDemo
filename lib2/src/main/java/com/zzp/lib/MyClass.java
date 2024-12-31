@@ -29,8 +29,10 @@ import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.net.UnknownHostException;
 import java.nio.charset.Charset;
+import java.text.SimpleDateFormat;
 import java.util.ArrayDeque;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.Deque;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -212,13 +214,13 @@ public class MyClass {
         //int[][] nums = new int[][]{{1,2,3},{4,5,6}};
         //System.out.println(Arrays.toString(nums[1]));
         //PvKt.Companion.doJob();
-        //new ShenjiFile().doJob();
+        new ShenjiFile().doJob();
         //caculate();
         //testThreadPool();
         //new DesignMain().doMain();
         //caculate1();
-        String s = "123456";
-        System.out.println(s.substring(0,6));
+        //String s = "123456";
+        //System.out.println(s.substring(0,6));
     }
 
     public static void caculate(){
